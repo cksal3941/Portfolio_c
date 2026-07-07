@@ -71,15 +71,18 @@ export default function BlankNextSection({ className = '' }: BlankNextSectionPro
       aria-label="Next section"
       className={`relative h-screen overflow-hidden bg-[#f3f3f1] ${className}`}
     >
-      <h2 className="next-section-title absolute left-[8.5vw] top-[21vh] text-[clamp(1rem,1.45vw,1.75rem)] font-black uppercase leading-none text-black">
+      <h2 className="next-section-title absolute left-[8.5vw] top-[14vh] text-[clamp(1rem,1.45vw,1.75rem)] font-black uppercase leading-none text-black">
         RE:BLIDE OFF [ GRID ]
       </h2>
 
-      <div className="archive-panels absolute inset-0">
+      <div
+        className="archive-panels absolute inset-0"
+        style={{ perspective: '900px', perspectiveOrigin: '55% 50%' }}
+      >
         {WORK_PANELS.map((panel) => (
           <div
             key={panel.title}
-            className="archive-panel group absolute left-[55vw] top-[57vh] w-[clamp(170px,13vw,250px)] -translate-x-1/2 -translate-y-1/2 hover:z-[100]"
+            className="archive-panel group absolute left-[55vw] top-[50vh] w-[clamp(170px,13vw,250px)] hover:z-[100]"
           >
             <div className="relative aspect-[3/4] border border-black/50 bg-white/20 transition duration-200 ease-out group-hover:-translate-y-1 group-hover:border-black/80 group-hover:bg-white/35">
               <div className="opacity-80 transition duration-200 ease-out group-hover:opacity-100">

@@ -39,11 +39,14 @@ export default function Hero() {
       gsap.set('.next-section-title', { opacity: 0, y: 14 })
       gsap.set('.archive-panels', { opacity: 1 })
       gsap.set(archivePanels, {
-        x: (index) => index * 7,
-        y: (index) => index * -4,
-        scale: (index) => 1 - index * 0.008,
-        opacity: 1,
+        xPercent: -50,
+        yPercent: -50,
+        x: 0,
+        y: (index) => (index === 0 ? vh * 0.4 : 0),
+        scale: (index) => (index === 0 ? 0.4 : 1),
+        opacity: (index) => (index === 0 ? 1 : 0),
         zIndex: (index) => 80 - index,
+        rotateY: 0,
       })
 
       const tl = gsap.timeline({
@@ -114,11 +117,19 @@ export default function Hero() {
         ease: 'none',
       }, '<+0.18')
 
+      // card 0 rises and scales up with the circle expansion
+      tl.to(archivePanels[0], {
+        scale: 1,
+        y: 0,
+        duration: 0.65,
+        ease: 'none',
+      }, '<')
+
       tl.to(circleRef.current, {
         clipPath: 'circle(150vmax at 50% 118%)',
         duration: 0.38,
         ease: 'none',
-      })
+      }, '<+0.32')
 
       tl.to('.next-section-title', {
         opacity: 1,
@@ -127,15 +138,36 @@ export default function Hero() {
         ease: 'none',
       })
 
+      // Phase A: stack forms — all cards appear at tight stacked positions, facing forward
+      tl.to(archivePanels, {
+        x: (index) => index * 2,
+        y: (index) => index * -1,
+        scale: (index) => 1 - index * 0.004,
+        opacity: 1,
+        duration: 0.1,
+        ease: 'none',
+        stagger: 0,
+      }, '>+0.08')
+
+      // Phase B: all cards rotate together as one group (stagger:0 = simultaneous)
+      tl.to(archivePanels, {
+        rotateY: -40,
+        duration: 0.12,
+        ease: 'none',
+        stagger: 0,
+      }, '>')
+
+      // Phase C: cards un-rotate and fan out simultaneously
       tl.to(archivePanels, {
         x: (index) => `${index * 10 - 38}vw`,
         y: (index) => `${8 - index * 5}vh`,
         scale: (index) => 1 - index * 0.035,
         zIndex: (index) => 80 - index,
-        duration: 0.85,
+        rotateY: 0,
+        duration: 0.3,
         ease: 'none',
-        stagger: 0.015,
-      }, '>+0.12')
+        stagger: 0,
+      }, '>+0.05')
 
       // ── Phase 8 — circle grows ──────────────────────────────────────────
 
