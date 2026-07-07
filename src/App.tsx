@@ -1,6 +1,8 @@
 import { useState } from 'react'
 import Hero from '@/components/Hero'
 import About from '@/components/About'
+import AboutSection from '@/components/AboutSection'
+import HorizontalSection from '@/components/HorizontalSection'
 import MenuPanel from '@/components/MenuPanel'
 import { Menu } from 'lucide-react'
 
@@ -21,6 +23,8 @@ export default function App() {
       <MenuPanel isOpen={menuOpen} onClose={() => setMenuOpen(false)} />
 
       <Hero />
+      <AboutSection />
+      <HorizontalSection />
       <About />
     </main>
   )
