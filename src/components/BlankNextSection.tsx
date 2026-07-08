@@ -210,10 +210,10 @@ function ProjectModal({ panel, onClose }: { panel: Panel; onClose: () => void })
             style={{ padding: '32px 40px 20px' }}
           >
             <div style={{ display: 'flex', flexDirection: 'column', gap: '2px' }}>
-              <p style={{ fontSize: '12px', letterSpacing: '0.18em', textTransform: 'uppercase', lineHeight: 1.4, color: '#000' }}>
+              <p style={{ fontSize: '12px', letterSpacing: '0.16em', textTransform: 'uppercase', lineHeight: 1.4, color: '#000' }}>
                 {d.type}
               </p>
-              <p style={{ fontSize: '12px', letterSpacing: '0.18em', textTransform: 'uppercase', lineHeight: 1.4, color: '#000' }}>
+              <p style={{ fontSize: '12px', letterSpacing: '0.16em', textTransform: 'uppercase', lineHeight: 1.4, color: '#000' }}>
                 {d.period}
               </p>
             </div>

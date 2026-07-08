@@ -69,8 +69,9 @@ export default function DarkTransition() {
             lineHeight: 1.65,
             margin: '0 0 28px',
           }}>
-            Haus continues to define the space between architectural intent and
-            human motion, leaving a permanent imprint on the modern grid.
+            I moved from laboratory notebooks to browser tabs. The same discipline
+            that shaped years of research now drives how I build — structured,
+            intentional, and open to what comes next.
           </p>
 
           <p style={{
@@ -80,7 +81,7 @@ export default function DarkTransition() {
             opacity: 0.6,
             margin: '0 0 56px',
           }}>
-            This sequence is merely the foundation for what follows.
+            Every project in this archive is a record of that shift.
           </p>
 
           <p style={{

@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import gsap from 'gsap'
 import item1 from '@/images/item.png'
 import item2 from '@/images/item2.png'
@@ -61,6 +61,20 @@ function MarqueeContent({ outlined = false }: { outlined?: boolean }) {
 
 export default function FooterSection() {
   const sectionRef    = useRef<HTMLElement>(null)
+  const [seoulTime, setSeoulTime] = useState('')
+
+  useEffect(() => {
+    const update = () => {
+      setSeoulTime(new Date().toLocaleTimeString('en-US', {
+        timeZone: 'Asia/Seoul',
+        hour: '2-digit', minute: '2-digit', second: '2-digit',
+        hour12: false,
+      }))
+    }
+    update()
+    const id = setInterval(update, 1000)
+    return () => clearInterval(id)
+  }, [])
   const track1aRef    = useRef<HTMLDivElement>(null)
   const track1bRef    = useRef<HTMLDivElement>(null)
   const track2aRef    = useRef<HTMLDivElement>(null)
@@ -151,19 +165,43 @@ export default function FooterSection() {
         </div>
       </div>
 
-      {/* ── MIDDLE: personal statement placeholder ── */}
-      <div style={{ padding: '0 8vw', textAlign: 'center', margin: '48px 0' }}>
-        {/* TODO: replace with your own copy */}
+      {/* ── MIDDLE: CTA + Seoul time + OPEN TO WORK ── */}
+      <div style={{ padding: '0 8vw', textAlign: 'center', margin: '60px 0' }}>
+        <div style={{ display: 'inline-flex', alignItems: 'center', gap: '10px', marginBottom: '24px' }}>
+          <span style={{
+            width: '8px', height: '8px', borderRadius: '50%',
+            background: '#4cff91', display: 'inline-block',
+            boxShadow: '0 0 8px #4cff91',
+          }} />
+          <span style={{
+            fontFamily: "'Archivo', sans-serif",
+            fontSize: '13px', letterSpacing: '0.16em',
+            textTransform: 'uppercase', color: 'rgba(255,255,255,0.6)',
+          }}>
+            OPEN TO WORK
+          </span>
+        </div>
+
         <p style={{
-          fontFamily:    "'Archivo', sans-serif",
-          fontSize:      '16px',
-          lineHeight:    1.7,
-          color:         'rgba(255,255,255,0.5)',
-          maxWidth:      '480px',
-          margin:        '0 auto',
-          letterSpacing: '0.01em',
+          ...ANTON,
+          fontSize: 'clamp(36px, 5vw, 72px)',
+          letterSpacing: '-0.02em',
+          textTransform: 'uppercase',
+          lineHeight: 1,
+          margin: '0 0 28px',
+          color: '#ffffff',
         }}>
-          From food research to front-end — always rebuilding.
+          LET'S BUILD<br />SOMETHING
+        </p>
+
+        <p style={{
+          fontFamily: "'Archivo', sans-serif",
+          fontSize: '13px', letterSpacing: '0.16em',
+          color: 'rgba(255,255,255,0.35)',
+          textTransform: 'uppercase',
+          margin: 0,
+        }}>
+          SEOUL, KR — {seoulTime}
         </p>
       </div>
 
