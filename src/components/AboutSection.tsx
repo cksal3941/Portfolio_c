@@ -2,19 +2,14 @@ import { useEffect, useRef } from 'react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { SplitText } from 'gsap/SplitText'
+import { useLang } from '@/context/LangContext'
+import { C } from '@/data/content'
 
 gsap.registerPlugin(ScrollTrigger, SplitText)
 
-const TITLE_LINES = ['OUR LOOKBOOKS', 'SERVE AS A DIALOGUE']
-const EMPHASIS = 'WE PRIORITIZE CLARITY, FUNCTION, AND THE POWER OF THE GRID TO ELEVATE GLOBAL CREATIVE STANDARDS.'
-const BODY = [
-  'Our lookbooks serve as a dialogue between the garment and the void.',
-  'By prioritizing volume over traditional tailoring, each piece becomes a structural study.',
-  'We invite you to explore the intersection of form and function through this curated visual sequence.',
-]
-
 export default function AboutSection() {
   const sectionRef = useRef<HTMLElement>(null)
+  const { lang }   = useLang()
 
   useEffect(() => {
     const section = sectionRef.current
@@ -78,7 +73,7 @@ export default function AboutSection() {
       })
     }
 
-    build()
+    const buildTimer = setTimeout(build, 0)
 
     let debounce: ReturnType<typeof setTimeout>
     const onResize = () => {
@@ -88,11 +83,12 @@ export default function AboutSection() {
     window.addEventListener('resize', onResize)
 
     return () => {
+      clearTimeout(buildTimer)
       window.removeEventListener('resize', onResize)
       clearTimeout(debounce)
       cleanup()
     }
-  }, [])
+  }, [lang])
 
   return (
     <section
@@ -122,40 +118,41 @@ export default function AboutSection() {
           maxWidth: 'none',
         }}
       >
-        {TITLE_LINES.map(line => (
+        {C.aboutSection.titleLines.en.map(line => (
           <span key={line} style={{ display: 'block' }}>
             {line}
           </span>
         ))}
       </h2>
 
-      <div style={{ maxWidth: '430px', textAlign: 'center' }}>
+      <div style={{ maxWidth: '560px', textAlign: 'center' }}>
         <p
           data-split
           style={{
+            fontFamily: "'Archivo', sans-serif",
             fontSize: 'clamp(15px, 1.2vw, 18px)',
             fontWeight: 700,
             letterSpacing: '-0.01em',
-            textTransform: 'uppercase',
-            lineHeight: 1.35,
+            lineHeight: 1.45,
             color: '#000',
             margin: '0 0 34px',
           }}
         >
-          {EMPHASIS}
+          {C.aboutSection.emphasis[lang]}
         </p>
 
         <p
           data-split
           style={{
+            fontFamily: "'Archivo', sans-serif",
             fontSize: '16px',
-            lineHeight: 1.45,
+            lineHeight: 1.65,
             letterSpacing: '-0.01em',
             color: '#000',
             margin: 0,
           }}
         >
-          {BODY.join(' ')}
+          {C.aboutSection.body[lang].join(' ')}
         </p>
       </div>
     </section>

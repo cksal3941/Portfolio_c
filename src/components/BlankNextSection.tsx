@@ -3,6 +3,7 @@ import { createPortal } from 'react-dom'
 import { X, ExternalLink, Globe } from 'lucide-react'
 import gsap from 'gsap'
 import { Cursor } from '@/components/core/cursor'
+import { lenis } from '@/lib/lenis'
 import afterImg from '@/images/after.9.png'
 import hancomImg from '@/images/hancom.png'
 import weefImg from '@/images/weef.png'
@@ -167,6 +168,8 @@ function ProjectModal({ panel, onClose }: { panel: Panel; onClose: () => void })
   const tlRef    = useRef<gsap.core.Timeline | null>(null)
 
   useEffect(() => {
+    lenis?.stop()
+
     const block = (e: Event) => {
       if (modalRef.current?.contains(e.target as Node)) return
       e.preventDefault()
@@ -184,6 +187,7 @@ function ProjectModal({ panel, onClose }: { panel: Panel; onClose: () => void })
     return () => {
       document.removeEventListener('wheel',     block)
       document.removeEventListener('touchmove', block)
+      lenis?.start()
     }
   }, [])
 
@@ -327,7 +331,7 @@ export default function BlankNextSection({ className = '', onModalClose }: Blank
       style={{ borderBottom: 'none', boxShadow: 'none' }}
     >
       <h2 className="next-section-title absolute left-[8.5vw] top-[14vh] text-[clamp(1rem,1.45vw,1.75rem)] font-black uppercase leading-none text-black">
-        RE:BLIDE OFF [ GRID ]
+        RE:BUILD OFF [ GRID ]
       </h2>
 
       <div

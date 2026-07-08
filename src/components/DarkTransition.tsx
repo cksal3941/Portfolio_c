@@ -1,6 +1,16 @@
 import { useEffect, useRef } from 'react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import SplitReveal from '@/components/core/SplitReveal'
+import { useLang } from '@/context/LangContext'
+import { C } from '@/data/content'
+import trail1 from '@/images/leftbg.png'
+import trail2 from '@/images/lotionmodel.png'
+import trail3 from '@/images/model-shot3.png'
+import trail4 from '@/images/model-shot7.png'
+import trail5 from '@/images/oilhand.png'
+import trail6 from '@/images/Routine Lineup.png'
+import trail7 from '@/images/shampoohand.png'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -12,10 +22,18 @@ const ARCHIVO = {
   fontFamily: "'Archivo', sans-serif",
 } as const
 
+const TRAIL_SRCS = [trail1, trail2, trail3, trail4, trail5, trail6, trail7]
+const POOL = TRAIL_SRCS.length
+
 export default function DarkTransition() {
   const wrapperRef = useRef<HTMLDivElement>(null)
   const sectionRef = useRef<HTMLDivElement>(null)
   const contentRef = useRef<HTMLDivElement>(null)
+  const { lang }   = useLang()
+
+  const trailRefs = useRef<(HTMLDivElement | null)[]>([])
+  const trailIdx  = useRef(0)
+  const lastPos   = useRef({ x: -999, y: -999 })
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -27,23 +45,57 @@ export default function DarkTransition() {
           scrub: true,
         },
       })
-
-      // Background darkens continuously — no color stops
-      tl.to(sectionRef.current, {
-        backgroundColor: '#000000',
-        ease: 'none',
-        duration: 1,
-      }, 0)
-
-      // Text lightens at the same rate so it stays readable throughout
-      tl.to(contentRef.current, {
-        color: '#ffffff',
-        ease: 'none',
-        duration: 1,
-      }, 0)
+      tl.to(sectionRef.current, { backgroundColor: '#000000', ease: 'none', duration: 1 }, 0)
+      tl.to(contentRef.current, { color: '#ffffff', ease: 'none', duration: 1 }, 0)
     }, wrapperRef)
 
-    return () => ctx.revert()
+    // cursor trail
+    const section = sectionRef.current
+    const THRESHOLD = 160
+    const IMG_W = 160
+    const IMG_H = 210
+
+    const onMouseMove = (e: MouseEvent) => {
+      const rect = section!.getBoundingClientRect()
+      const x = e.clientX - rect.left
+      const y = e.clientY - rect.top
+
+      const dx = x - lastPos.current.x
+      const dy = y - lastPos.current.y
+      if (Math.sqrt(dx * dx + dy * dy) < THRESHOLD) return
+
+      lastPos.current = { x, y }
+
+      const el = trailRefs.current[trailIdx.current % POOL]
+      trailIdx.current++
+      if (!el) return
+
+      const rotation = (Math.random() - 0.5) * 18
+
+      gsap.killTweensOf(el)
+      gsap.set(el, {
+        x: x - IMG_W / 2,
+        y: y - IMG_H / 2,
+        opacity: 1,
+        scale: 1,
+        rotation,
+        zIndex: 10 + (trailIdx.current % 20),
+      })
+      gsap.to(el, {
+        y: y - IMG_H / 2 - 100,
+        opacity: 0,
+        scale: 0.82,
+        duration: 1.6,
+        ease: 'power2.out',
+      })
+    }
+
+    section?.addEventListener('mousemove', onMouseMove)
+
+    return () => {
+      ctx.revert()
+      section?.removeEventListener('mousemove', onMouseMove)
+    }
   }, [])
 
   return (
@@ -51,11 +103,38 @@ export default function DarkTransition() {
       <div
         ref={sectionRef}
         className="sticky top-0 h-screen flex items-center justify-center"
-        style={{ backgroundColor: '#f0f0ee' }}
+        style={{ backgroundColor: '#f0f0ee', overflow: 'hidden', position: 'sticky' }}
       >
+        {/* cursor trail pool */}
+        {TRAIL_SRCS.map((src, i) => (
+          <div
+            key={i}
+            ref={el => { trailRefs.current[i] = el }}
+            style={{
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              width: '160px',
+              height: '210px',
+              pointerEvents: 'none',
+              opacity: 0,
+              willChange: 'transform, opacity',
+            }}
+          >
+            <img
+              src={src}
+              alt=""
+              style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+            />
+          </div>
+        ))}
+
+        {/* content */}
         <div
           ref={contentRef}
           style={{
+            position: 'relative',
+            zIndex: 20,
             width: '100%',
             maxWidth: '580px',
             textAlign: 'center',
@@ -63,35 +142,22 @@ export default function DarkTransition() {
             padding: '0 24px',
           }}
         >
-          <p style={{
-            ...ARCHIVO,
-            fontSize: '16px',
-            lineHeight: 1.65,
-            margin: '0 0 28px',
-          }}>
-            I moved from laboratory notebooks to browser tabs. The same discipline
-            that shaped years of research now drives how I build — structured,
-            intentional, and open to what comes next.
+          <p style={{ ...ARCHIVO, fontSize: '16px', lineHeight: 1.65, margin: '0 0 28px', whiteSpace: 'pre-line' }}>
+            {C.darkTransition.p1[lang]}
           </p>
 
-          <p style={{
-            ...ARCHIVO,
-            fontSize: '16px',
-            lineHeight: 1.65,
-            opacity: 0.6,
-            margin: '0 0 56px',
-          }}>
-            Every project in this archive is a record of that shift.
+          <p style={{ ...ARCHIVO, fontSize: '16px', lineHeight: 1.65, margin: '0 0 56px' }}>
+            {C.darkTransition.p2[lang]}
           </p>
 
-          <p style={{
+          <SplitReveal as="p" style={{
             ...ANTON,
             fontSize: '20px',
             letterSpacing: '0.02em',
             textTransform: 'uppercase',
           }}>
-            [ EXPLORE THE ARCHIVE ]
-          </p>
+            {C.darkTransition.cta.en}
+          </SplitReveal>
         </div>
       </div>
     </div>

@@ -1,53 +1,58 @@
 import { useEffect, useRef } from 'react'
 import gsap from 'gsap'
+import { lenis } from '@/lib/lenis'
 
-const LETTERS = 'RE:BLIDE'.split('')
+const LETTERS = 'RE:BUILD'.split('')
 
 export default function IntroLoader({ onDone }: { onDone: () => void }) {
   const overlayRef   = useRef<HTMLDivElement>(null)
-  const lineRef      = useRef<HTMLDivElement>(null)
+  const progressRef  = useRef<HTMLDivElement>(null)
   const letterRefs   = useRef<HTMLSpanElement[]>([])
 
   useEffect(() => {
     document.body.style.overflow = 'hidden'
+    lenis?.stop()
 
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
       document.body.style.overflow = ''
+      lenis?.start()
       onDone()
       return
     }
 
     const ctx = gsap.context(() => {
-      gsap.set(letterRefs.current, { yPercent: 100 })
-      gsap.set(lineRef.current,    { scaleX: 0, transformOrigin: 'left center' })
+      gsap.set(letterRefs.current, { opacity: 0 })
+      gsap.set(progressRef.current, { scaleX: 0, transformOrigin: 'left center' })
 
       gsap.timeline({
         onComplete: () => {
           document.body.style.overflow = ''
+          lenis?.start()
           onDone()
         },
       })
         .to(letterRefs.current, {
-          yPercent: 0,
-          duration: 0.6,
-          ease:     'power3.out',
-          stagger:  0.05,
+          opacity:  1,
+          duration: 0.3,
+          ease:     'none',
+          stagger:  0.07,
         })
-        .to(lineRef.current, {
+        .to(progressRef.current, {
           scaleX:   1,
-          duration: 0.45,
+          duration: 0.6,
           ease:     'power2.inOut',
-        }, '+=0.4')
+        }, '+=0.2')
         .to(overlayRef.current, {
-          yPercent: -100,
-          duration: 0.8,
-          ease:     'power4.inOut',
-        }, '+=0.15')
+          opacity:  0,
+          duration: 0.5,
+          ease:     'power2.inOut',
+        }, '+=0.3')
     }, overlayRef)
 
     return () => {
       ctx.revert()
       document.body.style.overflow = ''
+      lenis?.start()
     }
   }, [onDone])
 
@@ -63,39 +68,37 @@ export default function IntroLoader({ onDone }: { onDone: () => void }) {
         flexDirection:  'column',
         alignItems:     'center',
         justifyContent: 'center',
+        gap:            '16px',
       }}
     >
-      <div style={{ transform: 'scaleX(0.82)', transformOrigin: 'center' }}>
-        {/* Letter row */}
-        <div style={{ display: 'flex' }}>
+      <div style={{ display: 'inline-flex', flexDirection: 'column', gap: '16px' }}>
+        {/* letters */}
+        <div style={{ display: 'flex', gap: '0.18em' }}>
           {LETTERS.map((letter, i) => (
-            <div key={i} style={{ overflow: 'hidden', display: 'inline-block' }}>
-              <span
-                ref={el => { if (el) letterRefs.current[i] = el }}
-                style={{
-                  display:    'inline-block',
-                  fontFamily: "'Anton', Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif",
-                  fontSize:   'clamp(60px, 10vw, 160px)',
-                  lineHeight: 1,
-                  color:      '#ffffff',
-                }}
-              >
-                {letter}
-              </span>
-            </div>
+            <span
+              key={i}
+              ref={el => { if (el) letterRefs.current[i] = el }}
+              style={{
+                fontFamily:    "'Anton', Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif",
+                fontSize:      'clamp(32px, 5vw, 64px)',
+                letterSpacing: '0.08em',
+                textTransform: 'uppercase',
+                color:         '#ffffff',
+                opacity:       0,
+              }}
+            >
+              {letter}
+            </span>
           ))}
         </div>
 
-        {/* Underline */}
-        <div
-          ref={lineRef}
-          style={{
-            height:     '1px',
-            background: '#ffffff',
-            marginTop:  '14px',
-            width:      '100%',
-          }}
-        />
+        {/* progress bar — same width as letters */}
+        <div style={{ width: '100%', height: '1px', background: 'rgba(255,255,255,0.15)' }}>
+          <div
+            ref={progressRef}
+            style={{ width: '100%', height: '100%', background: '#ffffff' }}
+          />
+        </div>
       </div>
     </div>
   )

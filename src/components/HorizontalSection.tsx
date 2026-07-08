@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useMemo } from 'react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { Layout, Layers, Sparkles, Wand2, Globe, Monitor } from 'lucide-react'
@@ -6,6 +6,11 @@ import aboutImage from '@/images/IMG_3572.png'
 import cursorImg1 from '@/images/item.png'
 import cursorImg2 from '@/images/item2.png'
 import cursorImg3 from '@/images/item3.png'
+import cursorImg4 from '@/images/item4.png'
+import cursorImg5 from '@/images/item5.png'
+import cursorImg6 from '@/images/item6.png'
+import { useLang, type Lang } from '@/context/LangContext'
+import { C } from '@/data/content'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -136,80 +141,71 @@ const AI_ICONS: SkillIcon[] = [
   { icon: <AntigravityIcon />, label: 'Antigravity' },
 ]
 
-/* ── panel data ───────────────────────────────────────────── */
-const PANELS: {
-  label: string
-  title: string[]
-  lines: string[]
-  img: string | null
-  imgAlt: string
-  icons: SkillIcon[] | null
-  principles: Principle[] | null
-  stat: StatBlock | null
-  entries: Entry[] | null
-}[] = [
-  {
-    label: 'ABOUT', title: ['FROM FOOD RESEARCH', 'TO WEB EXPERIENCE'],
-    lines: [
-      'I started in food, nutrition, and research-based work.',
-      'Now I am translating that experience into web publishing,',
-      'front-end development, and digital interface design.',
-    ],
-    img: aboutImage,
-    imgAlt: 'minimal workspace',
-    icons: null, principles: null, stat: null, entries: null,
-  },
-  {
-    label: 'WORK STYLE', title: ['I BUILD AFTER', 'UNDERSTANDING STRUCTURE'],
-    lines: [], img: null, imgAlt: '', icons: null, stat: null, entries: null,
-    principles: [
-      { num: '01', key: 'STRUCTURE',   desc: 'Information order and user flow before any screen' },
-      { num: '02', key: 'CONNECTION',  desc: 'Every element linked and purposeful in the whole' },
-      { num: '03', key: 'DETAIL',      desc: 'Refine until the result speaks for itself' },
-    ],
-  },
-  {
-    label: 'FRONT-END', title: ['FRONT-END', 'AND PUBLISHING'],
-    lines: [], img: null, imgAlt: '', principles: null, stat: null, entries: null,
-    icons: FRONTEND_ICONS,
-  },
-  {
-    label: 'DESIGN & AI', title: ['DESIGN TO CODE', 'WITH AI'],
-    lines: [], img: null, imgAlt: '', principles: null, stat: null, entries: null,
-    icons: DESIGN_ICONS,
-  },
-  {
-    label: 'AI TOOLS', title: ['AI-ASSISTED', 'PRODUCTION'],
-    lines: [], img: null, imgAlt: '', principles: null, stat: null, entries: null,
-    icons: AI_ICONS,
-  },
-  {
-    label: 'EXPERIENCE', title: ['RESEARCH-BASED', 'EXPERIENCE'],
-    lines: [], img: null, imgAlt: '', icons: null, principles: null,
-    stat: { number: '4', unit: 'ROLES' },
-    entries: [
-      { name: 'KT&G',                              sub: 'Food & Bio Research',      period: '2024 — 2026' },
-      { name: 'Geumsan Ginseng Institute',          sub: 'Food Quality Research',    period: '2022 — 2023' },
-      { name: 'Chungcheongbuk-do Agri. Services',  sub: 'Food Development Research', period: '2020 — 2021' },
-      { name: 'MS Food',                            sub: 'Nutrition Management',      period: '2017 — 2018' },
-    ],
-  },
-  {
-    label: 'EDUCATION', title: ['EDUCATION', 'AND CERTIFICATES'],
-    lines: [], img: null, imgAlt: '', icons: null, principles: null,
-    stat: { number: '6', unit: 'CREDENTIALS' },
-    entries: [
-      { name: 'Food Science & Biotechnology',  sub: 'B.S. Degree' },
-      { name: 'Food and Nutrition',            sub: 'B.S. Degree' },
-      { name: 'Nutritionist',                  sub: 'National License' },
-      { name: 'GTQ',                           sub: 'Certificate' },
-      { name: 'GTQid',                         sub: 'Certificate' },
-      { name: 'ITQ',                           sub: 'Certificate' },
-    ],
-  },
-]
+/* ── panel data (lang-aware) ──────────────────────────────── */
+function getPanels(lang: Lang) {
+  const h = C.horizontal
+  return [
+    {
+      label: h.about.label.en,
+      title: h.about.title.en,
+      lines: h.about.lines[lang],
+      img: aboutImage, imgAlt: 'minimal workspace',
+      icons: null, principles: null, stat: null, entries: null,
+    },
+    {
+      label: h.workStyle.label.en,
+      title: h.workStyle.title.en,
+      lines: [], img: null, imgAlt: '', icons: null, stat: null, entries: null,
+      principles: h.workStyle.principles[lang],
+    },
+    {
+      label: h.frontend.label.en,
+      title: h.frontend.title.en,
+      lines: [], img: null, imgAlt: '', principles: null, stat: null, entries: null,
+      icons: FRONTEND_ICONS,
+    },
+    {
+      label: h.design.label.en,
+      title: h.design.title.en,
+      lines: [], img: null, imgAlt: '', principles: null, stat: null, entries: null,
+      icons: DESIGN_ICONS,
+    },
+    {
+      label: h.aiTools.label.en,
+      title: h.aiTools.title.en,
+      lines: [], img: null, imgAlt: '', principles: null, stat: null, entries: null,
+      icons: AI_ICONS,
+    },
+    {
+      label: h.experience.label.en,
+      title: h.experience.title.en,
+      lines: [], img: null, imgAlt: '', icons: null, principles: null,
+      stat: { number: '4', unit: h.experience.unit.en },
+      entries: [
+        { name: 'KT&G',                             sub: h.experience.subs[lang][0], period: '2024 — 2026' },
+        { name: 'Geumsan Ginseng Institute',         sub: h.experience.subs[lang][1], period: '2022 — 2023' },
+        { name: 'Chungcheongbuk-do Agri. Services', sub: h.experience.subs[lang][2], period: '2020 — 2021' },
+        { name: 'MS Food',                           sub: h.experience.subs[lang][3], period: '2017 — 2018' },
+      ],
+    },
+    {
+      label: h.education.label.en,
+      title: h.education.title.en,
+      lines: [], img: null, imgAlt: '', icons: null, principles: null,
+      stat: { number: '6', unit: h.education.unit.en },
+      entries: [
+        { name: 'Food Science & Biotechnology', sub: h.education.subs[lang][0] },
+        { name: 'Food and Nutrition',           sub: h.education.subs[lang][1] },
+        { name: 'Nutritionist',                 sub: h.education.subs[lang][2] },
+        { name: 'GTQ',                          sub: h.education.subs[lang][3] },
+        { name: 'GTQid',                        sub: h.education.subs[lang][4] },
+        { name: 'ITQ',                          sub: h.education.subs[lang][5] },
+      ],
+    },
+  ]
+}
 
-const CURSOR_IMAGES = [cursorImg1, cursorImg2, cursorImg3]
+const CURSOR_IMAGES = [cursorImg1, cursorImg2, cursorImg3, cursorImg4, cursorImg5, cursorImg6]
 
 /* ── sub-components ───────────────────────────────────────── */
 const ANTON: React.CSSProperties = {
@@ -249,7 +245,7 @@ function IconGrid({ items }: { items: SkillIcon[] }) {
 /* D — numbered principles */
 function PrinciplesGrid({ items }: { items: Principle[] }) {
   return (
-    <div style={{ display: 'flex', flexDirection: 'column' }}>
+    <div style={{ display: 'flex', flexDirection: 'column', width: '100%' }}>
       {items.map(({ num, key, desc }, i) => (
         <div key={num} style={{
           padding: '22px 0',
@@ -309,6 +305,8 @@ function StatList({ stat, entries }: { stat: StatBlock; entries: Entry[] }) {
 
 /* ── main component ───────────────────────────────────────── */
 export default function HorizontalSection() {
+  const { lang }     = useLang()
+  const PANELS       = useMemo(() => getPanels(lang), [lang])
   const containerRef = useRef<HTMLDivElement>(null)
   const tiltRef      = useRef<HTMLDivElement>(null)
   const trackRef     = useRef<HTMLDivElement>(null)
@@ -516,7 +514,7 @@ export default function HorizontalSection() {
                 padding: '3.2vh 8vw', borderBottom: '1px solid #000',
                 flexShrink: 0,
               }}>
-                <span style={{ fontSize: '16px', letterSpacing: '0.16em', textTransform: 'uppercase' }}>RE:BLIDE — ABOUT</span>
+                <span style={{ fontSize: '16px', letterSpacing: '0.16em', textTransform: 'uppercase' }}>RE:BUILD — ABOUT</span>
                 <span style={{ fontSize: '16px', letterSpacing: '0.16em', textTransform: 'uppercase' }}>
                   {String(i + 1).padStart(2, '0')} / {String(PANELS.length).padStart(2, '0')}
                 </span>
@@ -557,7 +555,7 @@ export default function HorizontalSection() {
 
                   {!panel.icons && !panel.principles && !panel.stat && panel.img && (
                     <img src={panel.img} alt={panel.imgAlt}
-                      style={{ width: '55%', height: '58vh', objectFit: 'cover', objectPosition: 'top', display: 'block', marginLeft: 'auto' }}
+                      style={{ width: '55%', height: '58vh', objectFit: 'cover', objectPosition: 'top', display: 'block', marginLeft: 'auto', filter: 'grayscale(1)' }}
                     />
                   )}
                 </div>
