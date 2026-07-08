@@ -1,7 +1,8 @@
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef, type SVGProps } from 'react'
 import { createPortal } from 'react-dom'
 import { X, ExternalLink, Globe } from 'lucide-react'
 import gsap from 'gsap'
+import { Cursor } from '@/components/core/cursor'
 import afterImg from '@/images/after.9.png'
 import hancomImg from '@/images/hancom.png'
 import weefImg from '@/images/weef.png'
@@ -29,6 +30,22 @@ type Detail = {
   links: { label: string; url: string }[]
 }
 
+function MouseIcon(props: SVGProps<SVGSVGElement>) {
+  return (
+    <svg xmlns='http://www.w3.org/2000/svg' width={20} height={24} fill='none' {...props}>
+      <path
+        fill='#000'
+        fillRule='evenodd'
+        stroke='#fff'
+        strokeLinecap='square'
+        strokeWidth={1.5}
+        d='M16.994 11.096 1.962 2.265l3.42 17.776 3.579-7.694z'
+        clipRule='evenodd'
+      />
+    </svg>
+  )
+}
+
 function GitHubIcon() {
   return (
     <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden>
@@ -37,7 +54,6 @@ function GitHubIcon() {
   )
 }
 
-// Figma logo SVG (no lucide icon available)
 function FigmaIcon() {
   return (
     <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden>
@@ -95,7 +111,7 @@ const WORK_PANELS: Panel[] = [
   {
     title: 'HANCOM ACADEMY RENEWAL',
     image: hancomImg,
-    imgClass: 'absolute inset-0 w-full h-full object-contain scale-[2.1] group-hover:scale-[2.3]',
+    imgClass: 'absolute inset-0 w-full h-full object-contain scale-[2.6] translate-y-[2%] group-hover:scale-[2.8]',
     detail: {
       subtitle: '오래된 교육기관 웹사이트를 반응형 구조와 현대적인 UI 흐름으로 리뉴얼한 프로젝트입니다.',
       type: 'PERSONAL PROJECT',
@@ -143,11 +159,6 @@ const WORK_PANELS: Panel[] = [
       ],
     },
   },
-  // { title: 'SOFT KNIT ARCHIVE' },
-  // { title: 'BURGUNDY COAT STUDY' },
-  // { title: 'GOLDEN LOAF PUFFER' },
-  // { title: 'PINK VOLUME COAT' },
-  // { title: 'SAND TAILORED SET' },
 ]
 
 function ProjectModal({ panel, onClose }: { panel: Panel; onClose: () => void }) {
@@ -156,7 +167,6 @@ function ProjectModal({ panel, onClose }: { panel: Panel; onClose: () => void })
   const tlRef    = useRef<gsap.core.Timeline | null>(null)
 
   useEffect(() => {
-    // block wheel/touch scroll without touching window.scrollY
     const block = (e: Event) => {
       if (modalRef.current?.contains(e.target as Node)) return
       e.preventDefault()
@@ -184,19 +194,17 @@ function ProjectModal({ panel, onClose }: { panel: Panel; onClose: () => void })
       .to(modalRef.current, { scale: 0.96, duration: 0.12, ease: 'power2.in' })
       .to(modalRef.current, { y: 80, opacity: 0, duration: 0.3, ease: 'power3.in' }, '<+0.05')
   }
+
   return (
     <>
-      {/* backdrop */}
       <div className="fixed inset-0 z-[300] bg-black/60" onClick={handleClose} />
 
-      {/* centered modal */}
       <div className="fixed inset-0 z-[310] flex items-center justify-center p-4 pointer-events-none">
         <div
           ref={modalRef}
           className="pointer-events-auto overflow-y-auto bg-white border border-black flex flex-col w-full"
           style={{ maxWidth: '760px', maxHeight: '86vh' }}
         >
-          {/* ── header: type · period · close ── */}
           <div
             className="flex items-start justify-between border-b border-black"
             style={{ padding: '32px 40px 20px' }}
@@ -220,7 +228,6 @@ function ProjectModal({ panel, onClose }: { panel: Panel; onClose: () => void })
             </button>
           </div>
 
-          {/* ── title area ── */}
           <div className="border-b border-black" style={{ padding: '28px 40px' }}>
             <h3
               className="text-black font-black uppercase"
@@ -231,67 +238,7 @@ function ProjectModal({ panel, onClose }: { panel: Panel; onClose: () => void })
             <p style={{ fontSize: '15px', lineHeight: 1.6, color: '#000', margin: 0 }}>
               {d.subtitle}
             </p>
-          </div>
-
-          {/* ── body ── */}
-          <div style={{ padding: '0 40px 40px', display: 'flex', flexDirection: 'column', gap: '28px' }}>
-
-            {/* role */}
-            <div style={{ paddingTop: '28px' }}>
-              <p style={{ fontSize: '12px', letterSpacing: '0.18em', textTransform: 'uppercase', color: '#000', marginBottom: '10px' }}>
-                Role
-              </p>
-              <p style={{ fontSize: '15px', lineHeight: 1.7, color: '#000', margin: 0 }}>
-                {d.role}
-              </p>
-            </div>
-
-            {/* key features */}
-            <div>
-              <p style={{ fontSize: '12px', letterSpacing: '0.18em', textTransform: 'uppercase', color: '#000', marginBottom: '12px' }}>
-                Key Features
-              </p>
-              <ul style={{ listStyle: 'none', margin: 0, padding: 0, display: 'grid', gap: '8px' }}>
-                {d.tasks.map(t => (
-                  <li
-                    key={t}
-                    style={{ padding: '12px 14px', border: '1px solid #000', fontSize: '14px', lineHeight: 1.5, color: '#000' }}
-                  >
-                    {t}
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            {/* tech stack */}
-            <div>
-              <p style={{ fontSize: '12px', letterSpacing: '0.18em', textTransform: 'uppercase', color: '#000', marginBottom: '12px' }}>
-                Tech Stack
-              </p>
-              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
-                {d.stack.map(s => (
-                  <span
-                    key={s}
-                    style={{ padding: '6px 10px', border: '1px solid #000', fontSize: '12px', lineHeight: 1, color: '#000', background: '#fff' }}
-                  >
-                    {s}
-                  </span>
-                ))}
-              </div>
-            </div>
-
-            {/* learned */}
-            <div style={{ borderTop: '1px solid #000', paddingTop: '28px' }}>
-              <p style={{ fontSize: '12px', letterSpacing: '0.18em', textTransform: 'uppercase', color: '#000', marginBottom: '10px' }}>
-                Learned
-              </p>
-              <p style={{ fontSize: '15px', lineHeight: 1.7, color: '#000', margin: 0 }}>
-                {d.learned}
-              </p>
-            </div>
-
-            {/* links — icon buttons */}
-            <div style={{ display: 'flex', gap: '8px' }}>
+            <div style={{ display: 'flex', gap: '8px', marginTop: '18px' }}>
               {d.links.map(link => (
                 <a
                   key={link.label}
@@ -306,7 +253,58 @@ function ProjectModal({ panel, onClose }: { panel: Panel; onClose: () => void })
                 </a>
               ))}
             </div>
+          </div>
 
+          <div style={{ padding: '0 40px 40px', display: 'flex', flexDirection: 'column', gap: '28px' }}>
+            <div style={{ paddingTop: '28px' }}>
+              <p style={{ fontSize: '15px', fontWeight: 800, letterSpacing: '0.14em', textTransform: 'uppercase', color: '#000', marginBottom: '10px' }}>
+                Role
+              </p>
+              <p style={{ fontSize: '15px', lineHeight: 1.7, color: '#000', margin: 0 }}>
+                {d.role}
+              </p>
+            </div>
+
+            <div>
+              <p style={{ fontSize: '15px', fontWeight: 800, letterSpacing: '0.14em', textTransform: 'uppercase', color: '#000', marginBottom: '12px' }}>
+                Key Features
+              </p>
+              <ul style={{ listStyle: 'none', margin: 0, padding: 0, display: 'grid', gap: '8px' }}>
+                {d.tasks.map(t => (
+                  <li
+                    key={t}
+                    style={{ padding: '12px 14px', border: '1px solid #000', fontSize: '14px', lineHeight: 1.5, color: '#000' }}
+                  >
+                    {t}
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <div>
+              <p style={{ fontSize: '15px', fontWeight: 800, letterSpacing: '0.14em', textTransform: 'uppercase', color: '#000', marginBottom: '12px' }}>
+                Tech Stack
+              </p>
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
+                {d.stack.map(s => (
+                  <span
+                    key={s}
+                    style={{ padding: '6px 10px', border: '1px solid #000', fontSize: '12px', lineHeight: 1, color: '#000', background: '#fff' }}
+                  >
+                    {s}
+                  </span>
+                ))}
+              </div>
+            </div>
+
+            <div style={{ borderTop: '1px solid #000', paddingTop: '28px' }}>
+              <p style={{ fontSize: '15px', fontWeight: 800, letterSpacing: '0.14em', textTransform: 'uppercase', color: '#000', marginBottom: '10px' }}>
+                Learned
+              </p>
+              <p style={{ fontSize: '15px', lineHeight: 1.7, color: '#000', margin: 0 }}>
+                {d.learned}
+              </p>
+            </div>
           </div>
         </div>
       </div>
@@ -326,6 +324,7 @@ export default function BlankNextSection({ className = '', onModalClose }: Blank
     <section
       aria-label="Next section"
       className={`relative h-screen overflow-hidden bg-[#f3f3f1] ${className}`}
+      style={{ borderBottom: 'none', boxShadow: 'none' }}
     >
       <h2 className="next-section-title absolute left-[8.5vw] top-[14vh] text-[clamp(1rem,1.45vw,1.75rem)] font-black uppercase leading-none text-black">
         RE:BLIDE OFF [ GRID ]
@@ -340,9 +339,39 @@ export default function BlankNextSection({ className = '', onModalClose }: Blank
             key={panel.title}
             className="archive-panel group absolute left-1/2 top-[50vh] w-[clamp(240px,20vw,360px)] hover:z-[100]"
             onClick={() => panel.detail && setActivePanel(panel)}
-            style={{ cursor: panel.detail ? 'pointer' : 'default' }}
+            style={{ cursor: panel.detail ? 'none' : 'default' }}
           >
-            <div className="relative aspect-[3/4] bg-white/20 transition duration-200 ease-out group-hover:-translate-y-1 group-hover:bg-transparent">
+            {panel.detail && (
+              <Cursor
+                attachToParent
+                variants={{
+                  initial:  { scale: 0.3, opacity: 0 },
+                  animate:  { scale: 1,   opacity: 1 },
+                  exit:     { scale: 0.3, opacity: 0 },
+                }}
+                transition={{ ease: 'easeInOut', duration: 0.15 }}
+                springConfig={{ damping: 25, stiffness: 350 }}
+              >
+                <div style={{ display: 'flex', alignItems: 'flex-end', gap: '8px' }}>
+                  <MouseIcon />
+                  <div style={{
+                    background:    '#000',
+                    color:         '#fff',
+                    padding:       '3px 10px',
+                    borderRadius:  '4px',
+                    fontFamily:    "'Archivo', sans-serif",
+                    fontSize:      '11px',
+                    fontWeight:    600,
+                    letterSpacing: '0.04em',
+                    whiteSpace:    'nowrap',
+                  }}>
+                    {panel.title}
+                  </div>
+                </div>
+              </Cursor>
+            )}
+
+            <div className="archive-card relative aspect-[3/4] bg-white/20 transition duration-200 ease-out group-hover:-translate-y-1">
               {panel.image && (
                 <img
                   src={panel.image}
@@ -350,12 +379,6 @@ export default function BlankNextSection({ className = '', onModalClose }: Blank
                   className={`transition-transform duration-500 ease-out ${panel.imgClass ?? 'absolute inset-[8%] w-[84%] h-[84%] object-contain group-hover:scale-110'}`}
                 />
               )}
-              <span
-                className="pointer-events-none absolute left-[58%] top-[58%] z-30 bg-black/65 font-black uppercase leading-tight text-white opacity-0 transition duration-150 ease-out group-hover:opacity-100"
-                style={{ fontSize: 'clamp(0.75rem, 1vw, 1rem)', padding: '10px 15px', maxWidth: '38%' }}
-              >
-                {panel.title}
-              </span>
             </div>
           </div>
         ))}

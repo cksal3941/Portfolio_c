@@ -1,16 +1,21 @@
 import { useState } from 'react'
+import IntroLoader from '@/components/IntroLoader'
 import Hero from '@/components/Hero'
-import About from '@/components/About'
 import AboutSection from '@/components/AboutSection'
 import HorizontalSection from '@/components/HorizontalSection'
+import DarkTransition from '@/components/DarkTransition'
+import FooterSection from '@/components/FooterSection'
 import MenuPanel from '@/components/MenuPanel'
 import { Menu } from 'lucide-react'
 
 export default function App() {
   const [menuOpen, setMenuOpen] = useState(false)
+  const [introDone, setIntroDone] = useState(false)
 
   return (
     <main>
+      {!introDone && <IntroLoader onDone={() => setIntroDone(true)} />}
+
       <button
         type="button"
         aria-label="Open menu"
@@ -25,7 +30,8 @@ export default function App() {
       <Hero />
       <AboutSection />
       <HorizontalSection />
-      <About />
+      <DarkTransition />
+      <FooterSection />
     </main>
   )
 }

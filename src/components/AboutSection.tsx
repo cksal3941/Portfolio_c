@@ -5,12 +5,12 @@ import { SplitText } from 'gsap/SplitText'
 
 gsap.registerPlugin(ScrollTrigger, SplitText)
 
-const TITLE    = 'WHO I AM WHAT I BUILD'
-const EMPHASIS = 'I DESIGN INTERACTIONS THAT TURN PORTFOLIOS INTO EXPERIENCES.'
-const BODY     = [
-  'I started in food research and now work in front-end and digital publishing.',
-  'I focus on motion, visual systems, and structured storytelling.',
-  'My work connects layout, interaction, and visual direction.',
+const TITLE_LINES = ['OUR LOOKBOOKS', 'SERVE AS A DIALOGUE']
+const EMPHASIS = 'WE PRIORITIZE CLARITY, FUNCTION, AND THE POWER OF THE GRID TO ELEVATE GLOBAL CREATIVE STANDARDS.'
+const BODY = [
+  'Our lookbooks serve as a dialogue between the garment and the void.',
+  'By prioritizing volume over traditional tailoring, each piece becomes a structural study.',
+  'We invite you to explore the intersection of form and function through this curated visual sequence.',
 ]
 
 export default function AboutSection() {
@@ -33,7 +33,6 @@ export default function AboutSection() {
       triggers.forEach(t => t.kill())
       triggers = []
 
-      // remove injected overflow wrappers before reverting
       lineWrappers.forEach(wrap => {
         const parent = wrap.parentElement
         while (wrap.firstChild) parent?.insertBefore(wrap.firstChild, wrap)
@@ -49,11 +48,9 @@ export default function AboutSection() {
       cleanup()
 
       targets.forEach(el => {
-        // split into lines based on current viewport width
         const split = new SplitText(el, { type: 'lines' })
         splits.push(split)
 
-        // wrap each line in overflow:hidden so text reveals from below
         split.lines.forEach(line => {
           const wrap = document.createElement('div')
           wrap.style.cssText = 'overflow:hidden;display:block;'
@@ -83,7 +80,6 @@ export default function AboutSection() {
 
     build()
 
-    // re-split on resize so lines match new viewport width
     let debounce: ReturnType<typeof setTimeout>
     const onResize = () => {
       clearTimeout(debounce)
@@ -102,82 +98,65 @@ export default function AboutSection() {
     <section
       ref={sectionRef}
       style={{
-        background:    '#efefed',
-        minHeight:     '100vh',
-        display:       'flex',
+        background: '#efefed',
+        minHeight: '100vh',
+        display: 'flex',
         flexDirection: 'column',
         justifyContent: 'center',
-        padding:       '14vh 8vw',
-        borderTop:     '1px solid #000',
+        alignItems: 'center',
+        padding: '14vh 8vw',
+        borderTop: '1px solid #000',
       }}
     >
-      {/* eyebrow */}
-      <p
-        style={{
-          fontSize:      '10px',
-          letterSpacing: '0.32em',
-          textTransform: 'uppercase',
-          color:         '#000',
-          margin:        '0 0 48px',
-        }}
-      >
-        RE:BLIDE — ABOUT
-      </p>
-
-      {/* main title — SplitText splits by natural line wraps */}
       <h2
         data-split
         style={{
-          fontFamily:    "'Anton', Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif",
-          fontSize:      'clamp(56px, 9.5vw, 136px)',
-          lineHeight:    0.9,
-          letterSpacing: '-0.03em',
+          fontFamily: "'Anton', Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif",
+          fontSize: 'clamp(48px, 4.75vw, 74px)',
+          lineHeight: 1.05,
+          letterSpacing: 0,
           textTransform: 'uppercase',
-          color:         '#000',
-          margin:        '0 0 52px',
-          maxWidth:      '14ch',
+          textAlign: 'center',
+          color: '#000',
+          margin: '0 0 60px',
+          maxWidth: 'none',
         }}
       >
-        {TITLE}
+        {TITLE_LINES.map(line => (
+          <span key={line} style={{ display: 'block' }}>
+            {line}
+          </span>
+        ))}
       </h2>
 
-      <div style={{ display: 'flex', alignItems: 'flex-start', gap: '4vw', maxWidth: '860px' }}>
-        {/* vertical accent line */}
-        <div style={{ width: '1px', background: '#000', alignSelf: 'stretch', flexShrink: 0, marginTop: '4px' }} />
+      <div style={{ maxWidth: '430px', textAlign: 'center' }}>
+        <p
+          data-split
+          style={{
+            fontSize: 'clamp(15px, 1.2vw, 18px)',
+            fontWeight: 700,
+            letterSpacing: '-0.01em',
+            textTransform: 'uppercase',
+            lineHeight: 1.35,
+            color: '#000',
+            margin: '0 0 34px',
+          }}
+        >
+          {EMPHASIS}
+        </p>
 
-        <div style={{ flex: 1 }}>
-          {/* emphasis */}
-          <p
-            data-split
-            style={{
-              fontSize:      'clamp(11px, 1.1vw, 14px)',
-              letterSpacing: '0.16em',
-              textTransform: 'uppercase',
-              lineHeight:    1.85,
-              color:         '#000',
-              margin:        '0 0 32px',
-            }}
-          >
-            {EMPHASIS}
-          </p>
-
-          {/* body */}
-          {BODY.map((line, i) => (
-            <p
-              key={i}
-              data-split
-              style={{
-                fontSize:      '13.5px',
-                lineHeight:    1.9,
-                letterSpacing: '0.01em',
-                color:         '#000',
-                margin:        0,
-              }}
-            >
-              {line}
-            </p>
-          ))}
-        </div>
+        <p
+          data-split
+          style={{
+            fontSize: '16px',
+            lineHeight: 1.45,
+            letterSpacing: '-0.01em',
+            color: '#000',
+            margin: 0,
+          }}
+        >
+          {BODY.join(' ')}
+        </p>
       </div>
     </section>
   )

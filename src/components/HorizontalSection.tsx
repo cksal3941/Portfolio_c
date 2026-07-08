@@ -2,6 +2,10 @@ import { useEffect, useRef } from 'react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { Layout, Layers, Sparkles, Wand2, Globe, Monitor } from 'lucide-react'
+import aboutImage from '@/images/IMG_3572.png'
+import cursorImg1 from '@/images/item.png'
+import cursorImg2 from '@/images/item2.png'
+import cursorImg3 from '@/images/item3.png'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -57,6 +61,14 @@ function FigmaIcon() {
     </svg>
   )
 }
+function PsIcon() {
+  return (
+    <svg width="26" height="26" viewBox="0 0 24 24" aria-hidden>
+      <rect width="24" height="24" fill="currentColor" />
+      <text x="12" y="17.5" textAnchor="middle" fill="white" fontSize="10" fontWeight="800" fontFamily="Arial, sans-serif">Ps</text>
+    </svg>
+  )
+}
 function GitIcon() {
   return (
     <svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor" aria-hidden>
@@ -83,6 +95,7 @@ const FRONTEND_ICONS: SkillIcon[] = [
 ]
 const DESIGN_ICONS: SkillIcon[] = [
   { icon: <FigmaIcon />,                               label: 'Figma' },
+  { icon: <PsIcon />,                                  label: 'Photoshop' },
   { icon: <Layout   size={26} strokeWidth={1.3} />,    label: 'Wireframe' },
   { icon: <Layers   size={26} strokeWidth={1.3} />,    label: 'UX Flow' },
   { icon: <Layout   size={26} strokeWidth={1.3} />,    label: 'Design System' },
@@ -109,7 +122,7 @@ const PANELS: {
       'Now I am translating that experience into web publishing,',
       'front-end development, and digital interface design.',
     ],
-    img: 'https://images.unsplash.com/photo-1497366754035-f200968a6e72?w=640&h=480&fit=crop&q=80',
+    img: aboutImage,
     imgAlt: 'minimal workspace',
     icons: null, principles: null, stat: null, entries: null,
   },
@@ -158,6 +171,8 @@ const PANELS: {
   },
 ]
 
+const CURSOR_IMAGES = [cursorImg1, cursorImg2, cursorImg3]
+
 /* ── sub-components ───────────────────────────────────────── */
 const ANTON: React.CSSProperties = {
   fontFamily: "'Anton', Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif",
@@ -204,12 +219,12 @@ function PrinciplesGrid({ items }: { items: Principle[] }) {
           borderBottom: i === items.length - 1 ? '1px solid #000' : 'none',
         }}>
           <div style={{ display: 'flex', alignItems: 'baseline', gap: '14px', marginBottom: '10px' }}>
-            <span style={{ fontSize: '11px', letterSpacing: '0.2em', opacity: 0.4 }}>{num}</span>
+            <span style={{ fontSize: '14px', letterSpacing: '0.16em', color: '#000' }}>{num}</span>
             <span style={{ ...ANTON, fontSize: 'clamp(22px, 2.4vw, 36px)', textTransform: 'uppercase', letterSpacing: '-0.01em' }}>
               {key}
             </span>
           </div>
-          <p style={{ fontSize: '15px', lineHeight: 1.75, margin: 0, paddingLeft: '34px', opacity: 0.7 }}>
+          <p style={{ fontSize: '15px', lineHeight: 1.75, margin: 0, paddingLeft: '34px', color: '#000' }}>
             {desc}
           </p>
         </div>
@@ -227,7 +242,7 @@ function StatList({ stat, entries }: { stat: StatBlock; entries: Entry[] }) {
         <p style={{ ...ANTON, fontSize: 'clamp(72px, 7vw, 110px)', lineHeight: 1, letterSpacing: '-0.04em', margin: '0 0 4px' }}>
           {stat.number}
         </p>
-        <p style={{ fontSize: '11px', letterSpacing: '0.28em', textTransform: 'uppercase', margin: 0, opacity: 0.5 }}>
+        <p style={{ fontSize: '13px', letterSpacing: '0.2em', textTransform: 'uppercase', margin: 0, color: '#000' }}>
           {stat.unit}
         </p>
       </div>
@@ -244,9 +259,9 @@ function StatList({ stat, entries }: { stat: StatBlock; entries: Entry[] }) {
               <p style={{ ...ANTON, fontSize: 'clamp(14px, 1.5vw, 20px)', textTransform: 'uppercase', letterSpacing: '-0.01em', margin: '0 0 4px' }}>
                 {name}
               </p>
-              {sub && <p style={{ fontSize: '12px', letterSpacing: '0.1em', textTransform: 'uppercase', margin: 0, opacity: 0.45 }}>{sub}</p>}
+              {sub && <p style={{ fontSize: '13px', letterSpacing: '0.08em', textTransform: 'uppercase', margin: 0, color: '#000' }}>{sub}</p>}
             </div>
-            {period && <p style={{ fontSize: '12px', letterSpacing: '0.1em', textTransform: 'uppercase', margin: 0, opacity: 0.45, flexShrink: 0 }}>{period}</p>}
+            {period && <p style={{ fontSize: '13px', letterSpacing: '0.08em', textTransform: 'uppercase', margin: 0, color: '#000', flexShrink: 0 }}>{period}</p>}
           </div>
         ))}
       </div>
@@ -257,9 +272,15 @@ function StatList({ stat, entries }: { stat: StatBlock; entries: Entry[] }) {
 /* ── main component ───────────────────────────────────────── */
 export default function HorizontalSection() {
   const containerRef = useRef<HTMLDivElement>(null)
+  const tiltRef      = useRef<HTMLDivElement>(null)
   const trackRef     = useRef<HTMLDivElement>(null)
+  const cursorRef    = useRef<HTMLDivElement>(null)
+  const cursorImgRef = useRef<HTMLImageElement>(null)
 
   useEffect(() => {
+    const isTouchDevice = window.matchMedia('(pointer: coarse)').matches || window.innerWidth < 768
+    const activeIdx = { current: -1 }
+
     const ctx = gsap.context(() => {
       const panelCount    = PANELS.length
       // Each panel gets a "hold" segment where scrolling does not move the track,
@@ -282,6 +303,20 @@ export default function HorizontalSection() {
           scrub:               1.2,
           anticipatePin:       1,
           invalidateOnRefresh: true,
+          onUpdate: isTouchDevice ? undefined : (self) => {
+            const idx = Math.round(self.progress * (panelCount - 1))
+            if (idx === activeIdx.current) return
+            activeIdx.current = idx
+            const img = cursorImgRef.current
+            if (!img) return
+            gsap.to(img, {
+              opacity: 0, scale: 0.85, duration: 0.12, ease: 'power2.in',
+              onComplete: () => {
+                img.src = CURSOR_IMAGES[idx % CURSOR_IMAGES.length]
+                gsap.to(img, { opacity: 1, scale: 1, duration: 0.18, ease: 'power2.out' })
+              },
+            })
+          },
         },
       })
 
@@ -330,19 +365,76 @@ export default function HorizontalSection() {
       })
     }, containerRef)
 
-    return () => ctx.revert()
+    if (isTouchDevice || !cursorRef.current) return () => ctx.revert()
+
+    gsap.set(cursorRef.current, { xPercent: -50, yPercent: -50, opacity: 0, scale: 0.85 })
+    const xTo   = gsap.quickTo(cursorRef.current, 'x',       { duration: 0.12, ease: 'power2.out' })
+    const yTo   = gsap.quickTo(cursorRef.current, 'y',       { duration: 0.12, ease: 'power2.out' })
+    const tiltX = gsap.quickTo(tiltRef.current,   'rotateX', { duration: 0.7,  ease: 'power3.out' })
+    const tiltY = gsap.quickTo(tiltRef.current,   'rotateY', { duration: 0.7,  ease: 'power3.out' })
+
+    const el = containerRef.current!
+    const onMouseMove  = (e: MouseEvent) => {
+      xTo(e.clientX)
+      yTo(e.clientY)
+      const cx = window.innerWidth  / 2
+      const cy = window.innerHeight / 2
+      tiltY( (e.clientX - cx) / cx * 6)
+      tiltX(-(e.clientY - cy) / cy * 4)
+    }
+    const onMouseEnter = () => {
+      el.style.cursor = 'none'
+      gsap.to(cursorRef.current, { opacity: 1, scale: 1, duration: 0.2, ease: 'power2.out' })
+    }
+    const onMouseLeave = () => {
+      el.style.cursor = ''
+      gsap.to(cursorRef.current, { opacity: 0, scale: 0.85, duration: 0.2, ease: 'power2.in' })
+      gsap.to(tiltRef.current,   { rotateX: 0, rotateY: 0, duration: 0.7, ease: 'power3.out' })
+    }
+
+    el.addEventListener('mousemove', onMouseMove)
+    el.addEventListener('mouseenter', onMouseEnter)
+    el.addEventListener('mouseleave', onMouseLeave)
+
+    return () => {
+      ctx.revert()
+      el.style.cursor = ''
+      el.removeEventListener('mousemove', onMouseMove)
+      el.removeEventListener('mouseenter', onMouseEnter)
+      el.removeEventListener('mouseleave', onMouseLeave)
+    }
   }, [])
 
   return (
-    /*
+    <>
+    <div
+      ref={cursorRef}
+      style={{
+        position: 'fixed', top: 0, left: 0,
+        width: '160px', height: '160px',
+        pointerEvents: 'none', zIndex: 9999,
+      }}
+    >
+      <img
+        ref={cursorImgRef}
+        src={cursorImg1}
+        alt=""
+        style={{ width: '100%', height: '100%', objectFit: 'contain', display: 'block' }}
+      />
+    </div>
+
+    {/*
      * Container: width/height match the viewport exactly.
      * overflow:hidden clips any part of the track that is outside panel 0.
      * max-width:100% prevents horizontal body overflow (scrollbar pages).
-     */
+     */}
     <div ref={containerRef} style={{
       width: '100vw', maxWidth: '100%', height: '100vh',
       overflow: 'hidden', position: 'relative',
+      perspective: '1200px',
     }}>
+      {/* tiltRef: receives rotateX/Y from mouse — sits between container and track */}
+      <div ref={tiltRef} style={{ width: '100%', height: '100%' }}>
       {/*
        * Track: a flat flex row of panels, no gap, no margin, anchored at left:0.
        * GSAP only modifies `x` (translate), never layout properties.
@@ -396,7 +488,7 @@ export default function HorizontalSection() {
               <div style={{ display: 'flex', flex: 1, gap: '5vw', alignItems: 'center', padding: '5vh 8vw', minHeight: 0 }}>
 
                 {/* left — always: label + title */}
-                <div style={{ flex: isWide ? '0 0 34%' : '0 0 40%', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+                <div style={{ flex: isWide ? '0 0 34%' : '0 0 50%', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
                   <Line className="p-label" style={{ fontSize: '18px', letterSpacing: '0.18em', textTransform: 'uppercase', marginBottom: '24px' }}>
                     {panel.label}
                   </Line>
@@ -404,11 +496,10 @@ export default function HorizontalSection() {
                     <Line key={j} className="p-title" style={{
                       ...ANTON,
                       fontSize: 'clamp(36px, 4.2vw, 72px)',
-                      lineHeight: 0.9, letterSpacing: '-0.025em', textTransform: 'uppercase',
+                      lineHeight: 1.08, letterSpacing: '-0.025em', textTransform: 'uppercase',
                       marginBottom: j < panel.title.length - 1 ? '4px' : '26px',
                     }}>{t}</Line>
                   ))}
-                  <div style={{ width: '32px', height: '1px', background: '#000', marginBottom: '22px' }} />
 
                   {/* text-only panels: body lines in left col */}
                   {panel.lines.map((line, j) => (
@@ -428,7 +519,7 @@ export default function HorizontalSection() {
 
                   {!panel.icons && !panel.principles && !panel.stat && panel.img && (
                     <img src={panel.img} alt={panel.imgAlt}
-                      style={{ width: '100%', height: '58vh', objectFit: 'cover', display: 'block', border: '1px solid #000' }}
+                      style={{ width: '55%', height: '58vh', objectFit: 'cover', objectPosition: 'top', display: 'block', marginLeft: 'auto' }}
                     />
                   )}
                 </div>
@@ -450,6 +541,8 @@ export default function HorizontalSection() {
           )
         })}
       </div>
+      </div>{/* end tiltRef */}
     </div>
+    </>
   )
 }

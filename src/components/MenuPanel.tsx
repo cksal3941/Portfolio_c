@@ -10,77 +10,90 @@ const NAV_ITEMS = ['Home', 'Collections', 'About', 'Stokists'] as const
 export default function MenuPanel({ isOpen, onClose }: Props) {
   return (
     <>
-      {/* backdrop */}
       <div
-        className={`fixed inset-0 z-[190] bg-black/25 transition-opacity duration-500 ${
+        className={`fixed inset-0 z-[190] bg-transparent transition-opacity duration-500 ${
           isOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
         }`}
         onClick={onClose}
       />
 
-      {/* panel */}
       <div
-        className={`fixed right-0 top-0 z-[200] flex h-full w-[min(440px,90vw)] flex-col bg-[#f4f4f2] transition-transform duration-500 ease-[cubic-bezier(0.76,0,0.24,1)] ${
+        className={`fixed right-0 top-0 z-[200] h-screen w-[min(440px,90vw)] border-l border-black/15 bg-[#f4f4f2] transition-transform duration-500 ease-[cubic-bezier(0.76,0,0.24,1)] ${
           isOpen ? 'translate-x-0' : 'translate-x-full'
         }`}
       >
-        {/* header */}
-        <div className="flex items-center justify-between px-8 pb-2 pt-8">
-          <span className="text-[10px] font-medium uppercase tracking-[0.28em] text-black/30">
-            Navigation
-          </span>
-          <button
-            type="button"
-            aria-label="Close menu"
-            onClick={onClose}
-            className="flex h-9 w-9 items-center justify-center text-black transition-opacity duration-150 hover:opacity-50"
-          >
-            <X size={20} strokeWidth={1.8} />
-          </button>
-        </div>
+        <button
+          type="button"
+          aria-label="Close menu"
+          onClick={onClose}
+          className={`absolute left-0 top-1/2 flex size-13 -translate-x-full -translate-y-1/2 items-center justify-center border border-black/15 bg-[#f4f4f2] text-black transition-[background-color,opacity] duration-150 hover:bg-white ${
+            isOpen ? 'pointer-events-auto opacity-100' : 'pointer-events-none opacity-0'
+          }`}
+        >
+          <X size={25} strokeWidth={2} />
+        </button>
 
-        {/* nav items */}
-        <nav className="mt-8 flex flex-col gap-3 px-6">
+        <nav className="absolute left-5 right-5 top-5 flex flex-col gap-3">
           {NAV_ITEMS.map((item) => (
             <button
               key={item}
               type="button"
-              className="group relative overflow-hidden border border-black/10 px-7 py-9 text-left"
+              className="group relative flex h-20 items-center overflow-hidden rounded-[3px] border border-black/10 bg-[#efefed] pr-4 text-left"
             >
-              {/* fill layer */}
               <span
                 aria-hidden
                 className="absolute inset-0 origin-bottom scale-y-0 bg-black transition-transform duration-[420ms] ease-[cubic-bezier(0.76,0,0.24,1)] group-hover:scale-y-100"
               />
-              {/* label */}
-              <span className="relative z-10 block font-black uppercase leading-none tracking-tight text-black transition-colors duration-[420ms] group-hover:text-white"
-                style={{ fontSize: 'clamp(1.7rem, 3.4vw, 2.3rem)' }}
-              >
+              <span aria-hidden className="relative z-10 block w-[17px] shrink-0" />
+              <span className="relative z-10 block text-[23px] font-black leading-none text-black transition-colors duration-[420ms] group-hover:text-white">
                 {item}
               </span>
             </button>
           ))}
         </nav>
 
-        {/* bottom bar */}
-        <div className="mt-auto flex items-end justify-between px-6 pb-10">
-          <p
-            className="font-black uppercase leading-none tracking-tighter text-black"
-            style={{ fontSize: 'clamp(1.1rem, 2.2vw, 1.6rem)' }}
-          >
-            RE:BLIDE
-          </p>
+        <div className="absolute bottom-5 left-5 right-5 flex flex-col gap-[10px]">
+          <div className="flex items-end justify-between">
+            <p className="text-[42px] font-black uppercase leading-[0.8] tracking-[-0.04em] text-black">
+              RE:BLIDE
+            </p>
+
+            <div className="flex items-center gap-2">
+              <a
+                href="https://www.linkedin.com"
+                aria-label="LinkedIn"
+                className="flex size-6 items-center justify-center border border-black/10 text-[10px] font-semibold text-black transition-colors duration-150 hover:bg-white"
+              >
+                in
+              </a>
+              <a
+                href="https://x.com"
+                aria-label="X"
+                className="flex size-6 items-center justify-center border border-black/10 text-[10px] font-semibold text-black transition-colors duration-150 hover:bg-white"
+              >
+                X
+              </a>
+              <a
+                href="https://www.instagram.com"
+                aria-label="Instagram"
+                className="flex size-6 items-center justify-center border border-black/10 text-[10px] font-semibold text-black transition-colors duration-150 hover:bg-white"
+              >
+                ig
+              </a>
+            </div>
+          </div>
 
           <button
             type="button"
-            className="group relative overflow-hidden border border-black/40 px-5 py-[0.65rem]"
+            className="group relative flex h-20 w-full items-center overflow-hidden rounded-[3px] border border-black/10 bg-[#efefed] pr-4 text-left"
           >
             <span
               aria-hidden
               className="absolute inset-0 origin-bottom scale-y-0 bg-black transition-transform duration-[420ms] ease-[cubic-bezier(0.76,0,0.24,1)] group-hover:scale-y-100"
             />
-            <span className="relative z-10 text-[11px] font-black uppercase tracking-[0.2em] text-black transition-colors duration-[420ms] group-hover:text-white">
-              Inquired ↗
+            <span aria-hidden className="relative z-10 block w-[17px] shrink-0" />
+            <span className="relative z-10 text-[23px] font-black leading-none text-black transition-colors duration-[420ms] group-hover:text-white">
+              Inquired {'\u2197'}
             </span>
           </button>
         </div>
