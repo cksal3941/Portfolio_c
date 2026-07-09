@@ -37,6 +37,7 @@ export default function Hero() {
       gsap.set(circleRef.current,          { clipPath: 'circle(0vmax at 50% 118%)' })
       gsap.set('.next-section-title',      { opacity: 0, y: 14 })
       gsap.set('.archive-panels',          { opacity: 1 })
+      gsap.set('.archive-panel-meta',      { opacity: 0, y: 22 })
       gsap.set(archivePanels, {
         xPercent: -50,
         yPercent: -50,
@@ -84,7 +85,8 @@ export default function Hero() {
         zIndex: (i) => 80 - i,
         rotateY: 0, duration: 0.3, ease: 'none', stagger: 0,
       }, '>+0.05')
-      tl.to('.archive-card', { backgroundColor: 'rgba(255,255,255,0)', duration: 0.2, ease: 'none' }, '<+0.1')
+      tl.to('.archive-panel-meta', { opacity: 1, y: 0, duration: 0.5, ease: 'none', stagger: 0.15 }, '<-0.17')
+      tl.to('.archive-card', { backgroundColor: 'rgba(255,255,255,0)', duration: 0.2, ease: 'none' }, '<+0.27')
     }, wrapperRef)
 
     // ── Parallax mousemove ──

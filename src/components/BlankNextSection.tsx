@@ -20,6 +20,12 @@ type Panel = {
   title: string
   image?: string
   imgClass?: string
+  meta?: {
+    num: string
+    displayTitle: BiLang<string>
+    type: BiLang<string>
+    tags: BiLang<string>
+  }
   detail?: Detail
 }
 
@@ -91,6 +97,12 @@ const WORK_PANELS: Panel[] = [
   {
     title: 'AFTER.9 COMMERCE SPA',
     image: afterImg,
+    meta: {
+      num: '01',
+      displayTitle: { ko: 'after.9 일체형페이지', en: "A'FTER.9" },
+      type: { ko: '브랜드 UI 콘셉트', en: 'BRAND UI CONCEPT' },
+      tags: { ko: 'UI 디자인 / 비주얼 디렉션', en: 'UI DESIGN / VISUAL DIRECTION' },
+    },
     detail: {
       subtitle: {
         ko: '브랜드 기획부터 쇼핑몰 구현까지 혼자 진행한 가상 바디 케어 브랜드 프로젝트입니다.',
@@ -122,6 +134,12 @@ const WORK_PANELS: Panel[] = [
     title: 'HANCOM ACADEMY RENEWAL',
     image: hancomImg,
     imgClass: 'absolute inset-0 w-full h-full object-contain scale-[2.6] translate-y-[2%] group-hover:scale-[2.8]',
+    meta: {
+      num: '02',
+      displayTitle: { ko: '한글과컴퓨터학원 반응형 웹 리뉴얼', en: 'HANCOM ACADEMY RENEWAL' },
+      type: { ko: '웹 리뉴얼 / 퍼블리싱', en: 'WEB RENEWAL / PUBLISHING' },
+      tags: { ko: 'REACT / CSS / 인터랙션', en: 'REACT / CSS / INTERACTION' },
+    },
     detail: {
       subtitle: {
         ko: '오래된 교육기관 웹사이트를 반응형 구조와 현대적인 UI 흐름으로 리뉴얼한 프로젝트입니다.',
@@ -153,6 +171,12 @@ const WORK_PANELS: Panel[] = [
     title: 'WEEF CLONE CODING',
     image: weefImg,
     imgClass: 'absolute inset-0 w-full h-full object-contain scale-[1.2] group-hover:scale-[1.35]',
+    meta: {
+      num: '03',
+      displayTitle: { ko: 'WEEF 클론 코딩', en: 'WIFF PRODUCT PAGE' },
+      type: { ko: '커머스 UI / 프로덕트 인터랙션', en: 'COMMERCE UI / PRODUCT INTERACTION' },
+      tags: { ko: 'UI 디자인 / 프론트엔드', en: 'UI DESIGN / FRONT-END' },
+    },
     detail: {
       subtitle: {
         ko: '식물 유래 주방 세정 브랜드 웹사이트의 구조와 애니메이션을 분석하며 구현한 클론 코딩 프로젝트입니다.',
@@ -362,9 +386,27 @@ export default function BlankNextSection({ className = '', onModalClose }: Blank
       className={`relative h-screen overflow-hidden bg-[#f3f3f1] ${className}`}
       style={{ borderBottom: 'none', boxShadow: 'none' }}
     >
-      <h2 className="next-section-title absolute left-[8.5vw] top-[14vh] text-[clamp(1rem,1.45vw,1.75rem)] font-black uppercase leading-none text-black">
-        PROJECTS
-      </h2>
+      <div className="next-section-title absolute left-[8.5vw] top-[14vh]">
+        <h2 className="font-black uppercase leading-none text-black" style={{ margin: 0, fontSize: 'clamp(28px, 3vw, 48px)' }}>
+          PROJECTS
+        </h2>
+        <p style={{
+          fontFamily: "'Archivo', sans-serif",
+          fontSize: 'clamp(16px, 1.3vw, 20px)',
+          letterSpacing: '0.04em',
+          textTransform: 'uppercase',
+          color: '#000',
+          margin: '10px 0 0',
+          lineHeight: 1.4,
+          maxWidth: '560px',
+          fontWeight: 500,
+        }}>
+          {lang === 'ko'
+            ? <>웹 퍼블리싱과 UI 디자인을 기반으로<br />기획하고 구현한 프로젝트 모음입니다.</>
+            : <>SELECTED WORKS ACROSS WEB PUBLISHING,<br />UI DESIGN, AND INTERACTION</>
+          }
+        </p>
+      </div>
 
       <div
         className="archive-panels absolute inset-0"
@@ -393,15 +435,15 @@ export default function BlankNextSection({ className = '', onModalClose }: Blank
                   <div style={{
                     background:    '#000',
                     color:         '#fff',
-                    padding:       '3px 10px',
+                    padding:       '7px 18px',
                     borderRadius:  '4px',
                     fontFamily:    "'Archivo', sans-serif",
-                    fontSize:      '11px',
+                    fontSize:      '16px',
                     fontWeight:    600,
-                    letterSpacing: '0.04em',
+                    letterSpacing: '0.06em',
                     whiteSpace:    'nowrap',
                   }}>
-                    {panel.title}
+                    VIEW PROJECT
                   </div>
                 </div>
               </Cursor>
@@ -416,6 +458,54 @@ export default function BlankNextSection({ className = '', onModalClose }: Blank
                 />
               )}
             </div>
+
+            {panel.meta && (
+              <div
+                className="archive-panel-meta absolute left-0 right-0 pointer-events-none"
+                style={{ top: '100%', paddingTop: '12px' }}
+              >
+                <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '12px' }}>
+                  <span style={{
+                    fontFamily: "'Archivo', sans-serif",
+                    fontSize: '16px',
+                    fontWeight: 700,
+                    letterSpacing: '0.1em',
+                    textTransform: 'uppercase',
+                    color: '#000',
+                    flexShrink: 0,
+                  }}>{panel.meta.num}</span>
+                  <div style={{ flex: 1, height: '1px', background: '#000' }} />
+                </div>
+                <p style={{
+                  fontFamily: "'Archivo', sans-serif",
+                  fontSize: 'clamp(16px, 1.4vw, 22px)',
+                  fontWeight: 800,
+                  letterSpacing: '0.02em',
+                  textTransform: 'uppercase',
+                  color: '#000',
+                  margin: '0 0 8px',
+                  lineHeight: 1.15,
+                }}>{panel.meta.displayTitle[lang]}</p>
+                <p style={{
+                  fontFamily: "'Archivo', sans-serif",
+                  fontSize: '16px',
+                  letterSpacing: '0.05em',
+                  textTransform: 'uppercase',
+                  color: '#000',
+                  margin: '0 0 5px',
+                  lineHeight: 1.4,
+                }}>{panel.meta.type[lang]}</p>
+                <p style={{
+                  fontFamily: "'Archivo', sans-serif",
+                  fontSize: '16px',
+                  letterSpacing: '0.04em',
+                  textTransform: 'uppercase',
+                  color: '#000',
+                  margin: 0,
+                  lineHeight: 1.4,
+                }}>{panel.meta.tags[lang]}</p>
+              </div>
+            )}
           </div>
         ))}
       </div>

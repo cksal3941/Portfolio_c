@@ -1,4 +1,4 @@
-import { useEffect, useRef, useMemo } from 'react'
+import { useEffect, useRef, useMemo, useState } from 'react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { Layout, Layers, Sparkles, Wand2, Globe, Monitor } from 'lucide-react'
@@ -110,28 +110,29 @@ function AntigravityIcon() {
 
 /* ── types ────────────────────────────────────────────────── */
 type SkillIcon  = { icon: React.ReactNode; label: string }
+type SkillCard  = { icon: React.ReactNode; label: string; level: string; desc: string }
 type Principle  = { num: string; key: string; desc: string }
 type Entry      = { name: string; sub?: string; period?: string }
 type StatBlock  = { number: string; unit: string }
 
-const FRONTEND_ICONS: SkillIcon[] = [
-  { icon: <HTMLIcon />,                                label: 'HTML5' },
-  { icon: <CSSIcon />,                                 label: 'CSS3' },
-  { icon: <JSIcon />,                                  label: 'JavaScript' },
-  { icon: <TSIcon />,                                  label: 'TypeScript' },
-  { icon: <ReactIcon />,                               label: 'React' },
-  { icon: <GitIcon />,                                 label: 'Git' },
-  { icon: <Monitor size={26} strokeWidth={1.3} />,     label: 'Responsive' },
-  { icon: <Globe   size={26} strokeWidth={1.3} />,     label: 'Publishing' },
+const FRONTEND_CARDS: SkillCard[] = [
+  { icon: <HTMLIcon />,                              label: 'HTML5',       level: 'LEVEL 03', desc: '시맨틱 구조 작성 · 페이지 마크업' },
+  { icon: <CSSIcon />,                               label: 'CSS3',        level: 'LEVEL 03', desc: '반응형 레이아웃 · 스타일링 · 기본 애니메이션' },
+  { icon: <JSIcon />,                                label: 'JavaScript',  level: 'LEVEL 02', desc: 'DOM 제어 · 인터랙션 로직 구현' },
+  { icon: <TSIcon />,                                label: 'TypeScript',  level: 'LEVEL 01', desc: '기본 타입 구조 이해 · 학습 중' },
+  { icon: <ReactIcon />,                             label: 'React',       level: 'LEVEL 02', desc: '컴포넌트 기반 UI · 상태 흐름 관리' },
+  { icon: <GitIcon />,                               label: 'Git',         level: 'LEVEL 02', desc: '버전 관리 · 브랜치 · 커밋 기록 관리' },
+  { icon: <Monitor size={26} strokeWidth={1.3} />,   label: 'Responsive',  level: 'LEVEL 03', desc: 'PC · 태블릿 · 모바일 반응형 레이아웃' },
+  { icon: <Globe   size={26} strokeWidth={1.3} />,   label: 'Publishing',  level: 'LEVEL 03', desc: '디자인 시안 → 웹 화면 구현' },
 ]
-const DESIGN_ICONS: SkillIcon[] = [
-  { icon: <FigmaIcon />,                               label: 'Figma' },
-  { icon: <PsIcon />,                                  label: 'Photoshop' },
-  { icon: <Layout   size={26} strokeWidth={1.3} />,    label: 'Wireframe' },
-  { icon: <Layers   size={26} strokeWidth={1.3} />,    label: 'UX Flow' },
-  { icon: <Layout   size={26} strokeWidth={1.3} />,    label: 'Design System' },
-  { icon: <Sparkles size={26} strokeWidth={1.3} />,    label: 'AI Image' },
-  { icon: <Wand2    size={26} strokeWidth={1.3} />,    label: 'AI Production' },
+const DESIGN_CARDS: SkillCard[] = [
+  { icon: <FigmaIcon />,                               label: 'Figma',         level: 'LEVEL 02', desc: '화면 구조 · 와이어프레임 · 사용자 흐름 정리' },
+  { icon: <PsIcon />,                                  label: 'Photoshop',     level: 'LEVEL 01', desc: '기본 이미지 보정 · 시각 자료 정리' },
+  { icon: <Layout   size={26} strokeWidth={1.3} />,    label: 'Wireframe',     level: 'LEVEL 02', desc: '페이지 정보 순서 · 화면 구성 설계' },
+  { icon: <Layers   size={26} strokeWidth={1.3} />,    label: 'UX Flow',       level: 'LEVEL 02', desc: '사용자 이동 · 화면 전환 흐름 설계' },
+  { icon: <Layout   size={26} strokeWidth={1.3} />,    label: 'Design System', level: 'LEVEL 01', desc: '색상 · 타이포 · 버튼 등 기본 UI 규칙' },
+  { icon: <Sparkles size={26} strokeWidth={1.3} />,    label: 'AI Image',      level: 'LEVEL 02', desc: '레퍼런스 이미지 생성 · 화면 분위기 구체화' },
+  { icon: <Wand2    size={26} strokeWidth={1.3} />,    label: 'AI Production', level: 'LEVEL 02', desc: '기획 · 디자인 · 코드 구현 과정 보조' },
 ]
 const AI_ICONS: SkillIcon[] = [
   { icon: <ChatGPTIcon />,     label: 'ChatGPT' },
@@ -139,6 +140,13 @@ const AI_ICONS: SkillIcon[] = [
   { icon: <ClaudeIcon />,      label: 'Claude' },
   { icon: <GeminiIcon />,      label: 'Gemini' },
   { icon: <AntigravityIcon />, label: 'Antigravity' },
+]
+const AI_CARDS: SkillCard[] = [
+  { icon: <ChatGPTIcon />,     label: 'ChatGPT',     level: 'LEVEL 03', desc: '아이디어 정리 · 문장 구성 · 인터랙션 분석 · 프롬프트 설계 · 이미지 생성' },
+  { icon: <CodexIcon />,       label: 'Codex',       level: 'LEVEL 02', desc: '코드 수정 · 오류 점검 · 컴포넌트 정리 · 구현 보조' },
+  { icon: <ClaudeIcon />,      label: 'Claude',      level: 'LEVEL 02', desc: '섹션 구성 · 레이아웃 정리 · 애니메이션 방향 설정' },
+  { icon: <GeminiIcon />,      label: 'Gemini',      level: 'LEVEL 01', desc: '자료 비교 · 아이디어 검토 · 대체 방향 탐색 · 이미지 생성' },
+  { icon: <AntigravityIcon />, label: 'Antigravity', level: 'LEVEL 01', desc: '실험적 코드 흐름 · 작업 방식 테스트' },
 ]
 
 /* ── panel data (lang-aware) ──────────────────────────────── */
@@ -150,31 +158,43 @@ function getPanels(lang: Lang) {
       title: h.about.title.en,
       lines: h.about.lines[lang],
       img: aboutImage, imgAlt: 'minimal workspace',
-      icons: null, principles: null, stat: null, entries: null,
+      icons: null, principles: null, stat: null, entries: null, skillCards: null,
     },
     {
       label: h.workStyle.label.en,
       title: h.workStyle.title.en,
-      lines: [], img: null, imgAlt: '', icons: null, stat: null, entries: null,
+      lines: [], img: null, imgAlt: '', icons: null, stat: null, entries: null, skillCards: null,
       principles: h.workStyle.principles[lang],
     },
     {
       label: h.frontend.label.en,
       title: h.frontend.title.en,
-      lines: [], img: null, imgAlt: '', principles: null, stat: null, entries: null,
-      icons: FRONTEND_ICONS,
+      lines: lang === 'ko'
+        ? ['기본 구조를 설계하고,', '반응형 화면과 인터랙션을 구현합니다.']
+        : ['Designing structure,', 'implementing responsive layouts and interactions.'],
+      img: null, imgAlt: '', principles: null, stat: null, entries: null,
+      icons: null,
+      skillCards: FRONTEND_CARDS,
     },
     {
       label: h.design.label.en,
       title: h.design.title.en,
-      lines: [], img: null, imgAlt: '', principles: null, stat: null, entries: null,
-      icons: DESIGN_ICONS,
+      lines: lang === 'ko'
+        ? ['화면 흐름을 정리하고,', 'AI를 활용해 아이디어와', '구현 방향을 구체화합니다.']
+        : ['Organising screen flows,', 'and shaping ideas and', 'implementation direction with AI.'],
+      img: null, imgAlt: '', principles: null, stat: null, entries: null,
+      icons: null,
+      skillCards: DESIGN_CARDS,
     },
     {
       label: h.aiTools.label.en,
       title: h.aiTools.title.en,
-      lines: [], img: null, imgAlt: '', principles: null, stat: null, entries: null,
-      icons: AI_ICONS,
+      lines: lang === 'ko'
+        ? ['AI는 결과물을 대신 만드는 도구가 아니라,', '기획·구조화·구현 점검을 돕는', '작업 보조 도구로 활용합니다.']
+        : ['Not a tool to replace output,', 'but a workflow assistant for', 'planning, structuring, and review.'],
+      img: null, imgAlt: '', principles: null, stat: null, entries: null,
+      icons: null,
+      skillCards: AI_CARDS,
     },
     {
       label: h.experience.label.en,
@@ -225,17 +245,14 @@ function Line({ children, style, className }: { children: React.ReactNode; style
 
 function IconGrid({ items }: { items: SkillIcon[] }) {
   return (
-    <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px' }}>
+    <div style={{ display: 'flex', flexWrap: 'wrap', gap: '12px' }}>
       {items.map(({ icon, label }) => (
         <div key={label} style={{
-          width: '90px', height: '90px', border: '1px solid #000',
-          display: 'flex', flexDirection: 'column', alignItems: 'center',
-          justifyContent: 'center', gap: '10px', boxSizing: 'border-box',
-        }}>
+          width: '72px', height: '72px', border: '1px solid #000',
+          display: 'flex', alignItems: 'center',
+          justifyContent: 'center', boxSizing: 'border-box',
+        }} title={label}>
           {icon}
-          <span style={{ fontSize: '9px', letterSpacing: '0.08em', textTransform: 'uppercase', textAlign: 'center', lineHeight: 1.2 }}>
-            {label}
-          </span>
         </div>
       ))}
     </div>
@@ -253,12 +270,12 @@ function PrinciplesGrid({ items }: { items: Principle[] }) {
           borderBottom: i === items.length - 1 ? '1px solid #000' : 'none',
         }}>
           <div style={{ display: 'flex', alignItems: 'baseline', gap: '14px', marginBottom: '10px' }}>
-            <span style={{ fontSize: '14px', letterSpacing: '0.16em', color: '#000' }}>{num}</span>
+            <span style={{ fontSize: '16px', letterSpacing: '0.16em', color: '#000' }}>{num}</span>
             <span style={{ ...ANTON, fontSize: 'clamp(22px, 2.4vw, 36px)', textTransform: 'uppercase', letterSpacing: '-0.01em' }}>
               {key}
             </span>
           </div>
-          <p style={{ fontSize: '15px', lineHeight: 1.75, margin: 0, paddingLeft: '34px', color: '#000' }}>
+          <p style={{ fontSize: '16px', lineHeight: 1.75, margin: 0, paddingLeft: '34px', color: '#000' }}>
             {desc}
           </p>
         </div>
@@ -276,7 +293,7 @@ function StatList({ stat, entries }: { stat: StatBlock; entries: Entry[] }) {
         <p style={{ ...ANTON, fontSize: 'clamp(72px, 7vw, 110px)', lineHeight: 1, letterSpacing: '-0.04em', margin: '0 0 4px' }}>
           {stat.number}
         </p>
-        <p style={{ fontSize: '13px', letterSpacing: '0.2em', textTransform: 'uppercase', margin: 0, color: '#000' }}>
+        <p style={{ fontSize: '16px', letterSpacing: '0.2em', textTransform: 'uppercase', margin: 0, color: '#000' }}>
           {stat.unit}
         </p>
       </div>
@@ -290,15 +307,90 @@ function StatList({ stat, entries }: { stat: StatBlock; entries: Entry[] }) {
             display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', gap: '16px',
           }}>
             <div>
-              <p style={{ ...ANTON, fontSize: 'clamp(14px, 1.5vw, 20px)', textTransform: 'uppercase', letterSpacing: '-0.01em', margin: '0 0 4px' }}>
+              <p style={{ ...ANTON, fontSize: 'clamp(16px, 1.5vw, 22px)', textTransform: 'uppercase', letterSpacing: '-0.01em', margin: '0 0 4px' }}>
                 {name}
               </p>
-              {sub && <p style={{ fontSize: '13px', letterSpacing: '0.08em', textTransform: 'uppercase', margin: 0, color: '#000' }}>{sub}</p>}
+              {sub && <p style={{ fontSize: '16px', letterSpacing: '0.08em', textTransform: 'uppercase', margin: 0, color: '#000' }}>{sub}</p>}
             </div>
-            {period && <p style={{ fontSize: '13px', letterSpacing: '0.08em', textTransform: 'uppercase', margin: 0, color: '#000', flexShrink: 0 }}>{period}</p>}
+            {period && <p style={{ fontSize: '16px', letterSpacing: '0.08em', textTransform: 'uppercase', margin: 0, color: '#000', flexShrink: 0 }}>{period}</p>}
           </div>
         ))}
       </div>
+    </div>
+  )
+}
+
+function SkillCardItem({ icon, label, level, desc }: SkillCard) {
+  const [hov, setHov] = useState(false)
+  const levelColor  = level === 'LEVEL 03' ? '#000' : level === 'LEVEL 02' ? '#444' : '#999'
+  const levelWeight = level === 'LEVEL 03' ? 700    : level === 'LEVEL 02' ? 600    : 400
+
+  return (
+    <div
+      data-skill-card="true"
+      onMouseEnter={() => setHov(true)}
+      onMouseLeave={() => setHov(false)}
+      style={{
+        width: '148px',
+        height: '148px',
+        border: '1px solid #000',
+        boxSizing: 'border-box',
+        position: 'relative',
+        background: hov ? '#000' : 'transparent',
+        transition: 'background 0.2s ease',
+        cursor: 'default',
+        overflow: 'hidden',
+        flexShrink: 0,
+      }}
+    >
+      {/* 기본 상태 — 세로 중앙 정렬 */}
+      <div style={{
+        position: 'absolute', inset: 0,
+        padding: '14px',
+        display: 'flex', flexDirection: 'column',
+        alignItems: 'center', justifyContent: 'center',
+        gap: '9px',
+        opacity: hov ? 0 : 1,
+        transition: 'opacity 0.15s ease',
+      }}>
+        <div style={{ color: '#000', lineHeight: 0 }}>{icon}</div>
+        <span style={{
+          fontFamily: "'Archivo', sans-serif",
+          fontSize: '13px', fontWeight: 700,
+          letterSpacing: '0.05em', textTransform: 'uppercase',
+          textAlign: 'center', color: '#000', lineHeight: 1.2,
+        }}>{label}</span>
+        <span style={{
+          ...ANTON,
+          fontSize: '12px',
+          letterSpacing: '0.1em', textTransform: 'uppercase',
+          color: levelColor,
+        }}>{level}</span>
+      </div>
+
+      {/* 호버 설명 레이어 */}
+      <div style={{
+        position: 'absolute', inset: 0,
+        padding: '14px',
+        display: 'flex', alignItems: 'center',
+        opacity: hov ? 1 : 0,
+        transition: 'opacity 0.15s ease',
+      }}>
+        <p style={{
+          fontFamily: "'Archivo', sans-serif",
+          fontSize: '13px', lineHeight: 1.65,
+          margin: 0, wordBreak: 'keep-all', color: '#fff',
+          textAlign: 'center', width: '100%',
+        }}>{desc}</p>
+      </div>
+    </div>
+  )
+}
+
+function FrontendSkillGrid({ items }: { items: SkillCard[] }) {
+  return (
+    <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px', alignContent: 'flex-start', alignItems: 'flex-start' }}>
+      {items.map(card => <SkillCardItem key={card.label} {...card} />)}
     </div>
   )
 }
@@ -410,6 +502,7 @@ export default function HorizontalSection() {
     const tiltY = gsap.quickTo(tiltRef.current,   'rotateY', { duration: 0.7,  ease: 'power3.out' })
 
     const el = containerRef.current!
+    let overSkillCard = false
     const onMouseMove  = (e: MouseEvent) => {
       xTo(e.clientX)
       yTo(e.clientY)
@@ -417,6 +510,18 @@ export default function HorizontalSection() {
       const cy = window.innerHeight / 2
       tiltY( (e.clientX - cx) / cx * 6)
       tiltX(-(e.clientY - cy) / cy * 4)
+
+      const isOverCard = !!(e.target as HTMLElement).closest('[data-skill-card]')
+      if (isOverCard !== overSkillCard) {
+        overSkillCard = isOverCard
+        if (isOverCard) {
+          el.style.cursor = ''
+          gsap.to(cursorRef.current, { opacity: 0, scale: 0.75, duration: 0.45, ease: 'power3.out' })
+        } else {
+          el.style.cursor = 'none'
+          gsap.to(cursorRef.current, { opacity: 1, scale: 1, duration: 0.5, ease: 'power3.out' })
+        }
+      }
     }
     const onMouseEnter = () => {
       el.style.cursor = 'none'
@@ -450,7 +555,7 @@ export default function HorizontalSection() {
       ref={cursorRef}
       style={{
         position: 'fixed', top: 0, left: 0,
-        width: '160px', height: '160px',
+        width: '220px', height: '220px',
         pointerEvents: 'none', zIndex: 9999,
       }}
     >
@@ -491,7 +596,7 @@ export default function HorizontalSection() {
         }}
       >
         {PANELS.map((panel, i) => {
-          const isWide = !!(panel.icons || panel.stat)
+          const isWide = !!(panel.icons || panel.stat || panel.skillCards)
 
           return (
             <div
@@ -544,10 +649,28 @@ export default function HorizontalSection() {
                   {panel.lines.map((line, j) => (
                     <Line key={j} className="p-body" style={{ fontSize: '18px', lineHeight: 1.85, letterSpacing: '0.01em' }}>{line}</Line>
                   ))}
+
+                  {/* level legend — frontend panel only */}
+                  {panel.skillCards && (
+                    <div className="p-body" style={{ marginTop: '28px', borderTop: '1px solid #000', paddingTop: '16px', display: 'flex', flexDirection: 'column', gap: '7px' }}>
+                      {[
+                        { level: 'LEVEL 01', meaning: lang === 'ko' ? '기본 이해' : 'Basic understanding' },
+                        { level: 'LEVEL 02', meaning: lang === 'ko' ? '프로젝트 적용 가능' : 'Project-ready' },
+                        { level: 'LEVEL 03', meaning: lang === 'ko' ? '주력 활용' : 'Core skill' },
+                      ].map(({ level, meaning }) => (
+                        <div key={level} style={{ display: 'flex', gap: '14px', alignItems: 'baseline' }}>
+                          <span style={{ fontFamily: "'Archivo', sans-serif", fontSize: '13px', fontWeight: 700, letterSpacing: '0.1em', flexShrink: 0 }}>{level}</span>
+                          <span style={{ fontFamily: "'Archivo', sans-serif", fontSize: '13px' }}>{meaning}</span>
+                        </div>
+                      ))}
+                    </div>
+                  )}
                 </div>
 
                 {/* right — varies by panel type; entire block fades in together */}
                 <div className="p-visual" style={{ flex: 1, display: 'flex', alignItems: 'center' }}>
+                  {panel.skillCards && <FrontendSkillGrid items={panel.skillCards} />}
+
                   {panel.icons && <IconGrid items={panel.icons} />}
 
                   {panel.principles && <PrinciplesGrid items={panel.principles} />}
@@ -556,7 +679,7 @@ export default function HorizontalSection() {
                     <StatList stat={panel.stat} entries={panel.entries} />
                   )}
 
-                  {!panel.icons && !panel.principles && !panel.stat && panel.img && (
+                  {!panel.skillCards && !panel.icons && !panel.principles && !panel.stat && panel.img && (
                     <img src={panel.img} alt={panel.imgAlt}
                       style={{ width: '55%', height: '58vh', objectFit: 'cover', objectPosition: 'top', display: 'block', marginLeft: 'auto', filter: 'grayscale(1)' }}
                     />
