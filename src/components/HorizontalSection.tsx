@@ -134,13 +134,7 @@ const DESIGN_CARDS: SkillCard[] = [
   { icon: <Sparkles size={26} strokeWidth={1.3} />,    label: 'AI Image',      level: 'LEVEL 02', desc: '레퍼런스 이미지 생성 · 화면 분위기 구체화' },
   { icon: <Wand2    size={26} strokeWidth={1.3} />,    label: 'AI Production', level: 'LEVEL 02', desc: '기획 · 디자인 · 코드 구현 과정 보조' },
 ]
-const AI_ICONS: SkillIcon[] = [
-  { icon: <ChatGPTIcon />,     label: 'ChatGPT' },
-  { icon: <CodexIcon />,       label: 'Codex' },
-  { icon: <ClaudeIcon />,      label: 'Claude' },
-  { icon: <GeminiIcon />,      label: 'Gemini' },
-  { icon: <AntigravityIcon />, label: 'Antigravity' },
-]
+
 const AI_CARDS: SkillCard[] = [
   { icon: <ChatGPTIcon />,     label: 'ChatGPT',     level: 'LEVEL 03', desc: '아이디어 정리 · 문장 구성 · 인터랙션 분석 · 프롬프트 설계 · 이미지 생성' },
   { icon: <CodexIcon />,       label: 'Codex',       level: 'LEVEL 02', desc: '코드 수정 · 오류 점검 · 컴포넌트 정리 · 구현 보조' },
@@ -322,8 +316,7 @@ function StatList({ stat, entries }: { stat: StatBlock; entries: Entry[] }) {
 
 function SkillCardItem({ icon, label, level, desc }: SkillCard) {
   const [hov, setHov] = useState(false)
-  const levelColor  = level === 'LEVEL 03' ? '#000' : level === 'LEVEL 02' ? '#444' : '#999'
-  const levelWeight = level === 'LEVEL 03' ? 700    : level === 'LEVEL 02' ? 600    : 400
+  const levelColor = level === 'LEVEL 03' ? '#000' : level === 'LEVEL 02' ? '#444' : '#999'
 
   return (
     <div
