@@ -12,7 +12,7 @@ export const C = {
     exploreBtn: { ko: '[ VIEW PROJECTS ]', en: '[ VIEW PROJECTS ]' },
     aboutHeader: { ko: 'ABOUT ME', en: 'ABOUT ME' },
     aboutBody: {
-      ko: '화면을 만들기 전에 먼저 흐름을 봅니다.\n정보의 순서와 사용자의 움직임을\n생각하며,\n필요한 구조를 하나씩 정리해 구현합니다.',
+      ko: '화면을 만들기 전에 먼저 흐름을 봅니다.\n정보의 순서와 사용자의 움직임을 생각하며,\n필요한 구조를 하나씩 정리해 구현합니다.',
       en: 'Before building a screen, I look at the flow first.\nI consider the order of information and how users move, then organise and implement the structure step by step.',
     },
     tg2Lines: {
@@ -23,6 +23,26 @@ export const C = {
     tg2Body: {
       ko: 'After.9, Hancom Academy, WEEF — 기획부터 코드 구현까지 모두 직접 진행한 프로젝트들입니다.',
       en: 'After.9, Hancom Academy, WEEF — each project planned, designed, and built from scratch.',
+    },
+    tg2Paragraphs: {
+      ko: [
+        'RE:BUILD는 저에게 단순히 "다시 시작한다"는 뜻이 아닙니다. 지나온 시간을 지우는 것이 아니라, 그 안에서 남길 수 있는 것들을 다시 보고 지금의 방향에 맞게 구성하는 과정에 가깝습니다.',
+        '저는 한 가지 길을 곧게 이어온 사람은 아닙니다. 여러 환경을 지나왔고, 지금은 웹 퍼블리싱과 프론트엔드 개발을 배우고 있습니다. 겉으로 보면 다른 방향처럼 보일 수 있지만, 저는 그 과정 안에서 정보를 정리하고, 필요한 흐름을 파악하고, 이해하기 쉬운 형태로 만드는 일에 계속 관심을 두었습니다.',
+        '저에게 RE:는 다시 보는 일입니다. 지나온 경험을 단절로만 두지 않고, 지금의 기준에서 다시 살펴보는 과정입니다. 무엇을 남기고, 무엇을 덜어내고, 어떤 방식으로 이어갈 수 있을지 정리하는 시간이기도 합니다.',
+        '그리고 BUILD는 그 정리한 생각을 실제 결과물로 만드는 일입니다. 저는 아이디어를 화면으로 옮기고, 사용자가 이해할 수 있는 구조로 배치하며, 필요한 기능을 연결해 직접 구현하는 과정을 배우고 있습니다.',
+        '저는 빠르게 완성하는 사람이라기보다, 먼저 오래 보고 구조를 잡는 편입니다. 여러 번 확인하고 다시 정리하면서 결과물로 만들어가는 방식이 저에게는 더 자연스럽습니다.',
+        'AI 도구도 이 흐름 안에서 사용하고 있습니다. 저는 AI를 결과를 대신 만드는 수단이 아니라, 아이디어와 구현 사이의 간격을 줄이는 보조 도구로 활용합니다. 최종 화면과 기능은 직접 확인하고 수정하며 제 작업 방식에 맞게 다듬고 있습니다.',
+        '이 포트폴리오는 그 RE:BUILD 과정에서 만든 작업들을 담은 기록입니다.',
+      ],
+      en: [
+        'RE:BUILD does not simply mean "starting over" to me. It is not about erasing the past — it is closer to looking back at what can be kept, and reorganising it to fit the direction I am moving in now.',
+        'I have not followed a single straight path. I have moved through different environments, and I am now learning web publishing and front-end development. On the surface it may look like a change of direction, but throughout that process I have consistently been drawn to organising information, understanding the necessary flow, and shaping things into a form that is easy to follow.',
+        'RE: means looking again. It is the process of not treating past experience as a break, but revisiting it from where I stand today — deciding what to keep, what to let go, and how to carry things forward.',
+        'And BUILD means turning those organised thoughts into real results. I am learning to move ideas onto screens, arrange them in structures users can understand, and connect the functions needed to bring them to life.',
+        'I am not someone who rushes to finish. I prefer to look carefully first and establish structure. Checking, re-organising, and refining until the result takes shape feels more natural to me.',
+        'I use AI tools within this same workflow — not as a means to produce results on my behalf, but as a support that bridges the gap between ideas and implementation. The final screens and functions are verified and adjusted by me, shaped to fit my way of working.',
+        'This portfolio is a record of the work made through that RE:BUILD process.',
+      ],
     },
   },
 

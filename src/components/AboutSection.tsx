@@ -18,7 +18,10 @@ export default function AboutSection() {
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
     if (prefersReducedMotion) return
 
-    const targets = Array.from(section.querySelectorAll<HTMLElement>('[data-split]'))
+    // <h2>는 항상 영문 고정 → lang 변경과 무관하게 SplitText 한 번만 실행
+    const splitTargets = Array.from(section.querySelectorAll<HTMLElement>('[data-split]'))
+    // <p> 태그는 lang에 따라 텍스트가 바뀌므로 SplitText 없이 단순 fade 처리
+    const fadeTargets = Array.from(section.querySelectorAll<HTMLElement>('[data-fade]'))
 
     let splits: SplitText[] = []
     let triggers: ScrollTrigger[] = []
@@ -27,14 +30,12 @@ export default function AboutSection() {
     const cleanup = () => {
       triggers.forEach(t => t.kill())
       triggers = []
-
       lineWrappers.forEach(wrap => {
         const parent = wrap.parentElement
         while (wrap.firstChild) parent?.insertBefore(wrap.firstChild, wrap)
         wrap.remove()
       })
       lineWrappers.length = 0
-
       splits.forEach(s => s.revert())
       splits = []
     }
@@ -42,10 +43,10 @@ export default function AboutSection() {
     const build = () => {
       cleanup()
 
-      targets.forEach(el => {
+      // SplitText 라인 reveal — h2 전용 (lang-independent)
+      splitTargets.forEach(el => {
         const split = new SplitText(el, { type: 'lines' })
         splits.push(split)
-
         split.lines.forEach(line => {
           const wrap = document.createElement('div')
           wrap.style.cssText = 'overflow:hidden;display:block;'
@@ -53,23 +54,28 @@ export default function AboutSection() {
           wrap.appendChild(line)
           lineWrappers.push(wrap)
         })
-
         gsap.set(split.lines, { yPercent: 110 })
-
-        const trig = ScrollTrigger.create({
+        triggers.push(ScrollTrigger.create({
           trigger: el,
           start: 'top 82%',
           once: true,
           onEnter: () => {
-            gsap.to(split.lines, {
-              yPercent: 0,
-              duration: 0.9,
-              ease: 'power3.out',
-              stagger: 0.09,
-            })
+            gsap.to(split.lines, { yPercent: 0, duration: 0.9, ease: 'power3.out', stagger: 0.09 })
           },
-        })
-        triggers.push(trig)
+        }))
+      })
+
+      // 단순 y+opacity reveal — p 태그 전용 (lang 바뀌어도 재실행 불필요)
+      fadeTargets.forEach(el => {
+        gsap.set(el, { y: 28, opacity: 0 })
+        triggers.push(ScrollTrigger.create({
+          trigger: el,
+          start: 'top 85%',
+          once: true,
+          onEnter: () => {
+            gsap.to(el, { y: 0, opacity: 1, duration: 0.8, ease: 'power3.out' })
+          },
+        }))
       })
     }
 
@@ -88,7 +94,7 @@ export default function AboutSection() {
       clearTimeout(debounce)
       cleanup()
     }
-  }, [lang])
+  }, []) // lang 의존성 완전 제거 — h2는 항상 영문, p는 SplitText 미사용
 
   return (
     <section
@@ -127,7 +133,7 @@ export default function AboutSection() {
 
       <div style={{ maxWidth: '560px', textAlign: 'center' }}>
         <p
-          data-split
+          data-fade
           style={{
             fontFamily: "'Archivo', sans-serif",
             fontSize: 'clamp(15px, 1.2vw, 18px)',
@@ -142,7 +148,7 @@ export default function AboutSection() {
         </p>
 
         <p
-          data-split
+          data-fade
           style={{
             fontFamily: "'Archivo', sans-serif",
             fontSize: '16px',

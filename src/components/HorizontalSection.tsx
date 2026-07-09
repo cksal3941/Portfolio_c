@@ -425,7 +425,10 @@ export default function HorizontalSection() {
     const onMouseLeave = () => {
       el.style.cursor = ''
       gsap.to(cursorRef.current, { opacity: 0, scale: 0.85, duration: 0.2, ease: 'power2.in' })
-      gsap.to(tiltRef.current,   { rotateX: 0, rotateY: 0, duration: 0.7, ease: 'power3.out' })
+      // gsap.to()로 매번 새 tween을 만들면 mouseleave가 반복될 때 누적됨.
+      // 기존 quickTo 인스턴스를 재사용해서 누적 방지.
+      tiltX(0)
+      tiltY(0)
     }
 
     el.addEventListener('mousemove', onMouseMove)

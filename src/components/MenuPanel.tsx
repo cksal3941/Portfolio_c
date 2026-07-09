@@ -68,7 +68,7 @@ export default function MenuPanel({ isOpen, onClose }: Props) {
           whiteSpace: 'nowrap',
         }}
       >
-        이메일 복사됨 · cksal8449@gmail.com
+        {lang === 'ko' ? '이메일 복사됨' : 'Email copied'} · cksal8449@gmail.com
       </div>
 
       <div

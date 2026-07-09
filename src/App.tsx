@@ -25,11 +25,17 @@ export default function App() {
     if (!lenis) return
     const l = lenis
     l.on('scroll', ScrollTrigger.update)
+
+    // refresh 직전 Lenis 위치를 고정해 가상 스크롤과 window.scrollY 불일치 방지
+    const onRefreshInit = () => l.scrollTo(l.actualScroll, { immediate: true })
+    ScrollTrigger.addEventListener('refreshInit', onRefreshInit)
+
     const raf = (time: number) => l.raf(time * 1000)
     gsap.ticker.add(raf)
     gsap.ticker.lagSmoothing(0)
     return () => {
       gsap.ticker.remove(raf)
+      ScrollTrigger.removeEventListener('refreshInit', onRefreshInit)
     }
   }, [])
 
