@@ -317,7 +317,6 @@ function StatList({ stat, entries }: { stat: StatBlock; entries: Entry[] }) {
 
 function SkillCardItem({ icon, label, level, desc, compact }: SkillCard & { compact?: boolean }) {
   const [hov, setHov] = useState(false)
-  const levelColor = level === 'LEVEL 03' ? '#000' : level === 'LEVEL 02' ? '#444' : '#999'
   const sz = compact ? 72 : 148
 
   return (
