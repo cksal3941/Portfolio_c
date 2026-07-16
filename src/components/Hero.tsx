@@ -159,7 +159,7 @@ export default function Hero() {
             ref={titleLeftRef}
             className="leading-none"
             style={{
-              fontSize: 'clamp(64px, 15vw, 305px)',
+              fontSize: 'clamp(74px, 15vw, 305px)',
               fontFamily: "'Anton', Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif",
               transform: 'scaleX(0.82)',
               transformOrigin: 'left top',
@@ -172,7 +172,7 @@ export default function Hero() {
             ref={titleRightRef}
             className="leading-none"
             style={{
-              fontSize: 'clamp(64px, 15vw, 305px)',
+              fontSize: 'clamp(74px, 15vw, 305px)',
               fontFamily: "'Anton', Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif",
               transform: 'scaleX(0.82)',
               transformOrigin: 'right top',
@@ -191,7 +191,7 @@ export default function Hero() {
             style={{
               fontFamily: "'Anton', Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif",
               top: isMobile ? '170px' : '294px',
-              fontSize: isMobile ? '14px' : '20px',
+              fontSize: isMobile ? '24px' : '20px',
             }}
           >
             {C.hero.tagline.en}
@@ -199,7 +199,7 @@ export default function Hero() {
           <div
             className="absolute left-[9.3vw]"
             style={{
-              top: isMobile ? '310px' : '498px',
+              top: isMobile ? '510px' : '498px',
               width: '532px',
               maxWidth: isMobile ? '80vw' : '38vw',
             }}

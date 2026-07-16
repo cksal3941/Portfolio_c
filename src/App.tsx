@@ -8,10 +8,12 @@ import Hero from '@/components/Hero'
 import AboutSection from '@/components/AboutSection'
 import HorizontalSection from '@/components/HorizontalSection'
 // import About from '@/components/About'
+import ProjectsSection from '@/components/ProjectsSection'
 import DarkTransition from '@/components/DarkTransition'
 import FooterSection from '@/components/FooterSection'
 import ScrollProgress from '@/components/ScrollProgress'
 import MenuPanel from '@/components/MenuPanel'
+import { useBreakpoint } from '@/hooks/useBreakpoint'
 import { Menu } from 'lucide-react'
 
 gsap.registerPlugin(ScrollTrigger)
@@ -20,6 +22,7 @@ export default function App() {
   const [menuOpen, setMenuOpen] = useState(false)
   const [introDone, setIntroDone] = useState(false)
   const menuMagRef = useMagnetic<HTMLSpanElement>(0.25)
+  const { isMobile } = useBreakpoint()
 
   useEffect(() => {
     if (!lenis) return
@@ -58,11 +61,13 @@ export default function App() {
       <MenuPanel isOpen={menuOpen} onClose={() => setMenuOpen(false)} />
 
       <Hero />
+      {isMobile && <ProjectsSection />}
       <div id="section-about" />
       <AboutSection />
       {/* <About /> */}
       <div id="section-work" />
       <HorizontalSection />
+      {!isMobile && <ProjectsSection />}
       <DarkTransition />
       <div id="section-contact" />
       <FooterSection />
