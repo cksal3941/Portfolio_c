@@ -315,7 +315,7 @@ function StatList({ stat, entries }: { stat: StatBlock; entries: Entry[] }) {
   )
 }
 
-function SkillCardItem({ icon, label, level, desc, compact }: SkillCard & { compact?: boolean }) {
+function SkillCardItem({ icon, label, desc, compact }: SkillCard & { compact?: boolean }) {
   const [hov, setHov] = useState(false)
   const sz = compact ? 72 : 148
 
