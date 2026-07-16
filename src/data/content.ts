@@ -153,10 +153,11 @@ export const C = {
 
   menu: {
     items: [
-      { label: { ko: '홈',  en: 'Home'    }, target: 'home'    as const },
-      { label: { ko: '작업', en: 'Work'   }, target: 'work'    as const },
-      { label: { ko: '소개', en: 'About'  }, target: 'about'   as const },
-      { label: { ko: '연락', en: 'Contact'}, target: 'contact' as const },
+      { label: { ko: '홈',      en: 'Home'     }, target: 'home'     as const },
+      { label: { ko: '프로젝트', en: 'Projects' }, target: 'projects' as const },
+      { label: { ko: '작업',    en: 'Work'     }, target: 'work'     as const },
+      { label: { ko: '소개',    en: 'About'    }, target: 'about'    as const },
+      { label: { ko: '연락',    en: 'Contact'  }, target: 'contact'  as const },
     ],
     contact: { ko: '연락하기 ↗', en: 'Contact ↗' },
   },

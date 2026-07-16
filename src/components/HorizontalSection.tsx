@@ -11,6 +11,7 @@ import cursorImg5 from '@/images/item5.png'
 import cursorImg6 from '@/images/item6.png'
 import { useLang, type Lang } from '@/context/LangContext'
 import { C } from '@/data/content'
+import { useBreakpoint } from '@/hooks/useBreakpoint'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -314,9 +315,10 @@ function StatList({ stat, entries }: { stat: StatBlock; entries: Entry[] }) {
   )
 }
 
-function SkillCardItem({ icon, label, level, desc }: SkillCard) {
+function SkillCardItem({ icon, label, level, desc, compact }: SkillCard & { compact?: boolean }) {
   const [hov, setHov] = useState(false)
   const levelColor = level === 'LEVEL 03' ? '#000' : level === 'LEVEL 02' ? '#444' : '#999'
+  const sz = compact ? 72 : 148
 
   return (
     <div
@@ -324,8 +326,8 @@ function SkillCardItem({ icon, label, level, desc }: SkillCard) {
       onMouseEnter={() => setHov(true)}
       onMouseLeave={() => setHov(false)}
       style={{
-        width: '148px',
-        height: '148px',
+        width: `${sz}px`,
+        height: `${sz}px`,
         border: '1px solid #000',
         boxSizing: 'border-box',
         position: 'relative',
@@ -339,39 +341,33 @@ function SkillCardItem({ icon, label, level, desc }: SkillCard) {
       {/* 기본 상태 — 세로 중앙 정렬 */}
       <div style={{
         position: 'absolute', inset: 0,
-        padding: '14px',
+        padding: compact ? '6px' : '14px',
         display: 'flex', flexDirection: 'column',
         alignItems: 'center', justifyContent: 'center',
-        gap: '9px',
+        gap: compact ? '4px' : '9px',
         opacity: hov ? 0 : 1,
         transition: 'opacity 0.15s ease',
       }}>
-        <div style={{ color: '#000', lineHeight: 0 }}>{icon}</div>
+        <div style={{ color: '#000', lineHeight: 0, transform: compact ? 'scale(0.65)' : 'none' }}>{icon}</div>
         <span style={{
           fontFamily: "'Archivo', sans-serif",
-          fontSize: '13px', fontWeight: 700,
-          letterSpacing: '0.05em', textTransform: 'uppercase',
-          textAlign: 'center', color: '#000', lineHeight: 1.2,
+          fontSize: compact ? '9px' : '13px', fontWeight: 700,
+          letterSpacing: '0.04em', textTransform: 'uppercase',
+          textAlign: 'center', color: '#000', lineHeight: 1.1,
         }}>{label}</span>
-        <span style={{
-          ...ANTON,
-          fontSize: '12px',
-          letterSpacing: '0.1em', textTransform: 'uppercase',
-          color: levelColor,
-        }}>{level}</span>
       </div>
 
       {/* 호버 설명 레이어 */}
       <div style={{
         position: 'absolute', inset: 0,
-        padding: '14px',
+        padding: compact ? '6px' : '14px',
         display: 'flex', alignItems: 'center',
         opacity: hov ? 1 : 0,
         transition: 'opacity 0.15s ease',
       }}>
         <p style={{
           fontFamily: "'Archivo', sans-serif",
-          fontSize: '13px', lineHeight: 1.65,
+          fontSize: compact ? '9px' : '13px', lineHeight: 1.4,
           margin: 0, wordBreak: 'keep-all', color: '#fff',
           textAlign: 'center', width: '100%',
         }}>{desc}</p>
@@ -380,10 +376,10 @@ function SkillCardItem({ icon, label, level, desc }: SkillCard) {
   )
 }
 
-function FrontendSkillGrid({ items }: { items: SkillCard[] }) {
+function FrontendSkillGrid({ items, compact }: { items: SkillCard[]; compact?: boolean }) {
   return (
-    <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px', alignContent: 'flex-start', alignItems: 'flex-start' }}>
-      {items.map(card => <SkillCardItem key={card.label} {...card} />)}
+    <div style={{ display: 'flex', flexWrap: 'wrap', gap: compact ? '4px' : '10px', alignContent: 'flex-start', alignItems: 'flex-start', width: '100%' }}>
+      {items.map(card => <SkillCardItem key={card.label} {...card} compact={compact} />)}
     </div>
   )
 }
@@ -391,6 +387,7 @@ function FrontendSkillGrid({ items }: { items: SkillCard[] }) {
 /* ── main component ───────────────────────────────────────── */
 export default function HorizontalSection() {
   const { lang }     = useLang()
+  const { isMobile } = useBreakpoint()
   const PANELS       = useMemo(() => getPanels(lang), [lang])
   const containerRef = useRef<HTMLDivElement>(null)
   const tiltRef      = useRef<HTMLDivElement>(null)
@@ -622,19 +619,28 @@ export default function HorizontalSection() {
               </div>
 
               {/* body — 8vw safe area on both sides; content cannot reach edges */}
-              <div style={{ display: 'flex', flex: 1, gap: '6vw', alignItems: 'center', padding: '5vh 8vw', minHeight: 0 }}>
+              <div style={{
+                display: 'flex',
+                flexDirection: isMobile ? 'column' : 'row',
+                flex: 1,
+                gap: isMobile ? '3vh' : '6vw',
+                alignItems: isMobile ? 'flex-start' : 'center',
+                padding: isMobile ? '3vh 6vw' : '5vh 8vw',
+                minHeight: 0,
+                overflowY: isMobile ? 'auto' : 'visible',
+              }}>
 
                 {/* left — always: label + title */}
-                <div style={{ flex: isWide ? '0 0 34%' : '0 0 50%', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+                <div style={{ flex: isMobile ? '0 0 auto' : isWide ? '0 0 34%' : '0 0 50%', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
                   <Line className="p-label" style={{ fontSize: '18px', letterSpacing: '0.16em', textTransform: 'uppercase', marginBottom: '24px' }}>
                     {panel.label}
                   </Line>
                   {panel.title.map((t, j) => (
                     <Line key={j} className="p-title" style={{
                       ...ANTON,
-                      fontSize: 'clamp(36px, 4.2vw, 72px)',
+                      fontSize: isMobile ? 'clamp(26px, 7vw, 36px)' : 'clamp(36px, 4.2vw, 72px)',
                       lineHeight: 1.08, letterSpacing: '-0.025em', textTransform: 'uppercase',
-                      marginBottom: j < panel.title.length - 1 ? '4px' : '26px',
+                      marginBottom: j < panel.title.length - 1 ? '4px' : isMobile ? '14px' : '26px',
                     }}>{t}</Line>
                   ))}
 
@@ -643,8 +649,8 @@ export default function HorizontalSection() {
                     <Line key={j} className="p-body" style={{ fontSize: '18px', lineHeight: 1.85, letterSpacing: '0.01em' }}>{line}</Line>
                   ))}
 
-                  {/* level legend — frontend panel only */}
-                  {panel.skillCards && (
+                  {/* level legend — frontend panel only, hidden on mobile */}
+                  {panel.skillCards && !isMobile && (
                     <div className="p-body" style={{ marginTop: '28px', borderTop: '1px solid #000', paddingTop: '16px', display: 'flex', flexDirection: 'column', gap: '7px' }}>
                       {[
                         { level: 'LEVEL 01', meaning: lang === 'ko' ? '기본 이해' : 'Basic understanding' },
@@ -661,8 +667,8 @@ export default function HorizontalSection() {
                 </div>
 
                 {/* right — varies by panel type; entire block fades in together */}
-                <div className="p-visual" style={{ flex: 1, display: 'flex', alignItems: 'center' }}>
-                  {panel.skillCards && <FrontendSkillGrid items={panel.skillCards} />}
+                <div className="p-visual" style={{ flex: isMobile ? '0 0 auto' : 1, display: 'flex', alignItems: isMobile ? 'flex-start' : 'center', width: isMobile ? '100%' : undefined }}>
+                  {panel.skillCards && <FrontendSkillGrid items={panel.skillCards} compact={isMobile} />}
 
                   {panel.icons && <IconGrid items={panel.icons} />}
 
@@ -674,7 +680,12 @@ export default function HorizontalSection() {
 
                   {!panel.skillCards && !panel.icons && !panel.principles && !panel.stat && panel.img && (
                     <img src={panel.img} alt={panel.imgAlt}
-                      style={{ width: '55%', height: '58vh', objectFit: 'cover', objectPosition: 'top', display: 'block', marginLeft: 'auto', filter: 'grayscale(1)' }}
+                      style={{
+                        width: isMobile ? '80%' : '55%',
+                        height: isMobile ? '30vh' : '58vh',
+                        objectFit: 'cover', objectPosition: 'top',
+                        display: 'block', marginLeft: 'auto', filter: 'grayscale(1)',
+                      }}
                     />
                   )}
                 </div>

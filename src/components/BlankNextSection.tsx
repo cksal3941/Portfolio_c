@@ -8,6 +8,7 @@ import afterImg from '@/images/after.9.png'
 import hancomImg from '@/images/hancom.png'
 import weefImg from '@/images/weef.png'
 import { useLang, type Lang } from '@/context/LangContext'
+import { useBreakpoint } from '@/hooks/useBreakpoint'
 
 type BlankNextSectionProps = {
   className?: string
@@ -207,7 +208,7 @@ const WORK_PANELS: Panel[] = [
   },
 ]
 
-function ProjectModal({ panel, onClose, lang }: { panel: Panel; onClose: () => void; lang: Lang }) {
+function ProjectModal({ panel, onClose, lang, isMobile }: { panel: Panel; onClose: () => void; lang: Lang; isMobile: boolean }) {
   const d = panel.detail!
   const modalRef = useRef<HTMLDivElement>(null)
   const tlRef    = useRef<gsap.core.Timeline | null>(null)
@@ -266,7 +267,7 @@ function ProjectModal({ panel, onClose, lang }: { panel: Panel; onClose: () => v
         >
           <div
             className="flex items-start justify-between border-b border-black"
-            style={{ padding: '32px 40px 20px' }}
+            style={{ padding: isMobile ? '16px 20px 14px' : '32px 40px 20px' }}
           >
             <div style={{ display: 'flex', flexDirection: 'column', gap: '2px' }}>
               <p style={{ fontSize: '12px', letterSpacing: '0.16em', textTransform: 'uppercase', lineHeight: 1.4, color: '#000' }}>
@@ -287,7 +288,7 @@ function ProjectModal({ panel, onClose, lang }: { panel: Panel; onClose: () => v
             </button>
           </div>
 
-          <div className="border-b border-black" style={{ padding: '28px 40px' }}>
+          <div className="border-b border-black" style={{ padding: isMobile ? '16px 20px' : '28px 40px' }}>
             <h3
               className="text-black font-black uppercase"
               style={{ fontSize: 'clamp(28px, 5vw, 44px)', lineHeight: 0.95, letterSpacing: '-0.03em', marginBottom: '16px' }}
@@ -314,7 +315,7 @@ function ProjectModal({ panel, onClose, lang }: { panel: Panel; onClose: () => v
             </div>
           </div>
 
-          <div style={{ padding: '0 40px 40px', display: 'flex', flexDirection: 'column', gap: '28px' }}>
+          <div style={{ padding: isMobile ? '0 20px 24px' : '0 40px 40px', display: 'flex', flexDirection: 'column', gap: isMobile ? '20px' : '28px' }}>
             <div style={{ paddingTop: '28px' }}>
               <p style={{ fontSize: '15px', fontWeight: 800, letterSpacing: '0.14em', textTransform: 'uppercase', color: '#000', marginBottom: '10px' }}>
                 Role
@@ -374,6 +375,7 @@ function ProjectModal({ panel, onClose, lang }: { panel: Panel; onClose: () => v
 export default function BlankNextSection({ className = '', onModalClose }: BlankNextSectionProps) {
   const [activePanel, setActivePanel] = useState<Panel | null>(null)
   const { lang } = useLang()
+  const { isMobile } = useBreakpoint()
 
   const handleClose = () => {
     setActivePanel(null)
@@ -415,7 +417,7 @@ export default function BlankNextSection({ className = '', onModalClose }: Blank
         {WORK_PANELS.map((panel) => (
           <div
             key={panel.title}
-            className="archive-panel group absolute left-1/2 top-[50vh] w-[clamp(240px,20vw,360px)] hover:z-[100]"
+            className="archive-panel group absolute left-1/2 top-[50vh] w-[clamp(80px,20vw,360px)] hover:z-[100]"
             onClick={() => panel.detail && setActivePanel(panel)}
             style={{ cursor: panel.detail ? 'none' : 'default' }}
           >
@@ -459,7 +461,7 @@ export default function BlankNextSection({ className = '', onModalClose }: Blank
               )}
             </div>
 
-            {panel.meta && (
+            {panel.meta && !isMobile && (
               <div
                 className="archive-panel-meta absolute left-0 right-0 pointer-events-none"
                 style={{ top: '100%', paddingTop: '12px' }}
@@ -511,7 +513,7 @@ export default function BlankNextSection({ className = '', onModalClose }: Blank
       </div>
 
       {activePanel && createPortal(
-        <ProjectModal panel={activePanel} onClose={handleClose} lang={lang} />,
+        <ProjectModal panel={activePanel} onClose={handleClose} lang={lang} isMobile={isMobile} />,
         document.body
       )}
     </section>

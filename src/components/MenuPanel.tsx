@@ -14,6 +14,13 @@ function scrollTo(target: string) {
     lenis ? lenis.scrollTo(0) : window.scrollTo({ top: 0, behavior: 'smooth' })
     return
   }
+  // Projects live inside the Hero sticky scroll; navigate to the hold zone
+  // where archive panels are fully spread (GSAP end = 1300vh, hold until 1550vh)
+  if (target === 'projects') {
+    const pos = window.innerHeight * 13.5
+    lenis ? lenis.scrollTo(pos) : window.scrollTo({ top: pos, behavior: 'smooth' })
+    return
+  }
   const el = document.getElementById(`section-${target}`)
   if (!el) return
   lenis ? lenis.scrollTo(el) : el.scrollIntoView({ behavior: 'smooth' })

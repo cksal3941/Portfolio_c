@@ -19,8 +19,8 @@ No test runner is configured.
 - **Tailwind CSS v4** via `@tailwindcss/vite` plugin + `tailwindcss-animate` plugin
 - **GSAP 3 + ScrollTrigger + SplitText** — primary animation library
 - **Lenis** — smooth scroll; singleton exported from `src/lib/lenis.ts`, integrated with GSAP ticker in `App.tsx`
-- **framer-motion** — installed; used only in `src/components/core/cursor.tsx`, which is not mounted in App
-- **Lucide React** — icon set; `@lobehub/icons` and `simple-icons` are installed but unused
+- **framer-motion** — used only in `src/components/core/cursor.tsx`; mounted via `BlankNextSection`, not directly in `App`
+- **Lucide React** — icon set; `@lobehub/icons` (dep) and `simple-icons` (devDep) are installed but unused
 - **Inter** — loaded via `@fontsource/inter` package in `main.tsx`; **Anton** and **Archivo** — loaded via Google Fonts `@import` at the top of `index.css`
 - Path alias: `@` → `src/`
 
@@ -44,7 +44,7 @@ Section anchor divs (`id="section-about"`, `id="section-work"`, `id="section-con
 
 ### Smooth scroll (Lenis)
 
-`src/lib/lenis.ts` exports a Lenis singleton (or `null` if `prefers-reduced-motion`). App wires Lenis into GSAP: `lenis.on('scroll', ScrollTrigger.update)` and `gsap.ticker.add(raf)` with `lagSmoothing(0)`. All `ScrollTrigger` instances benefit automatically.
+`src/lib/lenis.ts` exports a Lenis singleton (or `null` if `prefers-reduced-motion`). App wires Lenis into GSAP: `lenis.on('scroll', ScrollTrigger.update)` and `gsap.ticker.add(raf)` with `lagSmoothing(0)`. A `ScrollTrigger.addEventListener('refreshInit', …)` handler calls `lenis.scrollTo(lenis.actualScroll, { immediate: true })` before each refresh to keep virtual scroll and `window.scrollY` in sync. All `ScrollTrigger` instances benefit automatically.
 
 ### Bilingual content (`src/data/content.ts`)
 
@@ -68,7 +68,7 @@ Uses GSAP `SplitText` (premium plugin) to split `[data-split]` elements into lin
 
 GSAP-pinned horizontal scroll. `PANELS` defines the content — each panel has a `label`, `title[]`, `lines[]`, and one of: `icons` (icon grid), `principles` (numbered list), `stat + entries` (stat block), or `img`. The timeline alternates hold/slide segments (`holdDuration = 0.8`, `slideDuration = 1.0`) and triggers staggered text reveals per panel on `.p-label`, `.p-title`, `.p-body`, `.p-visual` class selectors. Keep `horizontal-panel` class stable — used by `gsap.utils.toArray`.
 
-Movement uses `x` in `vw` units (not `xPercent`) so translation is always exactly one viewport wide, independent of the track's total width. Custom image cursor cycles through `src/images/item.png`, `item2.png`, `item3.png`; hidden on touch devices. Mouse movement drives a 3D tilt via `rotateX`/`rotateY` on an intermediate `tiltRef` div.
+Movement uses `x` in `vw` units (not `xPercent`) so translation is always exactly one viewport wide, independent of the track's total width. Custom image cursor cycles through `src/images/item.png` – `item6.png` (6 images); hidden on touch devices. Mouse movement drives a 3D tilt via `rotateX`/`rotateY` on an intermediate `tiltRef` div.
 
 ### DarkTransition
 
@@ -106,3 +106,7 @@ Static arrays defined inline in each component. Key locations:
 - Bilingual text — `src/data/content.ts` (`C` object, keyed by section and `lang`)
 
 No external data fetching or state management library.
+
+### Unused scaffold components
+
+`src/components/Projects.tsx`, `Skills.tsx`, and `Contact.tsx` are placeholder components from initial scaffolding — not imported or mounted anywhere. Do not use them; the live sections are `BlankNextSection` (work grid), `HorizontalSection` (skills), and `FooterSection` (contact).

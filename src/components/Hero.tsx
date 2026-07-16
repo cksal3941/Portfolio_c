@@ -5,11 +5,13 @@ import BlankNextSection from '@/components/BlankNextSection'
 import bgImage from '@/images/background2.png'
 import { useLang } from '@/context/LangContext'
 import { C } from '@/data/content'
+import { useBreakpoint } from '@/hooks/useBreakpoint'
 
 gsap.registerPlugin(ScrollTrigger)
 
 export default function Hero() {
   const { lang }           = useLang()
+  const { isMobile }       = useBreakpoint()
   const wrapperRef         = useRef<HTMLDivElement>(null)
   const supportingRef      = useRef<HTMLDivElement>(null)
   const imageRef           = useRef<HTMLDivElement>(null)
@@ -132,10 +134,10 @@ export default function Hero() {
 
         {/* ── z-10 — Background image ── */}
         <div className="absolute inset-0 z-10 pointer-events-none">
-          <div className="absolute inset-x-0 top-[280px] flex justify-center">
-            <div ref={imageRef} className="origin-center" style={{ width: '430px' }}>
+          <div className="absolute inset-x-0 flex justify-center" style={{ top: isMobile ? '130px' : '280px' }}>
+            <div ref={imageRef} className="origin-center" style={{ width: isMobile ? 'min(300px, 78vw)' : '430px' }}>
               <div ref={parallaxImgRef}>
-              <div className="w-full relative overflow-hidden" style={{ height: '500px' }}>
+              <div className="w-full relative overflow-hidden" style={{ height: isMobile ? '360px' : '500px' }}>
                 <img
                   src={bgImage}
                   alt="fashion editorial"
@@ -157,7 +159,7 @@ export default function Hero() {
             ref={titleLeftRef}
             className="leading-none"
             style={{
-              fontSize: 'clamp(145px, 15vw, 305px)',
+              fontSize: 'clamp(64px, 15vw, 305px)',
               fontFamily: "'Anton', Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif",
               transform: 'scaleX(0.82)',
               transformOrigin: 'left top',
@@ -170,7 +172,7 @@ export default function Hero() {
             ref={titleRightRef}
             className="leading-none"
             style={{
-              fontSize: 'clamp(145px, 15vw, 305px)',
+              fontSize: 'clamp(64px, 15vw, 305px)',
               fontFamily: "'Anton', Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif",
               transform: 'scaleX(0.82)',
               transformOrigin: 'right top',
@@ -185,29 +187,52 @@ export default function Hero() {
         {/* ── z-20 — Supporting text (visible on load, fades on first scroll) ── */}
         <div ref={supportingRef} className="absolute inset-0 z-20 pointer-events-none text-black">
           <p
-            className="absolute left-[9.3vw] top-[294px] whitespace-nowrap text-[20px] leading-[1.08] uppercase"
-            style={{ fontFamily: "'Anton', Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif" }}
+            className="absolute left-[9.3vw] whitespace-nowrap text-[20px] leading-[1.08] uppercase"
+            style={{
+              fontFamily: "'Anton', Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif",
+              top: isMobile ? '170px' : '294px',
+              fontSize: isMobile ? '14px' : '20px',
+            }}
           >
             {C.hero.tagline.en}
           </p>
-          <div className="absolute left-[9.3vw] top-[498px] w-[532px] max-w-[38vw]">
+          <div
+            className="absolute left-[9.3vw]"
+            style={{
+              top: isMobile ? '310px' : '498px',
+              width: '532px',
+              maxWidth: isMobile ? '80vw' : '38vw',
+            }}
+          >
             <div
-              className="flex items-start justify-between text-[22px] leading-none uppercase"
-              style={{ fontFamily: "'Anton', Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif", marginBottom: '10px' }}
+              className="flex items-start justify-between leading-none uppercase"
+              style={{
+                fontFamily: "'Anton', Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif",
+                fontSize: isMobile ? '16px' : '22px',
+                marginBottom: '10px',
+              }}
             >
               <span>{C.hero.indexLabel.en}</span>
               <span>{C.hero.indexNum}</span>
             </div>
-            <p className="text-[17px] leading-[1.32]" style={{ whiteSpace: 'pre-line' }}>
+            <p
+              className="leading-[1.32]"
+              style={{ whiteSpace: 'pre-line', fontSize: isMobile ? '14px' : '17px' }}
+            >
               {C.hero.body[lang]}
             </p>
           </div>
           <div
-            className="absolute left-[9.3vw] top-[760px] text-[20px] leading-none uppercase"
-            style={{ fontFamily: "'Anton', Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif" }}
+            className="absolute left-[9.3vw] text-[20px] leading-none uppercase"
+            style={{
+              fontFamily: "'Anton', Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif",
+              top: isMobile ? '520px' : '760px',
+              fontSize: isMobile ? '14px' : '20px',
+            }}
           >
             {C.hero.exploreBtn.en}
           </div>
+          {!isMobile && (
           <div className="absolute left-[66.6vw] top-[673px] w-[360px] max-w-[27vw]">
             <h2
               className="text-[20px] leading-none uppercase"
@@ -226,6 +251,7 @@ export default function Hero() {
               {C.hero.aboutBody[lang]}
             </p>
           </div>
+          )}
         </div>
 
         {/* ── z-20 — Text Group 2: centered statement + label + body ── */}
@@ -234,14 +260,14 @@ export default function Hero() {
           className="absolute z-20 pointer-events-none"
           style={{ top: '6%', left: 0, right: 0, display: 'flex', justifyContent: 'center', padding: '0 24px' }}
         >
-          <div style={{ width: 'min(760px, 56vw)', color: '#ffffff', transform: 'translateX(calc(5vw - 15px))' }}>
+          <div style={{ width: isMobile ? 'min(760px, 90vw)' : 'min(760px, 56vw)', color: '#ffffff', transform: isMobile ? 'none' : 'translateX(calc(5vw - 15px))' }}>
             <p style={{
               fontFamily: "'Anton', Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif",
-              fontSize: '20px',
+              fontSize: isMobile ? '14px' : '20px',
               lineHeight: 1.18,
               letterSpacing: '0.02em',
               textTransform: 'uppercase',
-              margin: '0 0 160px',
+              margin: isMobile ? '0 0 60px' : '0 0 160px',
             }}>
               {['I LOOK AT THE FLOW BEFORE BUILDING THE SCREEN.', 'I ORGANIZE INFORMATION, SHAPE THE STRUCTURE,', 'AND TURN IT INTO A USABLE INTERFACE.'].map((line, i) => (
                 <span key={i} style={{ display: 'block' }}>{line}</span>
