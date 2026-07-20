@@ -396,6 +396,7 @@ export default function HorizontalSection() {
 
   useEffect(() => {
     const isTouchDevice = window.matchMedia('(pointer: coarse)').matches || window.innerWidth < 768
+
     const activeIdx = { current: -1 }
 
     const ctx = gsap.context(() => {
@@ -482,7 +483,7 @@ export default function HorizontalSection() {
       })
     }, containerRef)
 
-    if (isTouchDevice || !cursorRef.current) return () => ctx.revert()
+    if (!cursorRef.current) return () => ctx.revert()
 
     gsap.set(cursorRef.current, { xPercent: -50, yPercent: -50, opacity: 0, scale: 0.85 })
     const xTo   = gsap.quickTo(cursorRef.current, 'x',       { duration: 0.12, ease: 'power2.out' })
@@ -536,7 +537,7 @@ export default function HorizontalSection() {
       el.removeEventListener('mouseenter', onMouseEnter)
       el.removeEventListener('mouseleave', onMouseLeave)
     }
-  }, [])
+  }, [isMobile])
 
   return (
     <>
@@ -564,9 +565,11 @@ export default function HorizontalSection() {
      * max-width:100% prevents horizontal body overflow (scrollbar pages).
      */}
     <div ref={containerRef} style={{
-      width: '100vw', maxWidth: '100%', height: '100vh',
-      overflow: 'hidden', position: 'relative',
-      perspective: '1200px',
+      width: '100%', maxWidth: '100%',
+      height: '100vh',
+      overflow: 'hidden',
+      position: 'relative',
+      perspective: isMobile ? undefined : '1200px',
     }}>
       {/* tiltRef: receives rotateX/Y from mouse — sits between container and track */}
       <div ref={tiltRef} style={{ width: '100%', height: '100%' }}>
@@ -579,11 +582,11 @@ export default function HorizontalSection() {
         className="horizontal-track"
         style={{
           display:    'flex',
+          flexDirection: 'row',
           flexWrap:   'nowrap',
           width:      `${PANELS.length * 100}vw`,
           height:     '100%',
-          willChange: 'transform',
-          /* no position/left override — GSAP transform handles movement */
+          willChange: isMobile ? 'auto' : 'transform',
         }}
       >
         {PANELS.map((panel, i) => {
@@ -594,17 +597,15 @@ export default function HorizontalSection() {
               key={panel.label}
               className="horizontal-panel"
               style={{
-                /* each panel is exactly one viewport wide */
-                flex:          '0 0 100vw',
-                width:         '100vw',
-                height:        '100vh',
-                background:    '#efefed',
-                boxShadow:     i < PANELS.length - 1 ? 'inset -1px 0 0 0 #000' : 'none',
-                display:       'flex',
-                flexDirection: 'column',
-                boxSizing:     'border-box',
-                overflow:      'hidden',
-                /* NO padding here — applied per-row so borders run edge-to-edge */
+                flex:            '0 0 100vw',
+                width:           '100vw',
+                height:          '100%',
+                background:      '#efefed',
+                boxShadow:       i < PANELS.length - 1 ? 'inset -1px 0 0 0 #000' : 'none',
+                display:         'flex',
+                flexDirection:   'column',
+                boxSizing:       'border-box',
+                overflow:        'hidden',
               }}
             >
               {/* header — border runs full panel width; text inset by 8vw */}
@@ -626,16 +627,18 @@ export default function HorizontalSection() {
                 flex: 1,
                 gap: isMobile ? '3vh' : '6vw',
                 alignItems: isMobile ? 'flex-start' : 'center',
-                padding: isMobile ? '3vh 6vw' : '5vh 8vw',
+                padding: isMobile ? '4vw 6vw 6vw' : '5vh 8vw',
                 minHeight: 0,
                 overflowY: isMobile ? 'auto' : 'visible',
               }}>
 
                 {/* left — always: label + title */}
                 <div style={{ flex: isMobile ? '0 0 auto' : isWide ? '0 0 34%' : '0 0 50%', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+                  {!isMobile && (
                   <Line className="p-label" style={{ fontSize: '18px', letterSpacing: '0.16em', textTransform: 'uppercase', marginBottom: '24px' }}>
                     {panel.label}
                   </Line>
+                  )}
                   {panel.title.map((t, j) => (
                     <Line key={j} className="p-title" style={{
                       ...ANTON,
@@ -647,7 +650,7 @@ export default function HorizontalSection() {
 
                   {/* text-only panels: body lines in left col */}
                   {panel.lines.map((line, j) => (
-                    <Line key={j} className="p-body" style={{ fontSize: '18px', lineHeight: 1.85, letterSpacing: '0.01em' }}>{line}</Line>
+                    <Line key={j} className="p-body" style={{ fontSize: isMobile ? '14px' : '18px', lineHeight: 1.85, letterSpacing: '0.01em' }}>{line}</Line>
                   ))}
 
                   {/* level legend — frontend panel only, hidden on mobile */}
@@ -676,14 +679,24 @@ export default function HorizontalSection() {
                   {panel.principles && <PrinciplesGrid items={panel.principles} />}
 
                   {panel.stat && panel.entries && (
-                    <StatList stat={panel.stat} entries={panel.entries} />
+                    <StatList
+                      stat={panel.stat}
+                      entries={
+                        isMobile && panel.entries.length > 4
+                          ? [
+                              ...panel.entries.slice(0, 3),
+                              { name: 'GTQ · GTQid · ITQ', sub: lang === 'ko' ? '자격증' : 'Certificate' },
+                            ]
+                          : panel.entries
+                      }
+                    />
                   )}
 
                   {!panel.skillCards && !panel.icons && !panel.principles && !panel.stat && panel.img && (
                     <img src={panel.img} alt={panel.imgAlt}
                       style={{
-                        width: isMobile ? '80%' : '55%',
-                        height: isMobile ? '30vh' : '58vh',
+                        width: isMobile ? '58%' : '55%',
+                        height: isMobile ? '46vh' : '58vh',
                         objectFit: 'cover', objectPosition: 'top',
                         display: 'block', marginLeft: 'auto', filter: 'grayscale(1)',
                       }}

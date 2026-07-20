@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { lenis } from '@/lib/lenis'
@@ -23,6 +23,26 @@ export default function App() {
   const [introDone, setIntroDone] = useState(false)
   const menuMagRef = useMagnetic<HTMLSpanElement>(0.25)
   const { isMobile } = useBreakpoint()
+  const prevIsMobile = useRef(isMobile)
+
+  // 브레이크포인트 전환 시 빈 화면 방지
+  // Lenis 중단 → 네이티브 스크롤 0 → DOM/GSAP 정착 후 ScrollTrigger 재계산 → Lenis 재개
+  useEffect(() => {
+    if (prevIsMobile.current === isMobile) return
+    prevIsMobile.current = isMobile
+
+    if (lenis) lenis.stop()
+    window.scrollTo(0, 0)
+
+    const timer = setTimeout(() => {
+      ScrollTrigger.refresh()
+      if (lenis) {
+        lenis.scrollTo(0, { immediate: true })
+        lenis.start()
+      }
+    }, 120)
+    return () => clearTimeout(timer)
+  }, [isMobile])
 
   useEffect(() => {
     if (!lenis) return
@@ -61,6 +81,7 @@ export default function App() {
       <MenuPanel isOpen={menuOpen} onClose={() => setMenuOpen(false)} />
 
       <Hero />
+      {isMobile && <ProjectsSection />}
       <div id="section-about" />
       <AboutSection />
       {/* <About /> */}

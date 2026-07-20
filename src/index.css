@@ -32,3 +32,12 @@ body {
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
 }
+
+@media (max-width: 767px) {
+  [data-fade],
+  [data-split] {
+    opacity: 1 !important;
+    transform: none !important;
+    visibility: visible !important;
+  }
+}

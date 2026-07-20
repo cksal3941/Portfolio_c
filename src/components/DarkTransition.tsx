@@ -4,6 +4,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import SplitReveal from '@/components/core/SplitReveal'
 import { useLang } from '@/context/LangContext'
 import { C } from '@/data/content'
+import { useBreakpoint } from '@/hooks/useBreakpoint'
 import trail1 from '@/images/leftbg.png'
 import trail2 from '@/images/lotionmodel.png'
 import trail3 from '@/images/model-shot3.png'
@@ -29,7 +30,8 @@ export default function DarkTransition() {
   const wrapperRef = useRef<HTMLDivElement>(null)
   const sectionRef = useRef<HTMLDivElement>(null)
   const contentRef = useRef<HTMLDivElement>(null)
-  const { lang }   = useLang()
+  const { lang }     = useLang()
+  const { isMobile } = useBreakpoint()
 
   const trailRefs = useRef<(HTMLDivElement | null)[]>([])
   const trailIdx  = useRef(0)
@@ -143,7 +145,10 @@ export default function DarkTransition() {
           }}
         >
           <p style={{ ...ARCHIVO, fontSize: '16px', lineHeight: 1.65, margin: '0 0 28px', whiteSpace: 'pre-line' }}>
-            {C.darkTransition.p1[lang]}
+            {isMobile && lang === 'ko'
+              ? <>{'실험실 노트에 기록하고 관찰하던 방식은\n이제 화면을 구성하고 기능을 구현하는 작업으로'}<br />{'이어지고 있습니다.'}</>
+              : C.darkTransition.p1[lang]
+            }
           </p>
 
           <p style={{ ...ARCHIVO, fontSize: '16px', lineHeight: 1.65, margin: '0 0 56px' }}>

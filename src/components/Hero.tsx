@@ -63,7 +63,7 @@ export default function Hero() {
           scrub: isTouchDevice ? 0.5 : 1.8,
           onUpdate: (self) => {
             scrollProgress = self.progress
-            if (isTouchDevice && !circlePlayed && self.progress >= 0.97) {
+            if (isTouchDevice && !circlePlayed && self.progress >= 0.82) {
               circlePlayed = true
               const el = circleRef.current
               if (el) {
@@ -158,7 +158,7 @@ export default function Hero() {
   const onModalClose = useCallback(() => {}, [])
 
   return (
-    <div ref={wrapperRef} style={{ height: isMobile ? '600vh' : '1550vh' }}>
+    <div ref={wrapperRef} style={{ height: isMobile ? '400vh' : '1550vh' }}>
       <div className="sticky top-0 h-screen overflow-hidden bg-[#f5f5f3]">
 
         {/* ── z-10 — Background image ── */}
@@ -336,7 +336,7 @@ export default function Hero() {
 
         {/* ── z-30 — Circle wipe ── */}
         <div ref={circleRef} className="absolute inset-0 z-30 overflow-hidden">
-          {isMobile ? <ProjectsSection /> : <BlankNextSection onModalClose={onModalClose} />}
+          <BlankNextSection onModalClose={onModalClose} />
         </div>
 
       </div>

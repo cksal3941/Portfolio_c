@@ -4,19 +4,21 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { SplitText } from 'gsap/SplitText'
 import { useLang } from '@/context/LangContext'
 import { C } from '@/data/content'
+import { useBreakpoint } from '@/hooks/useBreakpoint'
 
 gsap.registerPlugin(ScrollTrigger, SplitText)
 
 export default function AboutSection() {
   const sectionRef = useRef<HTMLElement>(null)
   const { lang }   = useLang()
+  const { isMobile } = useBreakpoint()
 
   useEffect(() => {
     const section = sectionRef.current
     if (!section) return
 
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    if (prefersReducedMotion) return
+    if (prefersReducedMotion || isMobile) return
 
     // <h2>는 항상 영문 고정 → lang 변경과 무관하게 SplitText 한 번만 실행
     const splitTargets = Array.from(section.querySelectorAll<HTMLElement>('[data-split]'))
@@ -38,6 +40,8 @@ export default function AboutSection() {
       lineWrappers.length = 0
       splits.forEach(s => s.revert())
       splits = []
+      fadeTargets.forEach(el => gsap.set(el, { clearProps: 'y,opacity' }))
+      splitTargets.forEach(el => gsap.set(el, { clearProps: 'yPercent,opacity' }))
     }
 
     const build = () => {
@@ -94,7 +98,7 @@ export default function AboutSection() {
       clearTimeout(debounce)
       cleanup()
     }
-  }, []) // lang 의존성 완전 제거 — h2는 항상 영문, p는 SplitText 미사용
+  }, [isMobile])
 
   return (
     <section
