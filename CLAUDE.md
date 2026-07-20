@@ -35,12 +35,14 @@ Single-page app. No router — all sections stacked vertically.
 3. Fixed right-edge menu button with `useMagnetic` effect (`z-50`) that toggles `<MenuPanel />`
 4. `<MenuPanel />` — slide-in right drawer (`z-200`), backdrop (`z-190`)
 5. `<Hero />` — scroll-animated hero section
-6. `<AboutSection />` — SplitText line-reveal section
-7. `<HorizontalSection />` — GSAP-pinned horizontal scroll
-8. `<DarkTransition />` — scroll-driven light-to-dark color transition
-9. `<FooterSection />` — dual marquee + contact + Seoul time
+6. `<ProjectsSection />` — **mobile only** (rendered before `AboutSection` on mobile)
+7. `<AboutSection />` — SplitText line-reveal section
+8. `<HorizontalSection />` — GSAP-pinned horizontal scroll
+9. `<ProjectsSection />` — **desktop only** (rendered after `HorizontalSection` on desktop)
+10. `<DarkTransition />` — scroll-driven light-to-dark color transition
+11. `<FooterSection />` — dual marquee + contact + Seoul time
 
-Section anchor divs (`id="section-about"`, `id="section-work"`, `id="section-contact"`) are placed between sections for nav scrolling. `About` is commented out in App.tsx.
+Section anchor divs (`id="section-about"`, `id="section-work"`, `id="section-contact"`) are placed between sections for nav scrolling.
 
 ### Smooth scroll (Lenis)
 
@@ -58,7 +60,7 @@ Full-screen dark overlay (`z: 400`) that plays a GSAP sequence on mount: letters
 
 `Hero.tsx` uses a tall wrapper div (`height: 1100vh`) with a `sticky top-0 h-screen` inner container. A single GSAP timeline is scrubbed via `ScrollTrigger` (`scrub: 1.8`, `end: +=1000%`). All animated elements are positioned absolutely inside the sticky container. The GSAP context is scoped to `wrapperRef` and cleaned up with `ctx.revert()` on unmount.
 
-`BlankNextSection` is rendered inside the circle-clip div and contains the archive panels grid (`WORK_PANELS`). GSAP selects `.archive-panel` and `.next-section-title` by class name within the wrapper scope — keep those class names stable. `BlankNextSection` also renders a portal-based project detail modal (full-screen overlay) triggered by clicking an archive card.
+`BlankNextSection` is rendered inside the circle-clip div and contains the archive panels grid (sourced from `src/data/projects.tsx`). GSAP selects `.archive-panel` and `.next-section-title` by class name within the wrapper scope — keep those class names stable. `BlankNextSection` also renders a portal-based project detail modal (full-screen overlay) triggered by clicking an archive card.
 
 ### AboutSection
 
@@ -69,6 +71,14 @@ Uses GSAP `SplitText` (premium plugin) to split `[data-split]` elements into lin
 GSAP-pinned horizontal scroll. `PANELS` defines the content — each panel has a `label`, `title[]`, `lines[]`, and one of: `icons` (icon grid), `principles` (numbered list), `stat + entries` (stat block), or `img`. The timeline alternates hold/slide segments (`holdDuration = 0.8`, `slideDuration = 1.0`) and triggers staggered text reveals per panel on `.p-label`, `.p-title`, `.p-body`, `.p-visual` class selectors. Keep `horizontal-panel` class stable — used by `gsap.utils.toArray`.
 
 Movement uses `x` in `vw` units (not `xPercent`) so translation is always exactly one viewport wide, independent of the track's total width. Custom image cursor cycles through `src/images/item.png` – `item6.png` (6 images); hidden on touch devices. Mouse movement drives a 3D tilt via `rotateX`/`rotateY` on an intermediate `tiltRef` div.
+
+### ProjectsSection
+
+Standalone vertical grid of project cards. Layout uses `useBreakpoint` to render 1 col (mobile), 2 col (tablet), or 3 col (desktop). Each card shows a `3:4` aspect-ratio image with hover overlay. Clicking a card with a `detail` opens `<ProjectModal />` via `createPortal`. Link icons per project are rendered inline below the card meta. GSAP `ScrollTrigger` (`once: true`) fades each card in (`opacity: 0, y: 36 → 1, 0`) as it enters the viewport.
+
+### ProjectModal
+
+Full-screen portal overlay (`z: 300/310`) triggered from `ProjectsSection`. On mount: calls `lenis.stop()` and blocks page scroll events; GSAP entrance animation (`y: 48, opacity: 0 → 0, 1`). Close triggers a scale+slide exit animation before calling `onClose`. On unmount: calls `lenis.start()` to resume smooth scroll.
 
 ### DarkTransition
 
@@ -85,6 +95,7 @@ CSS-transition-only slide-in drawer (no GSAP). `NAV_ITEMS` are currently non-fun
 ### Utilities
 
 - `src/hooks/useMagnetic.ts` — GSAP `quickTo` magnetic pull effect; returns a ref; no-ops on touch/reduced-motion
+- `src/hooks/useBreakpoint.ts` — window-width breakpoints: `isMobile` (<768), `isTablet` (768–1024), `isMobileOrTablet` (<1024)
 - `src/components/ScrollProgress.tsx` — fixed 2px top bar driven by Lenis or native scroll
 - `src/components/core/SplitReveal.tsx` — reusable SplitText reveal component
 - `src/components/core/cursor.tsx` — Framer Motion spring-tracked cursor via portal; not mounted in App
@@ -99,14 +110,16 @@ CSS-transition-only slide-in drawer (no GSAP). `NAV_ITEMS` are currently non-fun
 
 ## Project data
 
-Static arrays defined inline in each component. Key locations:
-- `WORK_PANELS` — `BlankNextSection.tsx` (archive card grid in Hero)
+Static arrays defined inline in each component or in `src/data/`. Key locations:
+- `WORK_PANELS` — `src/data/projects.tsx` (shared by `BlankNextSection` and `ProjectsSection`)
+- `BiLang<T>`, `Panel`, `Detail` types + `getLinkIcon`, `getLinkAriaLabel` helpers — `src/data/projects.tsx`
 - `PANELS` — `HorizontalSection.tsx` (horizontal scroll panel content)
 - `NAV_ITEMS` — `MenuPanel.tsx`
 - Bilingual text — `src/data/content.ts` (`C` object, keyed by section and `lang`)
 
 No external data fetching or state management library.
 
-### Unused scaffold components
+### Unused / commented-out components
 
-`src/components/Projects.tsx`, `Skills.tsx`, and `Contact.tsx` are placeholder components from initial scaffolding — not imported or mounted anywhere. Do not use them; the live sections are `BlankNextSection` (work grid), `HorizontalSection` (skills), and `FooterSection` (contact).
+- `src/components/About.tsx` — fully implemented two-column about section (intro text + image gallery with clip-path reveal); imported in App.tsx but commented out. Not the same as `AboutSection.tsx`.
+- `src/components/Projects.tsx`, `Skills.tsx`, `Contact.tsx` — placeholder scaffold components; not imported anywhere. Do not use them.

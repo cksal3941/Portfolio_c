@@ -540,6 +540,7 @@ export default function HorizontalSection() {
 
   return (
     <>
+    {!isMobile && (
     <div
       ref={cursorRef}
       style={{
@@ -555,6 +556,7 @@ export default function HorizontalSection() {
         style={{ width: '100%', height: '100%', objectFit: 'contain', display: 'block' }}
       />
     </div>
+    )}
 
     {/*
      * Container: width/height match the viewport exactly.

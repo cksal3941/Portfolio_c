@@ -2,6 +2,7 @@ import { useEffect, useRef, useCallback } from 'react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import BlankNextSection from '@/components/BlankNextSection'
+import ProjectsSection from '@/components/ProjectsSection'
 import bgImage from '@/images/background2.png'
 import { useLang } from '@/context/LangContext'
 import { C } from '@/data/content'
@@ -52,13 +53,38 @@ export default function Hero() {
       })
       gsap.set('.archive-card', { backgroundColor: 'rgba(255,255,255,0.2)' })
 
+      let circlePlayed = false
+
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: wrapperRef.current,
           start: 'top top',
-          end: '+=1300%',
-          scrub: 1.8,
-          onUpdate: (self) => { scrollProgress = self.progress },
+          end: isTouchDevice ? '+=430%' : '+=1300%',
+          scrub: isTouchDevice ? 0.5 : 1.8,
+          onUpdate: (self) => {
+            scrollProgress = self.progress
+            if (isTouchDevice && !circlePlayed && self.progress >= 0.97) {
+              circlePlayed = true
+              const el = circleRef.current
+              if (el) {
+                el.style.transition = 'clip-path 1s ease-in-out, -webkit-clip-path 1s ease-in-out'
+                requestAnimationFrame(() => {
+                  ;(el.style as any).webkitClipPath = 'circle(150vmax at 50% 118%)'
+                  el.style.clipPath = 'circle(150vmax at 50% 118%)'
+                })
+              }
+            } else if (isTouchDevice && circlePlayed && self.progress < 0.90) {
+              circlePlayed = false
+              const el = circleRef.current
+              if (el) {
+                el.style.transition = 'clip-path 0.6s ease-in-out, -webkit-clip-path 0.6s ease-in-out'
+                requestAnimationFrame(() => {
+                  ;(el.style as any).webkitClipPath = 'circle(0vmax at 50% 118%)'
+                  el.style.clipPath = 'circle(0vmax at 50% 118%)'
+                })
+              }
+            }
+          },
         },
       })
 
@@ -70,25 +96,28 @@ export default function Hero() {
       tl.to(textGroup2Ref.current, { opacity: 1, y: 0, duration: 0.38, ease: 'none' }, '>+0.06')
       // ── Phase 5: TG2 continuously scrolls up so long text is readable, then fades ──
       tl.to(textGroup2Ref.current, { y: '-=850', duration: 1.0, ease: 'none' }, '>')
-      tl.to(textGroup2Ref.current, { opacity: 0, duration: 0.25, ease: 'none' }, '<+0.85')
-      tl.to(circleRef.current,    { clipPath: 'circle(44vmax at 50% 118%)', duration: 0.32, ease: 'none' }, '<+0.17')
-      tl.to(archivePanels[0],     { scale: 1, y: 0, duration: 0.65, ease: 'none' }, '<')
-      tl.to(circleRef.current,    { clipPath: 'circle(150vmax at 50% 118%)', duration: 0.38, ease: 'none' }, '<+0.32')
-      tl.to('.next-section-title', { opacity: 1, y: 0, duration: 0.22, ease: 'none' })
-      tl.to(archivePanels, {
-        x: (i) => i * 2, y: (i) => i * -1, scale: (i) => 1 - i * 0.004,
-        opacity: 1, duration: 0.1, ease: 'none', stagger: 0,
-      }, '>+0.08')
-      tl.to(archivePanels, { rotateY: -40, duration: 0.12, ease: 'none', stagger: 0 }, '>')
-      tl.to(archivePanels, {
-        x: (i) => `${(i - 1) * 25}vw`,
-        y: (i) => `${(i - 1) * -3}vh`,
-        scale: (i) => 1 - Math.abs(i - 1) * 0.03,
-        zIndex: (i) => 80 - i,
-        rotateY: 0, duration: 0.3, ease: 'none', stagger: 0,
-      }, '>+0.05')
-      tl.to('.archive-panel-meta', { opacity: 1, y: 0, duration: 0.5, ease: 'none', stagger: 0.15 }, '<-0.17')
-      tl.to('.archive-card', { backgroundColor: 'rgba(255,255,255,0)', duration: 0.2, ease: 'none' }, '<+0.27')
+      tl.to(textGroup2Ref.current, { opacity: 0, duration: 0.25, ease: 'none' }, isTouchDevice ? '<+0.65' : '<+0.85')
+
+      if (!isTouchDevice) {
+        tl.to(circleRef.current,    { clipPath: 'circle(44vmax at 50% 118%)', duration: 0.32, ease: 'none' }, '<+0.17')
+        tl.to(archivePanels[0], { scale: 1, y: 0, duration: 0.65, ease: 'none' }, '<')
+        tl.to(circleRef.current,    { clipPath: 'circle(150vmax at 50% 118%)', duration: 0.38, ease: 'none' }, '<+0.32')
+        tl.to('.next-section-title', { opacity: 1, y: 0, duration: 0.22, ease: 'none' })
+        tl.to(archivePanels, {
+          x: (i) => i * 2, y: (i) => i * -1, scale: (i) => 1 - i * 0.004,
+          opacity: 1, duration: 0.1, ease: 'none', stagger: 0,
+        }, '>+0.08')
+        tl.to(archivePanels, { rotateY: -40, duration: 0.12, ease: 'none', stagger: 0 }, '>')
+        tl.to(archivePanels, {
+          x: (i) => `${(i - 1) * 25}vw`,
+          y: (i) => `${(i - 1) * -3}vh`,
+          scale: (i) => 1 - Math.abs(i - 1) * 0.03,
+          zIndex: (i) => 80 - i,
+          rotateY: 0, duration: 0.3, ease: 'none', stagger: 0,
+        }, '>+0.05')
+        tl.to('.archive-panel-meta', { opacity: 1, y: 0, duration: 0.5, ease: 'none', stagger: 0.15 }, '<-0.17')
+        tl.to('.archive-card', { backgroundColor: 'rgba(255,255,255,0)', duration: 0.2, ease: 'none' }, '<+0.27')
+      }
     }, wrapperRef)
 
     // ── Parallax mousemove ──
@@ -129,7 +158,7 @@ export default function Hero() {
   const onModalClose = useCallback(() => {}, [])
 
   return (
-    <div ref={wrapperRef} style={{ height: '1550vh' }}>
+    <div ref={wrapperRef} style={{ height: isMobile ? '600vh' : '1550vh' }}>
       <div className="sticky top-0 h-screen overflow-hidden bg-[#f5f5f3]">
 
         {/* ── z-10 — Background image ── */}
@@ -199,7 +228,7 @@ export default function Hero() {
           <div
             className="absolute left-[9.3vw]"
             style={{
-              top: isMobile ? '510px' : '498px',
+              top: isMobile ? '560px' : '498px',
               width: '532px',
               maxWidth: isMobile ? '80vw' : '38vw',
             }}
@@ -219,14 +248,16 @@ export default function Hero() {
               className="leading-[1.32]"
               style={{ whiteSpace: 'pre-line', fontSize: isMobile ? '14px' : '17px' }}
             >
-              {C.hero.body[lang]}
+              {isMobile && lang === 'ko'
+                ? C.hero.body.ko.replace('고민하는 주니어', '고민하는\n주니어')
+                : C.hero.body[lang]}
             </p>
           </div>
           <div
             className="absolute left-[9.3vw] text-[20px] leading-none uppercase"
             style={{
               fontFamily: "'Anton', Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif",
-              top: isMobile ? '520px' : '760px',
+              top: isMobile ? '510px' : '760px',
               fontSize: isMobile ? '14px' : '20px',
             }}
           >
@@ -274,26 +305,30 @@ export default function Hero() {
               ))}
             </p>
 
-            <div style={{ display: 'grid', gridTemplateColumns: '150px minmax(0, 285px)', columnGap: '52px', justifyContent: 'end' }}>
+            <div>
               <p style={{
                 fontFamily: "'Anton', Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif",
                 fontSize: '20px',
                 lineHeight: 1,
                 letterSpacing: '0.02em',
                 textTransform: 'uppercase',
-                margin: 0,
+                margin: '0 0 36px',
               }}>WORK FLOW</p>
 
-              <div style={{ fontFamily: "'Archivo', sans-serif",
-                fontSize: '16px',
-                lineHeight: 1.35,
-                letterSpacing: '-0.02em',
-              }}>
-                {C.hero.tg2Paragraphs[lang].map((paragraph, i) => (
-                  <p key={i} style={{ margin: i === 0 ? 0 : '28px 0 0' }}>
-                    {paragraph}
-                  </p>
-                ))}
+              <div style={{ display: 'flex', justifyContent: 'center' }}>
+                <div style={{
+                  width: 'min(420px, 100%)',
+                  fontFamily: "'Archivo', sans-serif",
+                  fontSize: '16px',
+                  lineHeight: 1.35,
+                  letterSpacing: '-0.02em',
+                }}>
+                  {C.hero.tg2Paragraphs[lang].map((paragraph, i) => (
+                    <p key={i} style={{ margin: i === 0 ? 0 : '28px 0 0' }}>
+                      {paragraph}
+                    </p>
+                  ))}
+                </div>
               </div>
             </div>
           </div>
@@ -301,7 +336,7 @@ export default function Hero() {
 
         {/* ── z-30 — Circle wipe ── */}
         <div ref={circleRef} className="absolute inset-0 z-30 overflow-hidden">
-          <BlankNextSection onModalClose={onModalClose} />
+          {isMobile ? <ProjectsSection /> : <BlankNextSection onModalClose={onModalClose} />}
         </div>
 
       </div>

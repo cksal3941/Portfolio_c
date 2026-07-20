@@ -71,6 +71,7 @@ export const WORK_PANELS: Panel[] = [
   {
     title: 'AFTER.9 COMMERCE SPA',
     image: afterImg,
+    imgClass: 'absolute inset-0 w-full h-full object-contain scale-[0.82] group-hover:scale-[0.87]',
     meta: {
       num: '01',
       displayTitle: { ko: 'after.9 일체형페이지', en: "AFTER.9" },

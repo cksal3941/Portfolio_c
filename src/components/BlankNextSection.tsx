@@ -41,9 +41,9 @@ export default function BlankNextSection({ className = '', onModalClose }: Blank
     <section
       aria-label="Next section"
       className={`relative h-screen overflow-hidden bg-[#f3f3f1] ${className}`}
-      style={{ borderBottom: 'none', boxShadow: 'none' }}
+      style={{ borderBottom: 'none', boxShadow: 'none', ...(isMobile && { background: '#f0f0ee' }) }}
     >
-      <div className="next-section-title absolute left-[8.5vw] top-[14vh]" style={{ display: isMobile ? 'none' : undefined }}>
+<div className="next-section-title absolute left-[8.5vw] top-[14vh]" style={{ display: isMobile ? 'none' : undefined }}>
         <h2 className="font-black uppercase leading-none text-black" style={{ margin: 0, fontSize: 'clamp(28px, 3vw, 48px)' }}>
           PROJECTS
         </h2>

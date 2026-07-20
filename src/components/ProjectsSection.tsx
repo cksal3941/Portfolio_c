@@ -9,7 +9,7 @@ import ProjectModal from '@/components/ProjectModal'
 
 gsap.registerPlugin(ScrollTrigger)
 
-export default function ProjectsSection() {
+export default function ProjectsSection({ forceCols, compact }: { forceCols?: number; compact?: boolean } = {}) {
   const sectionRef = useRef<HTMLElement>(null)
   const cardsRef   = useRef<(HTMLDivElement | null)[]>([])
   const [activePanel, setActivePanel] = useState<Panel | null>(null)
@@ -17,6 +17,7 @@ export default function ProjectsSection() {
   const { isMobile, isTablet } = useBreakpoint()
 
   useEffect(() => {
+    if (forceCols || compact) return
     const ctx = gsap.context(() => {
       cardsRef.current.forEach((card) => {
         if (!card) return
@@ -38,9 +39,9 @@ export default function ProjectsSection() {
       })
     }, sectionRef)
     return () => ctx.revert()
-  }, [])
+  }, [forceCols, compact])
 
-  const cols = isMobile ? 1 : isTablet ? 2 : 3
+  const cols = forceCols ?? (isMobile ? 1 : isTablet ? 2 : 3)
 
   return (
     <section
@@ -48,53 +49,45 @@ export default function ProjectsSection() {
       ref={sectionRef}
       style={{
         background: '#f0f0ee',
-        padding: isMobile ? '80px 6vw 100px' : '120px 8vw 140px',
+        padding: compact ? '8px 4vw' : (isMobile ? '80px 6vw 100px' : '120px 8vw 140px'),
       }}
     >
-      {/* ── Header ── */}
-      <div style={{ marginBottom: isMobile ? '48px' : '72px' }}>
-        <p style={{
-          fontFamily: "'Archivo', sans-serif",
-          fontSize: '13px',
-          letterSpacing: '0.18em',
-          textTransform: 'uppercase',
-          color: '#000',
-          margin: '0 0 14px',
-        }}>
-          {lang === 'ko' ? '선택된 작업물' : 'Selected Work'}
-        </p>
-        <h2 style={{
-          fontFamily: "'Anton', Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif",
-          fontSize: 'clamp(48px, 7vw, 96px)',
-          lineHeight: 0.92,
-          letterSpacing: '-0.02em',
-          textTransform: 'uppercase',
-          color: '#000',
-          margin: '0 0 24px',
-          transform: 'scaleX(0.85)',
-          transformOrigin: 'left top',
-        }}>
-          PROJECTS
-        </h2>
-        <p style={{
-          fontFamily: "'Archivo', sans-serif",
-          fontSize: isMobile ? '14px' : '16px',
-          lineHeight: 1.6,
-          color: '#444',
-          margin: 0,
-          maxWidth: '480px',
-        }}>
-          {lang === 'ko'
-            ? '웹 퍼블리싱과 UI 디자인을 기반으로 기획하고 구현한 프로젝트 모음입니다.'
-            : 'Selected works across web publishing, UI design, and front-end development.'}
-        </p>
-      </div>
+      {/* ── Header (hidden in compact mode) ── */}
+      {!compact && (
+        <div style={{ marginBottom: isMobile ? '48px' : '72px' }}>
+          <h2 style={{
+            fontFamily: "'Anton', Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif",
+            fontSize: 'clamp(48px, 7vw, 96px)',
+            lineHeight: 0.92,
+            letterSpacing: '-0.02em',
+            textTransform: 'uppercase',
+            color: '#000',
+            margin: '0 0 24px',
+            transform: 'scaleX(0.85)',
+            transformOrigin: 'left top',
+          }}>
+            PROJECTS
+          </h2>
+          <p style={{
+            fontFamily: "'Archivo', sans-serif",
+            fontSize: isMobile ? '14px' : '16px',
+            lineHeight: 1.6,
+            color: '#444',
+            margin: 0,
+            maxWidth: '480px',
+          }}>
+            {lang === 'ko'
+              ? '웹 퍼블리싱과 UI 디자인을 기반으로 기획하고 구현한 프로젝트 모음입니다.'
+              : 'Selected works across web publishing, UI design, and front-end development.'}
+          </p>
+        </div>
+      )}
 
       {/* ── Grid ── */}
       <div style={{
         display: 'grid',
         gridTemplateColumns: `repeat(${cols}, 1fr)`,
-        gap: isMobile ? '48px' : '40px 32px',
+        gap: compact ? '8px' : (isMobile ? '48px' : '40px 32px'),
       }}>
         {WORK_PANELS.map((panel, i) => (
           <div
@@ -110,21 +103,15 @@ export default function ProjectsSection() {
               aspectRatio: '3 / 4',
               overflow: 'hidden',
               background: '#e2e2e0',
-              marginBottom: '20px',
+              marginBottom: compact ? '10px' : '20px',
             }}>
               {panel.image && (
                 <img
                   src={panel.image}
                   alt={panel.title}
-                  style={{
-                    position: 'absolute',
-                    inset: panel.imgClass ? '2%' : '8%',
-                    width: panel.imgClass ? '96%' : '84%',
-                    height: panel.imgClass ? '96%' : '84%',
-                    objectFit: 'contain',
-                    transition: 'transform 0.5s ease',
-                  }}
-                  className="group-hover:scale-105"
+                  className={`transition-transform duration-500 ease-out ${
+                    panel.imgClass ?? 'absolute inset-[8%] w-[84%] h-[84%] object-contain group-hover:scale-105'
+                  }`}
                 />
               )}
               {/* hover overlay */}
@@ -158,10 +145,10 @@ export default function ProjectsSection() {
             {/* Meta */}
             {panel.meta && (
               <div>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '14px' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: compact ? '6px' : '14px' }}>
                   <span style={{
                     fontFamily: "'Archivo', sans-serif",
-                    fontSize: '13px',
+                    fontSize: '11px',
                     fontWeight: 700,
                     letterSpacing: '0.12em',
                     color: '#000',
@@ -174,41 +161,43 @@ export default function ProjectsSection() {
 
                 <p style={{
                   fontFamily: "'Anton', Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif",
-                  fontSize: 'clamp(18px, 2vw, 26px)',
+                  fontSize: compact ? '13px' : 'clamp(18px, 2vw, 26px)',
                   lineHeight: 1.1,
                   letterSpacing: '0.01em',
                   textTransform: 'uppercase',
                   color: '#000',
-                  margin: '0 0 8px',
+                  margin: compact ? '0 0 4px' : '0 0 8px',
                 }}>
                   {panel.meta.displayTitle[lang]}
                 </p>
 
                 <p style={{
                   fontFamily: "'Archivo', sans-serif",
-                  fontSize: '13px',
-                  letterSpacing: '0.08em',
+                  fontSize: '11px',
+                  letterSpacing: '0.06em',
                   textTransform: 'uppercase',
-                  color: '#000',
-                  margin: '0 0 4px',
+                  color: '#555',
+                  margin: 0,
                   lineHeight: 1.4,
                 }}>
                   {panel.meta.type[lang]}
                 </p>
 
-                <p style={{
-                  fontFamily: "'Archivo', sans-serif",
-                  fontSize: '12px',
-                  letterSpacing: '0.06em',
-                  textTransform: 'uppercase',
-                  color: '#666',
-                  margin: '0 0 16px',
-                  lineHeight: 1.4,
-                }}>
-                  {panel.meta.tags[lang]}
-                </p>
+                {!compact && (
+                  <p style={{
+                    fontFamily: "'Archivo', sans-serif",
+                    fontSize: '12px',
+                    letterSpacing: '0.06em',
+                    textTransform: 'uppercase',
+                    color: '#666',
+                    margin: '0 0 16px',
+                    lineHeight: 1.4,
+                  }}>
+                    {panel.meta.tags[lang]}
+                  </p>
+                )}
 
-                {panel.detail && (
+                {!compact && panel.detail && (
                   <div style={{ display: 'flex', gap: '8px' }}>
                     {panel.detail.links.map(link => (
                       <a

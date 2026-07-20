@@ -61,13 +61,11 @@ export default function App() {
       <MenuPanel isOpen={menuOpen} onClose={() => setMenuOpen(false)} />
 
       <Hero />
-      {isMobile && <ProjectsSection />}
       <div id="section-about" />
       <AboutSection />
       {/* <About /> */}
       <div id="section-work" />
       <HorizontalSection />
-      {!isMobile && <ProjectsSection />}
       <DarkTransition />
       <div id="section-contact" />
       <FooterSection />
