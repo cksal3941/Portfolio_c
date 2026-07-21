@@ -1,4 +1,5 @@
 import { useState, type SVGProps } from 'react'
+import { ArrowUpRight } from 'lucide-react'
 import { createPortal } from 'react-dom'
 import { Cursor } from '@/components/core/cursor'
 import { useLang } from '@/context/LangContext'
@@ -99,8 +100,12 @@ export default function BlankNextSection({ className = '', onModalClose }: Blank
                     fontWeight:    600,
                     letterSpacing: '0.06em',
                     whiteSpace:    'nowrap',
+                    display:       'flex',
+                    alignItems:    'center',
+                    gap:           '6px',
                   }}>
                     VIEW PROJECT
+                    <ArrowUpRight size={16} strokeWidth={2} />
                   </div>
                 </div>
               </Cursor>

@@ -111,37 +111,37 @@ function AntigravityIcon() {
 
 /* ── types ────────────────────────────────────────────────── */
 type SkillIcon  = { icon: React.ReactNode; label: string }
-type SkillCard  = { icon: React.ReactNode; label: string; level: string; desc: string }
+type SkillCard  = { icon: React.ReactNode; label: string; level: string; desc: { ko: string; en: string } }
 type Principle  = { num: string; key: string; desc: string }
 type Entry      = { name: string; sub?: string; period?: string }
 type StatBlock  = { number: string; unit: string }
 
 const FRONTEND_CARDS: SkillCard[] = [
-  { icon: <HTMLIcon />,                              label: 'HTML5',       level: 'LEVEL 03', desc: '시맨틱 구조 작성 · 페이지 마크업' },
-  { icon: <CSSIcon />,                               label: 'CSS3',        level: 'LEVEL 03', desc: '반응형 레이아웃 · 스타일링 · 기본 애니메이션' },
-  { icon: <JSIcon />,                                label: 'JavaScript',  level: 'LEVEL 02', desc: 'DOM 제어 · 인터랙션 로직 구현' },
-  { icon: <TSIcon />,                                label: 'TypeScript',  level: 'LEVEL 01', desc: '기본 타입 구조 이해 · 학습 중' },
-  { icon: <ReactIcon />,                             label: 'React',       level: 'LEVEL 02', desc: '컴포넌트 기반 UI · 상태 흐름 관리' },
-  { icon: <GitIcon />,                               label: 'Git',         level: 'LEVEL 02', desc: '버전 관리 · 브랜치 · 커밋 기록 관리' },
-  { icon: <Monitor size={26} strokeWidth={1.3} />,   label: 'Responsive',  level: 'LEVEL 03', desc: 'PC · 태블릿 · 모바일 반응형 레이아웃' },
-  { icon: <Globe   size={26} strokeWidth={1.3} />,   label: 'Publishing',  level: 'LEVEL 03', desc: '디자인 시안 → 웹 화면 구현' },
+  { icon: <HTMLIcon />,                              label: 'HTML5',       level: 'LEVEL 03', desc: { ko: '시맨틱 구조 작성 · 페이지 마크업',              en: 'Semantic markup · Page structure' } },
+  { icon: <CSSIcon />,                               label: 'CSS3',        level: 'LEVEL 03', desc: { ko: '반응형 레이아웃 · 스타일링 · 기본 애니메이션',   en: 'Responsive layout · Styling · Animation' } },
+  { icon: <JSIcon />,                                label: 'JavaScript',  level: 'LEVEL 02', desc: { ko: 'DOM 제어 · 인터랙션 로직 구현',                 en: 'DOM control · Interaction logic' } },
+  { icon: <TSIcon />,                                label: 'TypeScript',  level: 'LEVEL 01', desc: { ko: '기본 타입 구조 이해 · 학습 중',                 en: 'Basic types · Currently learning' } },
+  { icon: <ReactIcon />,                             label: 'React',       level: 'LEVEL 02', desc: { ko: '컴포넌트 기반 UI · 상태 흐름 관리',             en: 'Component-based UI · State management' } },
+  { icon: <GitIcon />,                               label: 'Git',         level: 'LEVEL 02', desc: { ko: '버전 관리 · 브랜치 · 커밋 기록 관리',           en: 'Version control · Branching · Commits' } },
+  { icon: <Monitor size={26} strokeWidth={1.3} />,   label: 'Responsive',  level: 'LEVEL 03', desc: { ko: 'PC · 태블릿 · 모바일 반응형 레이아웃',          en: 'PC · Tablet · Mobile layouts' } },
+  { icon: <Globe   size={26} strokeWidth={1.3} />,   label: 'Publishing',  level: 'LEVEL 03', desc: { ko: '디자인 시안 → 웹 화면 구현',                   en: 'Design to web implementation' } },
 ]
 const DESIGN_CARDS: SkillCard[] = [
-  { icon: <FigmaIcon />,                               label: 'Figma',         level: 'LEVEL 02', desc: '화면 구조 · 와이어프레임 · 사용자 흐름 정리' },
-  { icon: <PsIcon />,                                  label: 'Photoshop',     level: 'LEVEL 01', desc: '기본 이미지 보정 · 시각 자료 정리' },
-  { icon: <Layout   size={26} strokeWidth={1.3} />,    label: 'Wireframe',     level: 'LEVEL 02', desc: '페이지 정보 순서 · 화면 구성 설계' },
-  { icon: <Layers   size={26} strokeWidth={1.3} />,    label: 'UX Flow',       level: 'LEVEL 02', desc: '사용자 이동 · 화면 전환 흐름 설계' },
-  { icon: <Layout   size={26} strokeWidth={1.3} />,    label: 'Design System', level: 'LEVEL 01', desc: '색상 · 타이포 · 버튼 등 기본 UI 규칙' },
-  { icon: <Sparkles size={26} strokeWidth={1.3} />,    label: 'AI Image',      level: 'LEVEL 02', desc: '레퍼런스 이미지 생성 · 화면 분위기 구체화' },
-  { icon: <Wand2    size={26} strokeWidth={1.3} />,    label: 'AI Production', level: 'LEVEL 02', desc: '기획 · 디자인 · 코드 구현 과정 보조' },
+  { icon: <FigmaIcon />,                               label: 'Figma',         level: 'LEVEL 02', desc: { ko: '화면 구조 · 와이어프레임 · 사용자 흐름 정리', en: 'Wireframe · Screen structure · User flow' } },
+  { icon: <PsIcon />,                                  label: 'Photoshop',     level: 'LEVEL 01', desc: { ko: '기본 이미지 보정 · 시각 자료 정리',           en: 'Basic image editing · Visual assets' } },
+  { icon: <Layout   size={26} strokeWidth={1.3} />,    label: 'Wireframe',     level: 'LEVEL 02', desc: { ko: '페이지 정보 순서 · 화면 구성 설계',           en: 'Info hierarchy · Screen layout design' } },
+  { icon: <Layers   size={26} strokeWidth={1.3} />,    label: 'UX Flow',       level: 'LEVEL 02', desc: { ko: '사용자 이동 · 화면 전환 흐름 설계',           en: 'User navigation · Screen transitions' } },
+  { icon: <Layout   size={26} strokeWidth={1.3} />,    label: 'Design System', level: 'LEVEL 01', desc: { ko: '색상 · 타이포 · 버튼 등 기본 UI 규칙',       en: 'Color · Typography · Basic UI rules' } },
+  { icon: <Sparkles size={26} strokeWidth={1.3} />,    label: 'AI Image',      level: 'LEVEL 02', desc: { ko: '레퍼런스 이미지 생성 · 화면 분위기 구체화',   en: 'Reference image gen · Visual mood' } },
+  { icon: <Wand2    size={26} strokeWidth={1.3} />,    label: 'AI Production', level: 'LEVEL 02', desc: { ko: '기획 · 디자인 · 코드 구현 과정 보조',         en: 'Planning · Design · Code assistance' } },
 ]
 
 const AI_CARDS: SkillCard[] = [
-  { icon: <ChatGPTIcon />,     label: 'ChatGPT',     level: 'LEVEL 03', desc: '아이디어 정리 · 문장 구성 · 인터랙션 분석 · 프롬프트 설계 · 이미지 생성' },
-  { icon: <CodexIcon />,       label: 'Codex',       level: 'LEVEL 02', desc: '코드 수정 · 오류 점검 · 컴포넌트 정리 · 구현 보조' },
-  { icon: <ClaudeIcon />,      label: 'Claude',      level: 'LEVEL 02', desc: '섹션 구성 · 레이아웃 정리 · 애니메이션 방향 설정' },
-  { icon: <GeminiIcon />,      label: 'Gemini',      level: 'LEVEL 01', desc: '자료 비교 · 아이디어 검토 · 대체 방향 탐색 · 이미지 생성' },
-  { icon: <AntigravityIcon />, label: 'Antigravity', level: 'LEVEL 01', desc: '실험적 코드 흐름 · 작업 방식 테스트' },
+  { icon: <ChatGPTIcon />,     label: 'ChatGPT',     level: 'LEVEL 03', desc: { ko: '아이디어 정리 · 문장 구성 · 인터랙션 분석 · 프롬프트 설계 · 이미지 생성', en: 'Ideation · Copywriting · Interaction analysis · Prompt design · Image gen' } },
+  { icon: <CodexIcon />,       label: 'Codex',       level: 'LEVEL 02', desc: { ko: '코드 수정 · 오류 점검 · 컴포넌트 정리 · 구현 보조',                       en: 'Code editing · Bug review · Component refining' } },
+  { icon: <ClaudeIcon />,      label: 'Claude',      level: 'LEVEL 02', desc: { ko: '섹션 구성 · 레이아웃 정리 · 애니메이션 방향 설정',                         en: 'Section structure · Layout · Animation direction' } },
+  { icon: <GeminiIcon />,      label: 'Gemini',      level: 'LEVEL 01', desc: { ko: '자료 비교 · 아이디어 검토 · 대체 방향 탐색 · 이미지 생성',                 en: 'Research · Idea review · Alternatives · Image gen' } },
+  { icon: <AntigravityIcon />, label: 'Antigravity', level: 'LEVEL 01', desc: { ko: '실험적 코드 흐름 · 작업 방식 테스트',                                       en: 'Experimental code flow · Workflow testing' } },
 ]
 
 /* ── panel data (lang-aware) ──────────────────────────────── */
@@ -315,7 +315,7 @@ function StatList({ stat, entries }: { stat: StatBlock; entries: Entry[] }) {
   )
 }
 
-function SkillCardItem({ icon, label, desc, compact }: SkillCard & { compact?: boolean }) {
+function SkillCardItem({ icon, label, level, desc, compact, lang }: SkillCard & { compact?: boolean; lang: Lang }) {
   const [hov, setHov] = useState(false)
   const sz = compact ? 72 : 148
 
@@ -354,6 +354,13 @@ function SkillCardItem({ icon, label, desc, compact }: SkillCard & { compact?: b
           letterSpacing: '0.04em', textTransform: 'uppercase',
           textAlign: 'center', color: '#000', lineHeight: 1.1,
         }}>{label}</span>
+        {!compact && (
+          <span style={{
+            fontFamily: "'Archivo', sans-serif",
+            fontSize: '10px', letterSpacing: '0.08em',
+            textTransform: 'uppercase', color: '#000', opacity: 0.75, lineHeight: 1,
+          }}>{level}</span>
+        )}
       </div>
 
       {/* 호버 설명 레이어 */}
@@ -369,16 +376,16 @@ function SkillCardItem({ icon, label, desc, compact }: SkillCard & { compact?: b
           fontSize: compact ? '9px' : '13px', lineHeight: 1.4,
           margin: 0, wordBreak: 'keep-all', color: '#fff',
           textAlign: 'center', width: '100%',
-        }}>{desc}</p>
+        }}>{desc[lang]}</p>
       </div>
     </div>
   )
 }
 
-function FrontendSkillGrid({ items, compact }: { items: SkillCard[]; compact?: boolean }) {
+function FrontendSkillGrid({ items, compact, lang }: { items: SkillCard[]; compact?: boolean; lang: Lang }) {
   return (
     <div style={{ display: 'flex', flexWrap: 'wrap', gap: compact ? '4px' : '10px', alignContent: 'flex-start', alignItems: 'flex-start', width: '100%' }}>
-      {items.map(card => <SkillCardItem key={card.label} {...card} compact={compact} />)}
+      {items.map(card => <SkillCardItem key={card.label} {...card} compact={compact} lang={lang} />)}
     </div>
   )
 }
@@ -403,8 +410,8 @@ export default function HorizontalSection() {
       const panelCount    = PANELS.length
       // Each panel gets a "hold" segment where scrolling does not move the track,
       // giving the user time to read. Then a "slide" segment transitions to the next.
-      const holdDuration  = 0.8   // timeline units (= proportion of total scroll)
-      const slideDuration = 1.0
+      const holdDuration  = 0.55  // timeline units (= proportion of total scroll)
+      const slideDuration = 0.7
       const totalDuration = panelCount * holdDuration + (panelCount - 1) * slideDuration
 
       const panels = gsap.utils.toArray<HTMLElement>('.horizontal-panel')
@@ -672,7 +679,7 @@ export default function HorizontalSection() {
 
                 {/* right — varies by panel type; entire block fades in together */}
                 <div className="p-visual" style={{ flex: isMobile ? '0 0 auto' : 1, display: 'flex', alignItems: isMobile ? 'flex-start' : 'center', width: isMobile ? '100%' : undefined }}>
-                  {panel.skillCards && <FrontendSkillGrid items={panel.skillCards} compact={isMobile} />}
+                  {panel.skillCards && <FrontendSkillGrid items={panel.skillCards} compact={isMobile} lang={lang} />}
 
                   {panel.icons && <IconGrid items={panel.icons} />}
 

@@ -108,7 +108,7 @@ export const WORK_PANELS: Panel[] = [
   {
     title: 'HANCOM ACADEMY RENEWAL',
     image: hancomImg,
-    imgClass: 'absolute inset-0 w-full h-full object-contain scale-[2.6] translate-y-[2%] group-hover:scale-[2.8]',
+    imgClass: 'absolute inset-0 w-full h-full object-contain scale-[1.4] md:scale-[2.6] translate-y-[2%] md:group-hover:scale-[2.8]',
     meta: {
       num: '02',
       displayTitle: { ko: '한글과컴퓨터학원 반응형 웹 리뉴얼', en: 'HANCOM ACADEMY RENEWAL' },

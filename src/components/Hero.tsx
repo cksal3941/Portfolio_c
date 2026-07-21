@@ -59,21 +59,21 @@ export default function Hero() {
         scrollTrigger: {
           trigger: wrapperRef.current,
           start: 'top top',
-          end: isTouchDevice ? '+=430%' : '+=1300%',
+          end: isTouchDevice ? '+=500%' : '+=1020%',
           scrub: isTouchDevice ? 0.5 : 1.8,
           onUpdate: (self) => {
             scrollProgress = self.progress
-            if (isTouchDevice && !circlePlayed && self.progress >= 0.82) {
+            if (isTouchDevice && !circlePlayed && self.progress >= 0.70) {
               circlePlayed = true
               const el = circleRef.current
               if (el) {
-                el.style.transition = 'clip-path 1s ease-in-out, -webkit-clip-path 1s ease-in-out'
+                el.style.transition = 'clip-path 0.6s ease-in-out, -webkit-clip-path 0.6s ease-in-out'
                 requestAnimationFrame(() => {
                   ;(el.style as any).webkitClipPath = 'circle(150vmax at 50% 118%)'
                   el.style.clipPath = 'circle(150vmax at 50% 118%)'
                 })
               }
-            } else if (isTouchDevice && circlePlayed && self.progress < 0.90) {
+            } else if (isTouchDevice && circlePlayed && self.progress < 0.78) {
               circlePlayed = false
               const el = circleRef.current
               if (el) {
@@ -95,8 +95,8 @@ export default function Hero() {
       // ── Phase 4: TG2 enters ──
       tl.to(textGroup2Ref.current, { opacity: 1, y: 0, duration: 0.38, ease: 'none' }, '>+0.06')
       // ── Phase 5: TG2 continuously scrolls up so long text is readable, then fades ──
-      tl.to(textGroup2Ref.current, { y: '-=850', duration: 1.0, ease: 'none' }, '>')
-      tl.to(textGroup2Ref.current, { opacity: 0, duration: 0.25, ease: 'none' }, isTouchDevice ? '<+0.65' : '<+0.85')
+      tl.to(textGroup2Ref.current, { y: '-=1100', duration: 1.2, ease: 'none' }, '>')
+      tl.to(textGroup2Ref.current, { opacity: 0, duration: 0.25, ease: 'none' }, isTouchDevice ? '<+0.80' : '<+0.85')
 
       if (!isTouchDevice) {
         tl.to(circleRef.current,    { clipPath: 'circle(44vmax at 50% 118%)', duration: 0.32, ease: 'none' }, '<+0.17')
@@ -153,12 +153,12 @@ export default function Hero() {
       ctx.revert()
       removeMouseMove?.()
     }
-  }, [])
+  }, [isMobile])
 
   const onModalClose = useCallback(() => {}, [])
 
   return (
-    <div ref={wrapperRef} style={{ height: isMobile ? '400vh' : '1550vh' }}>
+    <div ref={wrapperRef} style={{ height: isMobile ? '460vh' : '1250vh' }}>
       <div className="sticky top-0 h-screen overflow-hidden bg-[#f5f5f3]">
 
         {/* ── z-10 — Background image ── */}

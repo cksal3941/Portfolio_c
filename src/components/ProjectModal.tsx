@@ -19,6 +19,7 @@ export default function ProjectModal({ panel, onClose, lang, isMobile }: Props) 
 
   useEffect(() => {
     lenis?.stop()
+    document.body.style.overflow = 'hidden'
 
     const modalEl = modalRef.current
     const stopProp = (e: Event) => e.stopPropagation()
@@ -44,6 +45,7 @@ export default function ProjectModal({ panel, onClose, lang, isMobile }: Props) 
       modalEl?.removeEventListener('touchmove', stopProp)
       document.removeEventListener('wheel',     block)
       document.removeEventListener('touchmove', block)
+      document.body.style.overflow = ''
       lenis?.start()
     }
   }, [])
@@ -60,11 +62,18 @@ export default function ProjectModal({ panel, onClose, lang, isMobile }: Props) 
     <>
       <div className="fixed inset-0 z-[300] bg-black/60" onClick={handleClose} />
 
-      <div className="fixed inset-0 z-[310] flex items-center justify-center p-4 pointer-events-none">
+      <div
+        className="fixed inset-0 z-[310] flex items-center justify-center pointer-events-none"
+        style={{ padding: isMobile ? 0 : '16px' }}
+      >
         <div
           ref={modalRef}
           className="pointer-events-auto bg-white border border-black flex flex-col w-full"
-          style={{ maxWidth: '760px', maxHeight: '86vh' }}
+          style={{
+            maxWidth: isMobile ? '100%' : '760px',
+            maxHeight: isMobile ? '100%' : '86vh',
+            height: isMobile ? '100%' : undefined,
+          }}
         >
           {/* ── 고정 헤더 ── */}
           <div
@@ -91,7 +100,7 @@ export default function ProjectModal({ panel, onClose, lang, isMobile }: Props) 
           </div>
 
           {/* ── 스크롤 영역 ── */}
-          <div className="overflow-y-auto flex-1">
+          <div className="overflow-y-auto flex-1" style={{ overscrollBehavior: 'contain' }}>
 
           <div className="border-b border-black" style={{ padding: isMobile ? '16px 20px' : '28px 40px' }}>
             <h3
@@ -111,10 +120,13 @@ export default function ProjectModal({ panel, onClose, lang, isMobile }: Props) 
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={getLinkAriaLabel(link.label, lang)}
-                  className="flex items-center justify-center border border-black bg-white text-black hover:bg-black hover:text-white transition-colors"
-                  style={{ width: '44px', height: '44px' }}
+                  className="flex flex-col items-center justify-center gap-1 border border-black bg-white text-black hover:bg-black hover:text-white transition-colors"
+                  style={{ padding: '10px 14px', minWidth: '60px' }}
                 >
                   {getLinkIcon(link.label)}
+                  <span style={{ fontSize: '11px', letterSpacing: '0.06em', textTransform: 'uppercase', lineHeight: 1 }}>
+                    {link.label}
+                  </span>
                 </a>
               ))}
             </div>
@@ -122,6 +134,22 @@ export default function ProjectModal({ panel, onClose, lang, isMobile }: Props) 
 
           <div style={{ padding: isMobile ? '0 20px 24px' : '0 40px 40px', display: 'flex', flexDirection: 'column', gap: isMobile ? '20px' : '28px' }}>
             <div style={{ paddingTop: '28px' }}>
+              <p style={{ fontSize: '15px', fontWeight: 800, letterSpacing: '0.14em', textTransform: 'uppercase', color: '#000', marginBottom: '12px' }}>
+                Tech Stack
+              </p>
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
+                {d.stack.map(s => (
+                  <span
+                    key={s}
+                    style={{ padding: '6px 10px', border: '1px solid #000', fontSize: '12px', lineHeight: 1, color: '#000', background: '#fff' }}
+                  >
+                    {s}
+                  </span>
+                ))}
+              </div>
+            </div>
+
+            <div>
               <p style={{ fontSize: '15px', fontWeight: 800, letterSpacing: '0.14em', textTransform: 'uppercase', color: '#000', marginBottom: '10px' }}>
                 Role
               </p>
@@ -144,22 +172,6 @@ export default function ProjectModal({ panel, onClose, lang, isMobile }: Props) 
                   </li>
                 ))}
               </ul>
-            </div>
-
-            <div>
-              <p style={{ fontSize: '15px', fontWeight: 800, letterSpacing: '0.14em', textTransform: 'uppercase', color: '#000', marginBottom: '12px' }}>
-                Tech Stack
-              </p>
-              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
-                {d.stack.map(s => (
-                  <span
-                    key={s}
-                    style={{ padding: '6px 10px', border: '1px solid #000', fontSize: '12px', lineHeight: 1, color: '#000', background: '#fff' }}
-                  >
-                    {s}
-                  </span>
-                ))}
-              </div>
             </div>
 
             <div style={{ borderTop: '1px solid #000', paddingTop: '28px' }}>

@@ -35,14 +35,13 @@ Single-page app. No router — all sections stacked vertically.
 3. Fixed right-edge menu button with `useMagnetic` effect (`z-50`) that toggles `<MenuPanel />`
 4. `<MenuPanel />` — slide-in right drawer (`z-200`), backdrop (`z-190`)
 5. `<Hero />` — scroll-animated hero section
-6. `<ProjectsSection />` — **mobile only** (rendered before `AboutSection` on mobile)
+6. `<ProjectsSection />` — **mobile only** (`{isMobile && <ProjectsSection />}`, rendered before `AboutSection`)
 7. `<AboutSection />` — SplitText line-reveal section
 8. `<HorizontalSection />` — GSAP-pinned horizontal scroll
-9. `<ProjectsSection />` — **desktop only** (rendered after `HorizontalSection` on desktop)
-10. `<DarkTransition />` — scroll-driven light-to-dark color transition with image cursor trail
-11. `<FooterSection />` — dual marquee + contact links + scroll-to-top
+9. `<DarkTransition />` — scroll-driven light-to-dark color transition with image cursor trail
+10. `<FooterSection />` — dual marquee + contact links + scroll-to-top
 
-Section anchor divs (`id="section-about"`, `id="section-work"`, `id="section-contact"`) are placed between sections for `MenuPanel` nav scrolling. `About.tsx` is fully built but currently commented out.
+Section anchor divs (`id="section-about"`, `id="section-work"`, `id="section-contact"`) are placed between sections for `MenuPanel` nav scrolling. `About.tsx` is fully built but currently commented out. `Contact.tsx`, `Projects.tsx`, and `Skills.tsx` are unused scaffold files from the initial Vite template — do not import them.
 
 ### Bilingual content (`src/data/content.ts`)
 
@@ -79,7 +78,7 @@ GSAP-pinned horizontal scroll. `PANELS` defines the content — each panel has a
 
 ### ProjectsSection
 
-`src/components/ProjectsSection.tsx` — responsive project grid rendered twice in `App.tsx` (once for mobile, once for desktop) with display gated by `useBreakpoint`. Accepts `forceCols` and `compact` props. GSAP scroll-reveal is skipped when either prop is set. Clicking a card opens `<ProjectModal>` via React portal. Project data (`WORK_PANELS`) lives in `src/data/projects.tsx` alongside `Panel` / `Detail` types and icon helpers.
+`src/components/ProjectsSection.tsx` — responsive project grid rendered for mobile only in `App.tsx`. Accepts `forceCols` and `compact` props; GSAP scroll-reveal is skipped when either prop is set. Clicking a card opens `<ProjectModal>` via React portal. Project data (`WORK_PANELS`) lives in `src/data/projects.tsx` alongside `Panel` / `Detail` types and icon helpers. On desktop, projects are surfaced through the `BlankNextSection` archive panels inside `Hero`.
 
 ### DarkTransition
 

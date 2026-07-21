@@ -1,4 +1,5 @@
 import { useRef, useState, useEffect } from 'react'
+import { ArrowUpRight } from 'lucide-react'
 import { createPortal } from 'react-dom'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
@@ -136,8 +137,12 @@ export default function ProjectsSection({ forceCols, compact }: { forceCols?: nu
                   color: '#fff',
                   border: '1px solid #fff',
                   padding: '10px 22px',
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '8px',
                 }}>
                   {lang === 'ko' ? '자세히 보기' : 'VIEW PROJECT'}
+                  <ArrowUpRight size={16} strokeWidth={2} />
                 </span>
               </div>
             </div>
