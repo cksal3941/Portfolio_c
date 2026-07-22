@@ -2,6 +2,8 @@
 
 > 기획과 디자인, 구현 사이의 흐름을 고민하는 주니어 프론트엔드 개발자의 포트폴리오입니다.
 
+**[https://portfolio-c-lime.vercel.app/](https://portfolio-c-lime.vercel.app/)**
+
 ![React](https://img.shields.io/badge/React_19-61DAFB?style=flat&logo=react&logoColor=000)
 ![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=flat&logo=typescript&logoColor=fff)
 ![Vite](https://img.shields.io/badge/Vite-646CFF?style=flat&logo=vite&logoColor=fff)
