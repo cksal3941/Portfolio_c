@@ -125,7 +125,10 @@ export default function MenuPanel({ isOpen, onClose }: Props) {
         {/* bottom bar */}
         <div className="absolute bottom-5 left-5 right-5 flex flex-col gap-[10px]">
           <div className="flex items-end justify-between">
-            <p className="text-[42px] font-black uppercase leading-[0.8] tracking-[-0.04em] text-black">
+            <p
+              className="font-black uppercase leading-[0.8] tracking-[-0.04em] text-black"
+              style={{ fontSize: 'clamp(18px, 8.5vw, 42px)' }}
+            >
               RE:BUILD
             </p>
 
