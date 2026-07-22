@@ -34,11 +34,11 @@
 
 ## 수록 프로젝트
 
-| # | 프로젝트 | 유형 | 스택 |
-|---|---------|------|------|
-| 01 | [after.9](https://after-9-chi.vercel.app/) | 가상 바디 케어 브랜드 SPA | React · Firebase · Firestore · Polar · Vercel |
-| 02 | [한글과컴퓨터학원 리뉴얼](https://hancom-academy.vercel.app/) | 반응형 교육기관 웹사이트 리뉴얼 | React · Firebase · Cloudinary · Leaflet · Vercel |
-| 03 | [WEEF 클론 코딩](https://cksal3941.github.io/weef/) | 브랜드 커머스 UI 클론 | HTML · CSS · JS · Swiper · AOS |
+| # | 프로젝트 | 유형 | 스택 | 링크 |
+|---|---------|------|------|------|
+| 01 | after.9 | 가상 바디 케어 브랜드 SPA | React · Firebase · Firestore · Polar · Vercel | [Live](https://after-9-chi.vercel.app/) · [GitHub](https://github.com/cksal3941/after.9) · [Figma](https://www.figma.com/design/kIRjQuOWe0hhET7jbq8U9J) |
+| 02 | 한글과컴퓨터학원 리뉴얼 | 반응형 교육기관 웹사이트 리뉴얼 | React · Firebase · Cloudinary · Leaflet · Vercel | [Live](https://hancom-academy.vercel.app/) · [GitHub](https://github.com/cksal3941/hancom-academy) · [Figma](https://www.figma.com/design/5G0rH9PZy5opNOfxU1aW8k) |
+| 03 | WEEF 클론 코딩 | 브랜드 커머스 UI 클론 | HTML · CSS · JS · Swiper · AOS | [Live](https://cksal3941.github.io/weef/) · [GitHub](https://github.com/cksal3941/weef) · [Figma](https://www.figma.com/design/GwXbAanUF8LgzVlXMEJ4gW/weef) · [Original](https://weef.co.kr/) |
 
 ---
 
@@ -118,3 +118,4 @@ src/
 
 - **Email** — cksal8449@gmail.com
 - **GitHub** — [github.com/cksal3941](https://github.com/cksal3941)
+- **이 저장소** — [github.com/cksal3941/Portfolio_c](https://github.com/cksal3941/Portfolio_c)
