@@ -68,12 +68,20 @@ export default function BlankNextSection({ className = '', onModalClose }: Blank
 
       <div
         className="archive-panels absolute inset-0"
-        style={{ perspective: '900px', perspectiveOrigin: '50% 50%', display: isMobile ? 'none' : undefined }}
+        style={{ perspective: '2400px', perspectiveOrigin: '50% 55%', display: isMobile ? 'none' : undefined }}
       >
+        {/* card-stage: 카드가 움직일 수 있는 유일한 영역 — safe-left / safe-right 안쪽 */}
+        <div
+          className="card-stage absolute inset-y-0"
+          style={{
+            left:  'clamp(40px, 5vw, 96px)',
+            right: 'clamp(96px, 8vw, 160px)',
+          }}
+        >
         {WORK_PANELS.map((panel) => (
           <div
             key={panel.title}
-            className="archive-panel group absolute left-1/2 top-[50vh] w-[clamp(80px,20vw,360px)] hover:z-[100]"
+            className="archive-panel group absolute left-0 top-1/2 w-[clamp(140px,18vw,320px)] hover:z-[100]"
             onClick={() => panel.detail && setActivePanel(panel)}
             style={{ cursor: panel.detail ? 'none' : 'default' }}
           >
@@ -111,65 +119,25 @@ export default function BlankNextSection({ className = '', onModalClose }: Blank
               </Cursor>
             )}
 
-            <div className="archive-card relative aspect-[3/4] bg-white/20 transition duration-200 ease-out group-hover:-translate-y-1">
+            <div
+              className="archive-card relative aspect-[3/4] transition duration-200 ease-out group-hover:-translate-y-1"
+              style={{
+                background: 'rgba(248,247,245,0.88)',
+                border: '1px solid rgba(148,143,138,0.9)',
+              }}
+            >
               {panel.image && (
                 <img
                   src={panel.image}
                   alt={panel.title}
-                  className={`transition-transform duration-500 ease-out ${panel.imgClass ?? 'absolute inset-0 w-full h-full object-cover group-hover:scale-105'}`}
+                  className={`transition-transform duration-500 ease-out ${panel.imgClass ?? 'absolute inset-0 w-full h-full object-contain group-hover:scale-105'}`}
                 />
               )}
             </div>
 
-            {panel.meta && !isMobile && (
-              <div
-                className="archive-panel-meta absolute left-0 right-0 pointer-events-none"
-                style={{ top: '100%', paddingTop: '12px' }}
-              >
-                <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '12px' }}>
-                  <span style={{
-                    fontFamily: "'Archivo', sans-serif",
-                    fontSize: '16px',
-                    fontWeight: 700,
-                    letterSpacing: '0.1em',
-                    textTransform: 'uppercase',
-                    color: '#000',
-                    flexShrink: 0,
-                  }}>{panel.meta.num}</span>
-                  <div style={{ flex: 1, height: '1px', background: '#000' }} />
-                </div>
-                <p style={{
-                  fontFamily: "'Archivo', sans-serif",
-                  fontSize: 'clamp(16px, 1.4vw, 22px)',
-                  fontWeight: 800,
-                  letterSpacing: '0.02em',
-                  textTransform: 'uppercase',
-                  color: '#000',
-                  margin: '0 0 8px',
-                  lineHeight: 1.15,
-                }}>{panel.meta.displayTitle[lang]}</p>
-                <p style={{
-                  fontFamily: "'Archivo', sans-serif",
-                  fontSize: '16px',
-                  letterSpacing: '0.05em',
-                  textTransform: 'uppercase',
-                  color: '#000',
-                  margin: '0 0 5px',
-                  lineHeight: 1.4,
-                }}>{panel.meta.type[lang]}</p>
-                <p style={{
-                  fontFamily: "'Archivo', sans-serif",
-                  fontSize: '16px',
-                  letterSpacing: '0.04em',
-                  textTransform: 'uppercase',
-                  color: '#000',
-                  margin: 0,
-                  lineHeight: 1.4,
-                }}>{panel.meta.tags[lang]}</p>
-              </div>
-            )}
           </div>
         ))}
+        </div>{/* end card-stage */}
       </div>
 
       {activePanel && createPortal(

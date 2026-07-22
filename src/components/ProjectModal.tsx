@@ -105,26 +105,32 @@ export default function ProjectModal({ panel, onClose, lang, isMobile }: Props) 
           <div className="border-b border-black" style={{ padding: isMobile ? '16px 20px' : '28px 40px' }}>
             <h3
               className="text-black font-black uppercase"
-              style={{ fontSize: 'clamp(28px, 5vw, 44px)', lineHeight: 0.95, letterSpacing: '-0.03em', marginBottom: '16px' }}
+              style={{ fontSize: 'clamp(28px, 5vw, 44px)', lineHeight: 0.95, letterSpacing: '-0.03em', marginBottom: '6px' }}
             >
               {panel.title}
             </h3>
+            <p
+              className="text-black font-bold"
+              style={{ fontSize: 'clamp(13px, 2vw, 16px)', letterSpacing: '-0.01em', marginBottom: '16px' }}
+            >
+              {panel.meta?.displayTitle.ko}
+            </p>
             <p style={{ fontSize: '15px', lineHeight: 1.6, color: '#000', margin: 0 }}>
               {d.subtitle[lang]}
             </p>
             <div style={{ display: 'flex', gap: '8px', marginTop: '18px' }}>
-              {d.links.map(link => (
+              {d.links.map((link, i) => (
                 <a
                   key={link.label}
                   href={link.url}
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={getLinkAriaLabel(link.label, lang)}
-                  className="flex flex-col items-center justify-center gap-1 border border-black bg-white text-black hover:bg-black hover:text-white transition-colors"
-                  style={{ padding: '10px 14px', minWidth: '60px' }}
+                  className={`flex flex-col items-center justify-center gap-1 border border-black transition-colors ${i === 0 ? 'bg-black text-white' : 'bg-white text-black hover:bg-black hover:text-white'}`}
+                  style={{ width: '64px', height: '64px' }}
                 >
                   {getLinkIcon(link.label)}
-                  <span style={{ fontSize: '11px', letterSpacing: '0.06em', textTransform: 'uppercase', lineHeight: 1 }}>
+                  <span style={{ fontSize: '11px', letterSpacing: '0.06em', textTransform: 'uppercase', lineHeight: 1, textAlign: 'center' }}>
                     {link.label}
                   </span>
                 </a>

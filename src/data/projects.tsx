@@ -21,6 +21,7 @@ export type Panel = {
   title: string
   image?: string
   imgClass?: string
+  cardBg?: string
   meta?: {
     num: string
     displayTitle: BiLang<string>
@@ -71,7 +72,7 @@ export const WORK_PANELS: Panel[] = [
   {
     title: 'AFTER.9 COMMERCE SPA',
     image: afterImg,
-    imgClass: 'absolute inset-0 w-full h-full object-contain scale-[0.82] group-hover:scale-[0.87]',
+    imgClass: 'absolute inset-0 w-full h-full object-contain scale-[0.88] group-hover:scale-[0.93]',
     meta: {
       num: '01',
       displayTitle: { ko: 'after.9 일체형페이지', en: "AFTER.9" },
@@ -80,7 +81,7 @@ export const WORK_PANELS: Panel[] = [
     },
     detail: {
       subtitle: {
-        ko: '브랜드 기획부터 쇼핑몰 구현까지 혼자 진행한 가상 바디 케어 브랜드 프로젝트입니다.',
+        ko: '브랜드 기획부터 웹사이트 구현까지 진행한 가상의 바디 케어 브랜드 프로젝트입니다.',
         en: 'A solo project building a virtual body care brand — from brand planning to full e-commerce implementation.',
       },
       type: 'PERSONAL PROJECT',
@@ -108,7 +109,7 @@ export const WORK_PANELS: Panel[] = [
   {
     title: 'HANCOM ACADEMY RENEWAL',
     image: hancomImg,
-    imgClass: 'absolute inset-0 w-full h-full object-contain scale-[1.4] md:scale-[2.6] translate-y-[2%] md:group-hover:scale-[2.8]',
+    imgClass: 'absolute inset-0 w-full h-full object-contain scale-[0.88] group-hover:scale-[0.93]',
     meta: {
       num: '02',
       displayTitle: { ko: '한글과컴퓨터학원 반응형 웹 리뉴얼', en: 'HANCOM ACADEMY RENEWAL' },
@@ -117,8 +118,8 @@ export const WORK_PANELS: Panel[] = [
     },
     detail: {
       subtitle: {
-        ko: '오래된 교육기관 웹사이트를 반응형 구조와 현대적인 UI 흐름으로 리뉴얼한 프로젝트입니다.',
-        en: 'Renewed an outdated educational institution website with a responsive layout and modern UI flow.',
+        ko: '교육기관 웹사이트를 반응형 구조와 현대적인 UI 흐름으로 리뉴얼한 프로젝트입니다.',
+        en: 'Renewed an educational institution website with a responsive layout and modern UI flow.',
       },
       type: 'PERSONAL PROJECT',
       period: '2026.06.08 – 2026.07.02',
@@ -145,7 +146,7 @@ export const WORK_PANELS: Panel[] = [
   {
     title: 'WEEF CLONE CODING',
     image: weefImg,
-    imgClass: 'absolute inset-0 w-full h-full object-contain scale-[1.2] group-hover:scale-[1.35]',
+    imgClass: 'absolute inset-0 w-full h-full object-contain scale-[0.88] group-hover:scale-[0.93]',
     meta: {
       num: '03',
       displayTitle: { ko: 'WEEF 클론 코딩', en: 'WEEF PRODUCT PAGE' },
@@ -154,8 +155,8 @@ export const WORK_PANELS: Panel[] = [
     },
     detail: {
       subtitle: {
-        ko: '식물 유래 주방 세정 브랜드 웹사이트의 구조와 애니메이션을 분석하며 구현한 클론 코딩 프로젝트입니다.',
-        en: 'Clone-coded a plant-based kitchen cleaner brand website, analysing its structure and scroll animations.',
+        ko: '주방 세정 브랜드 웹사이트의 구조와 애니메이션을 분석하며 구현한 클론 코딩 프로젝트입니다.',
+        en: 'Clone-coded a kitchen cleaner brand website, analysing its structure and scroll animations.',
       },
       type: 'PERSONAL PROJECT · CLONE CODING',
       period: '2025 / 3 DAYS',
@@ -178,6 +179,33 @@ export const WORK_PANELS: Panel[] = [
         { label: 'Figma',     url: 'https://www.figma.com/design/GwXbAanUF8LgzVlXMEJ4gW/weef' },
         { label: 'Original',  url: 'https://weef.co.kr/' },
       ],
+    },
+  },
+  {
+    title: 'PROJECT 04',
+    meta: {
+      num: '04',
+      displayTitle: { ko: '프로젝트 04', en: 'PROJECT 04' },
+      type: { ko: '준비 중', en: 'COMING SOON' },
+      tags: { ko: '-', en: '-' },
+    },
+  },
+  {
+    title: 'PROJECT 05',
+    meta: {
+      num: '05',
+      displayTitle: { ko: '프로젝트 05', en: 'PROJECT 05' },
+      type: { ko: '준비 중', en: 'COMING SOON' },
+      tags: { ko: '-', en: '-' },
+    },
+  },
+  {
+    title: 'PROJECT 06',
+    meta: {
+      num: '06',
+      displayTitle: { ko: '프로젝트 06', en: 'PROJECT 06' },
+      type: { ko: '준비 중', en: 'COMING SOON' },
+      tags: { ko: '-', en: '-' },
     },
   },
 ]

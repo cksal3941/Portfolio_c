@@ -18,6 +18,8 @@ import { Menu } from 'lucide-react'
 
 gsap.registerPlugin(ScrollTrigger)
 
+if ('scrollRestoration' in history) history.scrollRestoration = 'manual'
+
 export default function App() {
   const [menuOpen, setMenuOpen] = useState(false)
   const [introDone, setIntroDone] = useState(false)
@@ -80,6 +82,11 @@ export default function App() {
       clearTimeout(timer)
     }
   }, [isMobile])
+
+  useEffect(() => {
+    window.scrollTo(0, 0)
+    lenis?.scrollTo(0, { immediate: true, force: true })
+  }, [])
 
   useEffect(() => {
     if (!lenis) return
