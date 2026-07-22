@@ -78,7 +78,7 @@ export default function MenuPanel({ isOpen, onClose }: Props) {
       </div>
 
       <div
-        className={`fixed inset-0 z-[190] bg-transparent transition-opacity duration-500 ${
+        className={`fixed inset-0 z-[190] bg-black/50 transition-opacity duration-500 md:bg-transparent ${
           isOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
         }`}
         onClick={onClose}
