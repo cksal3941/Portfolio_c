@@ -4,12 +4,12 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import SplitReveal from '@/components/core/SplitReveal'
 import { useLang } from '@/context/LangContext'
 import { C } from '@/data/content'
-import img1 from '@/images/lotionmodel.png'
-import img2 from '@/images/model-shot7.png'
-import img3 from '@/images/model-shot3.png'
-import img4 from '@/images/Routine Lineup.png'
-import img5 from '@/images/oilhand.png'
-import img6 from '@/images/shampoohand.png'
+import img1 from '@/images/lotionmodel.webp'
+import img2 from '@/images/model-shot7.webp'
+import img3 from '@/images/model-shot3.webp'
+import img4 from '@/images/routine-lineup.webp'
+import img5 from '@/images/oilhand.webp'
+import img6 from '@/images/shampoohand.webp'
 
 gsap.registerPlugin(ScrollTrigger)
 

@@ -2,8 +2,7 @@ import { useEffect, useRef, useCallback } from 'react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import BlankNextSection from '@/components/BlankNextSection'
-import ProjectsSection from '@/components/ProjectsSection'
-import bgImage from '@/images/background2.png'
+import bgImage from '@/images/background2.webp'
 import { useLang } from '@/context/LangContext'
 import { C } from '@/data/content'
 import { useBreakpoint } from '@/hooks/useBreakpoint'
@@ -158,11 +157,11 @@ export default function Hero() {
   const onModalClose = useCallback(() => {}, [])
 
   return (
-    <div ref={wrapperRef} style={{ height: isMobile ? '460vh' : '1250vh' }}>
-      <div className="sticky top-0 h-screen overflow-hidden bg-[#f5f5f3]">
+    <div ref={wrapperRef} style={{ height: isMobile ? '460vh' : '1250vh', background: isMobile ? '#f0f0ee' : undefined }}>
+      <div className="sticky top-0 h-screen overflow-hidden" style={{ background: isMobile ? '#f0f0ee' : '#f5f5f3' }}>
 
         {/* ── z-10 — Background image ── */}
-        <div className="absolute inset-0 z-10 pointer-events-none">
+        <div className="absolute inset-0 z-10 pointer-events-none overflow-hidden">
           <div className="absolute inset-x-0 flex justify-center" style={{ top: isMobile ? '130px' : '280px' }}>
             <div ref={imageRef} className="origin-center" style={{ width: isMobile ? 'min(300px, 78vw)' : '430px' }}>
               <div ref={parallaxImgRef}>
@@ -216,11 +215,12 @@ export default function Hero() {
         {/* ── z-20 — Supporting text (visible on load, fades on first scroll) ── */}
         <div ref={supportingRef} className="absolute inset-0 z-20 pointer-events-none text-black">
           <p
-            className="absolute left-[9.3vw] whitespace-nowrap text-[20px] leading-[1.08] uppercase"
+            className="absolute left-[9.3vw] leading-[1.08] uppercase"
             style={{
               fontFamily: "'Anton', Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif",
               top: isMobile ? '170px' : '294px',
-              fontSize: isMobile ? '24px' : '20px',
+              fontSize: isMobile ? 'clamp(14px, 5.5vw, 24px)' : '20px',
+              maxWidth: isMobile ? '82vw' : undefined,
             }}
           >
             {C.hero.tagline.en}
@@ -228,7 +228,7 @@ export default function Hero() {
           <div
             className="absolute left-[9.3vw]"
             style={{
-              top: isMobile ? '560px' : '498px',
+              top: isMobile ? 'min(560px, 82vh)' : '498px',
               width: '532px',
               maxWidth: isMobile ? '80vw' : '38vw',
             }}
@@ -237,7 +237,7 @@ export default function Hero() {
               className="flex items-start justify-between leading-none uppercase"
               style={{
                 fontFamily: "'Anton', Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif",
-                fontSize: isMobile ? '16px' : '22px',
+                fontSize: isMobile ? 'clamp(12px, 4vw, 16px)' : '22px',
                 marginBottom: '10px',
               }}
             >
@@ -246,7 +246,7 @@ export default function Hero() {
             </div>
             <p
               className="leading-[1.32]"
-              style={{ whiteSpace: 'pre-line', fontSize: isMobile ? '14px' : '17px' }}
+              style={{ whiteSpace: 'pre-line', fontSize: isMobile ? 'clamp(11px, 3.5vw, 14px)' : '17px' }}
             >
               {isMobile && lang === 'ko'
                 ? C.hero.body.ko.replace('고민하는 주니어', '고민하는\n주니어')
@@ -254,11 +254,11 @@ export default function Hero() {
             </p>
           </div>
           <div
-            className="absolute left-[9.3vw] text-[20px] leading-none uppercase"
+            className="absolute left-[9.3vw] leading-none uppercase"
             style={{
               fontFamily: "'Anton', Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif",
-              top: isMobile ? '510px' : '760px',
-              fontSize: isMobile ? '14px' : '20px',
+              top: isMobile ? 'min(510px, 75vh)' : '760px',
+              fontSize: isMobile ? 'clamp(11px, 3.5vw, 14px)' : '20px',
             }}
           >
             {C.hero.exploreBtn.en}

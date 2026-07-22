@@ -5,13 +5,13 @@ import SplitReveal from '@/components/core/SplitReveal'
 import { useLang } from '@/context/LangContext'
 import { C } from '@/data/content'
 import { useBreakpoint } from '@/hooks/useBreakpoint'
-import trail1 from '@/images/leftbg.png'
-import trail2 from '@/images/lotionmodel.png'
-import trail3 from '@/images/model-shot3.png'
-import trail4 from '@/images/model-shot7.png'
-import trail5 from '@/images/oilhand.png'
-import trail6 from '@/images/Routine Lineup.png'
-import trail7 from '@/images/shampoohand.png'
+import trail1 from '@/images/leftbg.webp'
+import trail2 from '@/images/lotionmodel.webp'
+import trail3 from '@/images/model-shot3.webp'
+import trail4 from '@/images/model-shot7.webp'
+import trail5 from '@/images/oilhand.webp'
+import trail6 from '@/images/routine-lineup.webp'
+import trail7 from '@/images/shampoohand.webp'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -144,20 +144,20 @@ export default function DarkTransition() {
             padding: '0 24px',
           }}
         >
-          <p style={{ ...ARCHIVO, fontSize: '16px', lineHeight: 1.65, margin: '0 0 28px', whiteSpace: 'pre-line' }}>
+          <p style={{ ...ARCHIVO, fontSize: 'clamp(13px, 3.5vw, 16px)', lineHeight: 1.65, margin: '0 0 28px', whiteSpace: 'pre-line' }}>
             {isMobile && lang === 'ko'
               ? <>{'실험실 노트에 기록하고 관찰하던 방식은\n이제 화면을 구성하고 기능을 구현하는 작업으로'}<br />{'이어지고 있습니다.'}</>
               : C.darkTransition.p1[lang]
             }
           </p>
 
-          <p style={{ ...ARCHIVO, fontSize: '16px', lineHeight: 1.65, margin: '0 0 56px' }}>
+          <p style={{ ...ARCHIVO, fontSize: 'clamp(13px, 3.5vw, 16px)', lineHeight: 1.65, margin: '0 0 56px' }}>
             {C.darkTransition.p2[lang]}
           </p>
 
           <SplitReveal as="p" style={{
             ...ANTON,
-            fontSize: '20px',
+            fontSize: 'clamp(15px, 4.5vw, 20px)',
             letterSpacing: '0.02em',
             textTransform: 'uppercase',
           }}>

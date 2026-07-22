@@ -71,7 +71,7 @@ export default function ProjectsSection({ forceCols, compact }: { forceCols?: nu
           </h2>
           <p style={{
             fontFamily: "'Archivo', sans-serif",
-            fontSize: isMobile ? '14px' : '16px',
+            fontSize: 'clamp(12px, 3.5vw, 16px)',
             lineHeight: 1.6,
             color: '#444',
             margin: 0,

@@ -2,13 +2,13 @@ import { useEffect, useRef, useMemo, useState } from 'react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { Layout, Layers, Sparkles, Wand2, Globe, Monitor } from 'lucide-react'
-import aboutImage from '@/images/IMG_3572.png'
-import cursorImg1 from '@/images/item.png'
-import cursorImg2 from '@/images/item2.png'
-import cursorImg3 from '@/images/item3.png'
-import cursorImg4 from '@/images/item4.png'
-import cursorImg5 from '@/images/item5.png'
-import cursorImg6 from '@/images/item6.png'
+import aboutImage from '@/images/IMG_3572.webp'
+import cursorImg1 from '@/images/item.webp'
+import cursorImg2 from '@/images/item2.webp'
+import cursorImg3 from '@/images/item3.webp'
+import cursorImg4 from '@/images/item4.webp'
+import cursorImg5 from '@/images/item5.webp'
+import cursorImg6 from '@/images/item6.webp'
 import { useLang, type Lang } from '@/context/LangContext'
 import { C } from '@/data/content'
 import { useBreakpoint } from '@/hooks/useBreakpoint'
@@ -621,8 +621,8 @@ export default function HorizontalSection() {
                 padding: '3.2vh 8vw', borderBottom: '1px solid #000',
                 flexShrink: 0,
               }}>
-                <span style={{ fontSize: '16px', letterSpacing: '0.16em', textTransform: 'uppercase' }}>RE:BUILD — ABOUT</span>
-                <span style={{ fontSize: '16px', letterSpacing: '0.16em', textTransform: 'uppercase' }}>
+                <span style={{ fontSize: 'clamp(11px, 3vw, 16px)', letterSpacing: '0.12em', textTransform: 'uppercase' }}>RE:BUILD — ABOUT</span>
+                <span style={{ fontSize: 'clamp(11px, 3vw, 16px)', letterSpacing: '0.12em', textTransform: 'uppercase' }}>
                   {String(i + 1).padStart(2, '0')} / {String(PANELS.length).padStart(2, '0')}
                 </span>
               </div>
@@ -657,7 +657,7 @@ export default function HorizontalSection() {
 
                   {/* text-only panels: body lines in left col */}
                   {panel.lines.map((line, j) => (
-                    <Line key={j} className="p-body" style={{ fontSize: isMobile ? '14px' : '18px', lineHeight: 1.85, letterSpacing: '0.01em' }}>{line}</Line>
+                    <Line key={j} className="p-body" style={{ fontSize: isMobile ? 'clamp(12px, 3.5vw, 14px)' : '18px', lineHeight: 1.85, letterSpacing: '0.01em' }}>{line}</Line>
                   ))}
 
                   {/* level legend — frontend panel only, hidden on mobile */}
@@ -719,7 +719,7 @@ export default function HorizontalSection() {
                 padding: '3vh 8vw', borderTop: '1px solid #000',
                 flexShrink: 0,
               }}>
-                <span style={{ fontSize: '16px', letterSpacing: '0.16em', textTransform: 'uppercase' }}>
+                <span style={{ fontSize: 'clamp(11px, 3vw, 16px)', letterSpacing: '0.12em', textTransform: 'uppercase' }}>
                   {i < PANELS.length - 1 ? 'Continue →' : 'End'}
                 </span>
                 <div style={{ width: '6px', height: '6px', background: '#000' }} />

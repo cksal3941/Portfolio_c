@@ -118,7 +118,7 @@ export default function AboutSection() {
         data-split
         style={{
           fontFamily: "'Anton', Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif",
-          fontSize: 'clamp(48px, 4.75vw, 74px)',
+          fontSize: 'clamp(36px, 9vw, 74px)',
           lineHeight: 1.05,
           letterSpacing: 0,
           textTransform: 'uppercase',
@@ -140,7 +140,7 @@ export default function AboutSection() {
           data-fade
           style={{
             fontFamily: "'Archivo', sans-serif",
-            fontSize: 'clamp(15px, 1.2vw, 18px)',
+            fontSize: 'clamp(13px, 3.5vw, 18px)',
             fontWeight: 700,
             letterSpacing: '-0.01em',
             lineHeight: 1.45,
@@ -155,7 +155,7 @@ export default function AboutSection() {
           data-fade
           style={{
             fontFamily: "'Archivo', sans-serif",
-            fontSize: '16px',
+            fontSize: 'clamp(13px, 3.5vw, 16px)',
             lineHeight: 1.65,
             letterSpacing: '-0.01em',
             color: '#000',

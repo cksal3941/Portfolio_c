@@ -1,7 +1,7 @@
 import { Globe, ExternalLink } from 'lucide-react'
-import afterImg from '@/images/after.9.png'
-import hancomImg from '@/images/hancom.png'
-import weefImg from '@/images/weef.png'
+import afterImg from '@/images/after.9.webp'
+import hancomImg from '@/images/hancom.webp'
+import weefImg from '@/images/weef.webp'
 import type { Lang } from '@/context/LangContext'
 
 export type BiLang<T> = { ko: T; en: T }

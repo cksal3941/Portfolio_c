@@ -4,12 +4,12 @@ import { lenis } from '@/lib/lenis'
 import { useMagnetic } from '@/hooks/useMagnetic'
 import { useLang } from '@/context/LangContext'
 import { C } from '@/data/content'
-import item1 from '@/images/item.png'
-import item2 from '@/images/item2.png'
-import item3 from '@/images/item3.png'
-import item4 from '@/images/item4.png'
-import item5 from '@/images/item5.png'
-import item6 from '@/images/item6.png'
+import item1 from '@/images/item.webp'
+import item2 from '@/images/item2.webp'
+import item3 from '@/images/item3.webp'
+import item4 from '@/images/item4.webp'
+import item5 from '@/images/item5.webp'
+import item6 from '@/images/item6.webp'
 
 const ANTON: React.CSSProperties = {
   fontFamily: "'Anton', Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif",
@@ -136,7 +136,7 @@ export default function FooterSection() {
         {/* role */}
         <p style={{
           ...ARCHIVO,
-          fontSize: '15px',
+          fontSize: 'clamp(11px, 3vw, 15px)',
           letterSpacing: '0.14em',
           textTransform: 'uppercase',
           color: 'rgba(255,255,255,0.5)',
@@ -151,7 +151,7 @@ export default function FooterSection() {
             href="mailto:cksal8449@gmail.com"
             style={{
               ...ANTON,
-              fontSize: '18px',
+              fontSize: 'clamp(13px, 3.8vw, 18px)',
               textTransform: 'uppercase',
               color: '#ffffff',
               textDecoration: 'none',
@@ -178,7 +178,7 @@ export default function FooterSection() {
             rel="noopener noreferrer"
             style={{
               ...ANTON,
-              fontSize: '18px',
+              fontSize: 'clamp(13px, 3.8vw, 18px)',
               textTransform: 'uppercase',
               color: '#ffffff',
               textDecoration: 'none',
