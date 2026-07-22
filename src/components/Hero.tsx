@@ -1,4 +1,4 @@
-import { useEffect, useRef, useCallback } from 'react'
+import { useEffect, useRef, useCallback, useState } from 'react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import BlankNextSection from '@/components/BlankNextSection'
@@ -12,6 +12,8 @@ gsap.registerPlugin(ScrollTrigger)
 export default function Hero() {
   const { lang }           = useLang()
   const { isMobile }       = useBreakpoint()
+  const [isSpread, setIsSpread] = useState(false)
+  const isSpreadRef = useRef(false)
   const wrapperRef         = useRef<HTMLDivElement>(null)
   const supportingRef      = useRef<HTMLDivElement>(null)
   const imageRef           = useRef<HTMLDivElement>(null)
@@ -68,6 +70,11 @@ export default function Hero() {
           invalidateOnRefresh: true,
           onUpdate: (self) => {
             scrollProgress = self.progress
+            const spread = self.progress > 0.87
+            if (spread !== isSpreadRef.current) {
+              isSpreadRef.current = spread
+              setIsSpread(spread)
+            }
             if (isTouchDevice && !circlePlayed && self.progress >= 0.70) {
               circlePlayed = true
               const el = circleRef.current
@@ -144,7 +151,7 @@ export default function Hero() {
             }
             return x
           },
-          y: (i) => (center - i) * window.innerHeight * 0.04,
+          y: (i) => (center - i) * window.innerHeight * 0.07,
           scale: (i) => 1 - i * 0.02,
           rotateY: 12,
           zIndex: (i) => 80 - i,
@@ -380,7 +387,7 @@ export default function Hero() {
 
         {/* ── z-30 — Circle wipe ── */}
         <div ref={circleRef} className="absolute inset-0 z-30 overflow-hidden">
-          <BlankNextSection onModalClose={onModalClose} />
+          <BlankNextSection onModalClose={onModalClose} isSpread={isSpread} />
         </div>
 
       </div>

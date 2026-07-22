@@ -1,4 +1,4 @@
-import { useState, type SVGProps } from 'react'
+import { useState, type SVGProps, type CSSProperties } from 'react'
 import { ArrowUpRight } from 'lucide-react'
 import { createPortal } from 'react-dom'
 import { Cursor } from '@/components/core/cursor'
@@ -10,7 +10,11 @@ import ProjectModal from '@/components/ProjectModal'
 type BlankNextSectionProps = {
   className?: string
   onModalClose?: () => void
+  isSpread?: boolean
 }
+
+const ANTON: CSSProperties   = { fontFamily: "'Anton', Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif" }
+const ARCHIVO: CSSProperties = { fontFamily: "'Archivo', sans-serif" }
 
 function MouseIcon(props: SVGProps<SVGSVGElement>) {
   return (
@@ -28,8 +32,9 @@ function MouseIcon(props: SVGProps<SVGSVGElement>) {
   )
 }
 
-export default function BlankNextSection({ className = '', onModalClose }: BlankNextSectionProps) {
+export default function BlankNextSection({ className = '', onModalClose, isSpread = false }: BlankNextSectionProps) {
   const [activePanel, setActivePanel] = useState<Panel | null>(null)
+  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null)
   const { lang } = useLang()
   const { isMobile } = useBreakpoint()
 
@@ -74,17 +79,56 @@ export default function BlankNextSection({ className = '', onModalClose }: Blank
         <div
           className="card-stage absolute inset-y-0"
           style={{
-            left:  'clamp(40px, 5vw, 96px)',
-            right: 'clamp(96px, 8vw, 160px)',
+            left:  'clamp(100px, 14vw, 280px)',
+            right: 'clamp(100px, 14vw, 280px)',
           }}
         >
-        {WORK_PANELS.map((panel) => (
+        {WORK_PANELS.map((panel, i) => (
           <div
             key={panel.title}
-            className="archive-panel group absolute left-0 top-1/2 w-[clamp(140px,18vw,320px)] hover:z-[100]"
+            className="archive-panel group absolute left-0 top-1/2 w-[clamp(140px,17vw,280px)] hover:z-[100]"
             onClick={() => panel.detail && setActivePanel(panel)}
             style={{ cursor: panel.detail ? 'none' : 'default' }}
+            onMouseEnter={() => setHoveredIndex(i)}
+            onMouseLeave={() => setHoveredIndex(null)}
           >
+            {/* inner wrapper — slides right on hover, text moves with it */}
+            <div style={{
+              position: 'relative',
+              transform: hoveredIndex === i ? 'translateX(150px)' : 'translateX(0px)',
+              transition: 'transform 0.45s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
+            }}>
+
+            {/* project info — left of card, revealed as card slides right */}
+            {panel.meta && (
+              <div style={{
+                position: 'absolute',
+                left: 'calc(100% + 20px)',
+                top: '50%',
+                transform: 'translateY(-50%)',
+                textAlign: 'left',
+                pointerEvents: 'none',
+                whiteSpace: 'nowrap',
+                opacity: hoveredIndex === i ? 1 : 0,
+                transition: 'opacity 0.3s ease',
+                padding: '14px 18px',
+                borderRadius: '6px',
+                backdropFilter: 'blur(12px)',
+                WebkitBackdropFilter: 'blur(12px)',
+                background: 'rgba(243,243,241,0.35)',
+              }}>
+                <p style={{ ...ANTON, fontSize: 'clamp(36px, 4vw, 60px)', color: '#000', letterSpacing: '0.05em', lineHeight: 1, margin: '0 0 10px' }}>
+                  {panel.meta.num}
+                </p>
+                <p style={{ ...ANTON, fontSize: '20px', color: '#000', lineHeight: 1.2, margin: '0 0 6px', fontWeight: lang === 'ko' ? 700 : 'normal' }}>
+                  {panel.meta.displayTitle[lang]}
+                </p>
+                <p style={{ ...ARCHIVO, fontSize: '14px', color: '#000', letterSpacing: '0.05em', textTransform: 'uppercase', margin: 0 }}>
+                  {panel.meta.type[lang]}
+                </p>
+              </div>
+            )}
+
             {panel.detail && (
               <Cursor
                 attachToParent
@@ -120,10 +164,15 @@ export default function BlankNextSection({ className = '', onModalClose }: Blank
             )}
 
             <div
-              className="archive-card relative aspect-[3/4] transition duration-200 ease-out group-hover:-translate-y-1"
+              className="archive-card relative transition duration-200 ease-out group-hover:-translate-y-1"
               style={{
-                background: 'rgba(248,247,245,0.88)',
-                border: '1px solid rgba(148,143,138,0.9)',
+                aspectRatio: '3 / 3.7',
+                background: 'rgba(248,247,245,0.75)',
+                borderTop:    isSpread ? '3px solid #000' : '1px solid rgba(148,143,138,0.9)',
+                borderRight:  isSpread ? '3px solid #000' : '1px solid rgba(148,143,138,0.9)',
+                borderBottom: '1px solid rgba(148,143,138,0.9)',
+                borderLeft:   '1px solid rgba(148,143,138,0.9)',
+                transition: 'border 0.3s ease',
               }}
             >
               {panel.image && (
@@ -135,6 +184,7 @@ export default function BlankNextSection({ className = '', onModalClose }: Blank
               )}
             </div>
 
+            </div>{/* end inner wrapper */}
           </div>
         ))}
         </div>{/* end card-stage */}

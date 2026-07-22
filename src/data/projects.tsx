@@ -2,6 +2,9 @@ import { Globe, ExternalLink } from 'lucide-react'
 import afterImg from '@/images/after.9.webp'
 import hancomImg from '@/images/hancom.webp'
 import weefImg from '@/images/weef.webp'
+import lumaImg from '@/images/luma.png'
+import gumiseaImg from '@/images/goldfish.png'
+import gyeongjuImg from '@/images/첨성대 임시 이미지.png'
 import type { Lang } from '@/context/LangContext'
 
 export type BiLang<T> = { ko: T; en: T }
@@ -77,7 +80,7 @@ export const WORK_PANELS: Panel[] = [
       num: '01',
       displayTitle: { ko: 'after.9 일체형페이지', en: "AFTER.9" },
       type: { ko: '브랜드 UI 콘셉트', en: 'BRAND UI CONCEPT' },
-      tags: { ko: 'UI 디자인 / 비주얼 디렉션', en: 'UI DESIGN / VISUAL DIRECTION' },
+      tags: { ko: 'UI 디자인 / 반응형 / 비주얼 디렉션', en: 'UI DESIGN / RESPONSIVE / VISUAL DIRECTION' },
     },
     detail: {
       subtitle: {
@@ -114,7 +117,7 @@ export const WORK_PANELS: Panel[] = [
       num: '02',
       displayTitle: { ko: '한글과컴퓨터학원 반응형 웹 리뉴얼', en: 'HANCOM ACADEMY RENEWAL' },
       type: { ko: '웹 리뉴얼 / 퍼블리싱', en: 'WEB RENEWAL / PUBLISHING' },
-      tags: { ko: 'REACT / CSS / 인터랙션', en: 'REACT / CSS / INTERACTION' },
+      tags: { ko: 'REACT / CSS / 반응형 / 인터랙션', en: 'REACT / CSS / RESPONSIVE / INTERACTION' },
     },
     detail: {
       subtitle: {
@@ -151,7 +154,7 @@ export const WORK_PANELS: Panel[] = [
       num: '03',
       displayTitle: { ko: 'WEEF 클론 코딩', en: 'WEEF PRODUCT PAGE' },
       type: { ko: '커머스 UI / 프로덕트 인터랙션', en: 'COMMERCE UI / PRODUCT INTERACTION' },
-      tags: { ko: 'UI 디자인 / 프론트엔드', en: 'UI DESIGN / FRONT-END' },
+      tags: { ko: 'UI 디자인 / 반응형 / 프론트엔드', en: 'UI DESIGN / RESPONSIVE / FRONT-END' },
     },
     detail: {
       subtitle: {
@@ -182,30 +185,214 @@ export const WORK_PANELS: Panel[] = [
     },
   },
   {
-    title: 'PROJECT 04',
+    title: 'LUMA ONE LANDING PAGE',
+    image: lumaImg,
+    imgClass: 'absolute inset-0 w-full h-full object-contain scale-[0.88] group-hover:scale-[0.93]',
     meta: {
       num: '04',
-      displayTitle: { ko: '프로젝트 04', en: 'PROJECT 04' },
-      type: { ko: '준비 중', en: 'COMING SOON' },
-      tags: { ko: '-', en: '-' },
+      displayTitle: { ko: 'LUMA ONE 랜딩페이지', en: 'LUMA ONE LANDING PAGE' },
+      type: { ko: '브랜드 UI 콘셉트', en: 'BRAND UI CONCEPT' },
+      tags: { ko: 'UI 디자인 / 비주얼 디렉션', en: 'UI DESIGN / VISUAL DIRECTION' },
+    },
+    detail: {
+      subtitle: {
+        ko: '가상의 미래형 전기차 브랜드 LUMA의 첫 번째 모델 ONE — 기획부터 AI 이미지·영상 제작, 역동적인 랜딩페이지 구현까지 진행한 개인 프로젝트입니다.',
+        en: 'A solo project for LUMA ONE, the debut model of a fictional futuristic EV brand — from planning and AI image generation to video production and a dynamic landing page.',
+      },
+      type: 'PERSONAL PROJECT',
+      period: '2026',
+      role: {
+        ko: '기획 · 브랜드 디자인 · AI 이미지/영상 제작 · 웹사이트 구현',
+        en: 'Planning · Brand Design · AI Image & Video Production · Website Implementation',
+      },
+      stack: ['React', 'Vite', 'CSS', 'GSAP', 'AI Image Generation', 'Google Flow'],
+      tasks: {
+        ko: [
+          '가상 미래형 전기차 브랜드 LUMA 기획 및 AI 이미지 제작',
+          'Google Flow를 활용한 브랜드 영상 제작',
+          '스크롤 기반 역동적인 랜딩페이지 구현',
+          '브랜드 아이덴티티에 맞는 인터랙션 및 애니메이션 설계',
+        ],
+        en: [
+          'Brand planning and AI image production for fictional EV brand LUMA',
+          'Brand video production using Google Flow',
+          'Scroll-driven dynamic landing page implementation',
+          'Interaction and animation design aligned with brand identity',
+        ],
+      },
+      learned: {
+        ko: 'AI 이미지와 영상을 활용해 브랜드 세계관을 구축하고, 이를 웹 인터랙션으로 연결하는 전체 흐름을 경험했습니다.',
+        en: 'Experienced the full flow of building a brand universe with AI-generated visuals and translating it into web interactions.',
+      },
+      links: [],
     },
   },
   {
-    title: 'PROJECT 05',
+    title: 'GUMISEA LANDING PAGE',
+    image: gumiseaImg,
+    imgClass: 'absolute inset-0 w-full h-full object-contain scale-[0.88] group-hover:scale-[0.93]',
     meta: {
       num: '05',
-      displayTitle: { ko: '프로젝트 05', en: 'PROJECT 05' },
-      type: { ko: '준비 중', en: 'COMING SOON' },
-      tags: { ko: '-', en: '-' },
+      displayTitle: { ko: 'GUMISEA 랜딩페이지', en: 'GUMISEA LANDING PAGE' },
+      type: { ko: '인터랙티브 랜딩페이지', en: 'INTERACTIVE LANDING PAGE' },
+      tags: { ko: 'UI 디자인 / 반응형 / 인터랙션', en: 'UI DESIGN / RESPONSIVE / INTERACTION' },
+    },
+    detail: {
+      subtitle: {
+        ko: '인터랙션을 통해 역동적이고 컬러풀한 경험을 제공하는 가상 브랜드 랜딩페이지입니다. 기획부터 AI 이미지 제작까지 직접 진행했습니다.',
+        en: 'A vibrant, colourful landing page for a fictional brand built around dynamic interactions — from planning to AI image production, all solo.',
+      },
+      type: 'PERSONAL PROJECT',
+      period: '2026',
+      role: {
+        ko: '기획 · AI 이미지 제작 · 인터랙션 구현',
+        en: 'Planning · AI Image Production · Interaction Implementation',
+      },
+      stack: ['React', 'Vite', 'CSS', 'GSAP', 'AI Image Generation'],
+      tasks: {
+        ko: [
+          '가상 브랜드 GUMISEA 기획 및 콘셉트 설계',
+          'AI 이미지를 활용한 비주얼 에셋 제작',
+          '스크롤 및 마우스 인터랙션 기반 역동적인 화면 구현',
+          '컬러풀하고 생동감 있는 UI 디자인 및 애니메이션 적용',
+        ],
+        en: [
+          'Brand planning and concept design for fictional brand GUMISEA',
+          'Visual asset production using AI image generation',
+          'Dynamic scroll and mouse interaction implementation',
+          'Colourful, vibrant UI design and animation',
+        ],
+      },
+      learned: {
+        ko: '색감과 인터랙션이 브랜드의 에너지를 어떻게 전달하는지, 그 관계를 직접 설계하며 배웠습니다.',
+        en: 'Learned first-hand how colour and interaction convey a brand\'s energy by designing that relationship from scratch.',
+      },
+      links: [],
     },
   },
   {
-    title: 'PROJECT 06',
+    title: '클래스 브릿지',
     meta: {
       num: '06',
-      displayTitle: { ko: '프로젝트 06', en: 'PROJECT 06' },
-      type: { ko: '준비 중', en: 'COMING SOON' },
-      tags: { ko: '-', en: '-' },
+      displayTitle: { ko: '클래스 브릿지', en: 'CLASS BRIDGE' },
+      type: { ko: '모바일 앱 / 성적 관리', en: 'MOBILE APP / GRADE MANAGEMENT' },
+      tags: { ko: '개발 중', en: 'IN DEVELOPMENT' },
+    },
+    detail: {
+      subtitle: {
+        ko: '학원·학부모·학생을 하나로 이어주는 성적 관리 모바일 어플리케이션입니다. 현재 개발 진행 중입니다.',
+        en: 'A mobile app connecting academies, parents, and students for integrated grade management. Currently in development.',
+      },
+      type: 'PERSONAL PROJECT',
+      period: '2026 — 진행 중',
+      role: {
+        ko: '기획 · UI/UX 디자인 · 앱 개발',
+        en: 'Planning · UI/UX Design · App Development',
+      },
+      stack: [],
+      tasks: {
+        ko: [
+          '학원·학부모·학생 3자 연동 구조 기획',
+          '성적 입력 및 조회 기능 설계',
+          '알림 및 커뮤니케이션 기능 구현 예정',
+        ],
+        en: [
+          'Three-way connection structure planning for academies, parents, and students',
+          'Grade input and retrieval feature design',
+          'Notification and communication features planned',
+        ],
+      },
+      learned: {
+        ko: '',
+        en: '',
+      },
+      links: [],
+    },
+  },
+  {
+    title: 'GYEONGJU CULTURAL TOURISM RENEWAL',
+    image: gyeongjuImg,
+    imgClass: 'absolute inset-0 w-full h-full object-contain scale-[0.88] group-hover:scale-[0.93]',
+    meta: {
+      num: '07',
+      displayTitle: { ko: '경주 문화관광 웹 리뉴얼', en: 'GYEONGJU TOURISM RENEWAL' },
+      type: { ko: '반응형 웹 리뉴얼', en: 'RESPONSIVE WEB RENEWAL' },
+      tags: { ko: '팀 프로젝트 / 웹 퍼블리싱', en: 'TEAM PROJECT / WEB PUBLISHING' },
+    },
+    detail: {
+      subtitle: {
+        ko: '경주 문화관광 공식 사이트를 반응형 구조와 현대적인 UI로 리뉴얼한 팀 프로젝트입니다.',
+        en: 'A team project renewing the official Gyeongju cultural tourism website with a responsive layout and modern UI.',
+      },
+      type: 'TEAM PROJECT',
+      period: '2026',
+      role: {
+        ko: '반응형 웹 퍼블리싱 · UI 구성',
+        en: 'Responsive Web Publishing · UI Layout',
+      },
+      stack: ['HTML', 'CSS', 'JavaScript'],
+      tasks: {
+        ko: [
+          '경주 문화관광 사이트 구조 분석 및 리뉴얼 기획',
+          'PC / 태블릿 / 모바일 반응형 레이아웃 구현',
+          '관광지 정보 및 콘텐츠 UI 재구성',
+          '팀원 간 역할 분담 및 협업',
+        ],
+        en: [
+          'Site structure analysis and renewal planning for Gyeongju tourism site',
+          'PC / tablet / mobile responsive layout implementation',
+          'Restructured attraction info and content UI',
+          'Role distribution and collaboration within the team',
+        ],
+      },
+      learned: {
+        ko: '팀 프로젝트를 통해 협업 과정에서의 역할 분담과 소통의 중요성을 배웠습니다.',
+        en: 'Learned the importance of role distribution and communication through team collaboration.',
+      },
+      links: [],
+    },
+  },
+  {
+    title: '관악구 초록이',
+    meta: {
+      num: '08',
+      displayTitle: { ko: '관악구 초록이', en: 'GWANAK CHOROKI' },
+      type: { ko: '모바일 웹 / 공공 API', en: 'MOBILE WEB / PUBLIC API' },
+      tags: { ko: '팀 프로젝트 / 지도 서비스', en: 'TEAM PROJECT / MAP SERVICE' },
+    },
+    detail: {
+      subtitle: {
+        ko: '관악구 폐기물 수거함 위치를 지도로 찾아주는 모바일 웹 서비스입니다. 공공 API를 활용했으며 3D 캐릭터 초록이를 직접 제작했습니다.',
+        en: 'A mobile web service that locates waste collection points in Gwanak-gu on a map. Built with public API data and a custom 3D character — no AI used.',
+      },
+      type: 'TEAM PROJECT',
+      period: '2026',
+      role: {
+        ko: '모바일 웹 구현 · 3D 캐릭터 제작',
+        en: 'Mobile Web Implementation · 3D Character Design',
+      },
+      stack: ['HTML', 'CSS', 'JavaScript', '공공 API', '지도 API', '3D 모델링'],
+      tasks: {
+        ko: [
+          '공공 API 연동으로 폐기물 수거함 위치 데이터 수집',
+          '지도 API를 활용한 수거함 위치 시각화',
+          '모바일 최적화 반응형 UI 구현',
+          '브랜드 캐릭터 초록이 3D 직접 제작',
+          '팀원 간 역할 분담 및 협업',
+        ],
+        en: [
+          'Fetched waste collection point data via public API',
+          'Visualised locations on a map using a map API',
+          'Mobile-optimised responsive UI implementation',
+          'Custom 3D character Choroki designed without AI',
+          'Role distribution and collaboration within the team',
+        ],
+      },
+      learned: {
+        ko: '공공 데이터를 실생활 문제 해결에 연결하는 경험과 함께, 3D 캐릭터로 서비스 아이덴티티를 직접 만드는 과정을 경험했습니다.',
+        en: 'Gained experience connecting public data to real-life problem solving, while creating a service identity through a hand-crafted 3D character.',
+      },
+      links: [],
     },
   },
 ]
