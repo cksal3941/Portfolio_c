@@ -1,7 +1,6 @@
-import { useState, type SVGProps, type CSSProperties } from 'react'
+import { useState, type CSSProperties } from 'react'
 import { ArrowUpRight } from 'lucide-react'
 import { createPortal } from 'react-dom'
-import { Cursor } from '@/components/core/cursor'
 import { useLang } from '@/context/LangContext'
 import { useBreakpoint } from '@/hooks/useBreakpoint'
 import { WORK_PANELS, type Panel } from '@/data/projects'
@@ -16,21 +15,6 @@ type BlankNextSectionProps = {
 const ANTON: CSSProperties   = { fontFamily: "'Anton', Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif" }
 const ARCHIVO: CSSProperties = { fontFamily: "'Archivo', sans-serif" }
 
-function MouseIcon(props: SVGProps<SVGSVGElement>) {
-  return (
-    <svg xmlns='http://www.w3.org/2000/svg' width={20} height={24} fill='none' {...props}>
-      <path
-        fill='#000'
-        fillRule='evenodd'
-        stroke='#fff'
-        strokeLinecap='square'
-        strokeWidth={1.5}
-        d='M16.994 11.096 1.962 2.265l3.42 17.776 3.579-7.694z'
-        clipRule='evenodd'
-      />
-    </svg>
-  )
-}
 
 export default function BlankNextSection({ className = '', onModalClose, isSpread = false }: BlankNextSectionProps) {
   const [activePanel, setActivePanel] = useState<Panel | null>(null)
@@ -88,7 +72,7 @@ export default function BlankNextSection({ className = '', onModalClose, isSprea
             key={panel.title}
             className="archive-panel group absolute left-0 top-1/2 w-[clamp(140px,17vw,280px)] hover:z-[100]"
             onClick={() => panel.detail && setActivePanel(panel)}
-            style={{ cursor: panel.detail ? 'none' : 'default' }}
+            style={{ cursor: panel.detail ? 'pointer' : 'default' }}
             onMouseEnter={() => setHoveredIndex(i)}
             onMouseLeave={() => setHoveredIndex(null)}
           >
@@ -113,54 +97,34 @@ export default function BlankNextSection({ className = '', onModalClose, isSprea
                 transition: 'opacity 0.3s ease',
                 padding: '14px 18px',
                 borderRadius: '6px',
-                backdropFilter: 'blur(12px)',
-                WebkitBackdropFilter: 'blur(12px)',
-                background: 'rgba(243,243,241,0.35)',
+                background: '#000',
+                border: '1px solid rgba(255,255,255,0.15)',
               }}>
-                <p style={{ ...ANTON, fontSize: 'clamp(36px, 4vw, 60px)', color: '#000', letterSpacing: '0.05em', lineHeight: 1, margin: '0 0 10px' }}>
+                <p style={{ ...ANTON, fontSize: 'clamp(36px, 4vw, 60px)', color: '#fff', letterSpacing: '0.05em', lineHeight: 1, margin: '0 0 10px' }}>
                   {panel.meta.num}
                 </p>
-                <p style={{ ...ANTON, fontSize: '20px', color: '#000', lineHeight: 1.2, margin: '0 0 6px', fontWeight: lang === 'ko' ? 700 : 'normal' }}>
+                <p style={{ ...ARCHIVO, fontSize: '20px', color: '#fff', lineHeight: 1.2, margin: '0 0 6px', fontWeight: 600, letterSpacing: '0.03em' }}>
                   {panel.meta.displayTitle[lang]}
                 </p>
-                <p style={{ ...ARCHIVO, fontSize: '14px', color: '#000', letterSpacing: '0.05em', textTransform: 'uppercase', margin: 0 }}>
+                <p style={{ ...ARCHIVO, fontSize: '14px', color: 'rgba(255,255,255,0.6)', letterSpacing: '0.05em', textTransform: 'uppercase', margin: '0 0 12px' }}>
                   {panel.meta.type[lang]}
                 </p>
-              </div>
-            )}
-
-            {panel.detail && (
-              <Cursor
-                attachToParent
-                variants={{
-                  initial:  { scale: 0.3, opacity: 0 },
-                  animate:  { scale: 1,   opacity: 1 },
-                  exit:     { scale: 0.3, opacity: 0 },
-                }}
-                transition={{ ease: 'easeInOut', duration: 0.15 }}
-                springConfig={{ damping: 25, stiffness: 350 }}
-              >
-                <div style={{ display: 'flex', alignItems: 'flex-end', gap: '8px' }}>
-                  <MouseIcon />
-                  <div style={{
-                    background:    '#000',
-                    color:         '#fff',
-                    padding:       '7px 18px',
-                    borderRadius:  '4px',
-                    fontFamily:    "'Archivo', sans-serif",
-                    fontSize:      '16px',
-                    fontWeight:    600,
-                    letterSpacing: '0.06em',
-                    whiteSpace:    'nowrap',
-                    display:       'flex',
-                    alignItems:    'center',
-                    gap:           '6px',
-                  }}>
-                    VIEW PROJECT
-                    <ArrowUpRight size={16} strokeWidth={2} />
+                {panel.detail && (
+                  <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+                    <div style={{
+                      width: '28px',
+                      height: '28px',
+                      background: '#fff',
+                      borderRadius: '50%',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                    }}>
+                      <ArrowUpRight size={14} color="#000" strokeWidth={2} />
+                    </div>
                   </div>
-                </div>
-              </Cursor>
+                )}
+              </div>
             )}
 
             <div

@@ -9,6 +9,7 @@ type CursorProps = {
   attachToParent?: boolean
   variants?: Variants
   transition?: Transition
+  hidden?: boolean
 }
 
 export function Cursor({
@@ -18,6 +19,7 @@ export function Cursor({
   attachToParent = false,
   variants,
   transition,
+  hidden = false,
 }: CursorProps) {
   const anchorRef = useRef<HTMLSpanElement>(null)
   const [visible, setVisible] = useState(!attachToParent)
@@ -62,7 +64,7 @@ export function Cursor({
           style={{ x: springX, y: springY }}
         >
           <AnimatePresence>
-            {visible && (
+            {visible && !hidden && (
               <motion.div
                 variants={variants}
                 initial='initial'

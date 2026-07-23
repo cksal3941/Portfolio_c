@@ -1,4 +1,21 @@
-import { useState, useEffect, useLayoutEffect, useRef } from 'react'
+import { useState, useEffect, useLayoutEffect, useRef, type SVGProps } from 'react'
+import { Cursor } from '@/components/core/cursor'
+
+function MouseIcon({ fill = '#fff', stroke = '#000', ...props }: SVGProps<SVGSVGElement>) {
+  return (
+    <svg xmlns='http://www.w3.org/2000/svg' width={20} height={24} fill='none' {...props}>
+      <path
+        fill={fill}
+        fillRule='evenodd'
+        stroke={stroke}
+        strokeLinecap='square'
+        strokeWidth={1.5}
+        d='M16.994 11.096 1.962 2.265l3.42 17.776 3.579-7.694z'
+        clipRule='evenodd'
+      />
+    </svg>
+  )
+}
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { lenis } from '@/lib/lenis'
@@ -27,7 +44,10 @@ export default function App() {
     window.innerWidth < 768 ? 'mobile' : 'desktop'
   )
   const menuMagRef = useMagnetic<HTMLSpanElement>(0.25)
-  const { isMobile } = useBreakpoint()
+  const { isMobile, isMobileOrTablet } = useBreakpoint()
+  const [cursorHidden, setCursorHidden] = useState(false)
+  const [isClicking, setIsClicking] = useState(false)
+  const [isPointer, setIsPointer] = useState(false)
   const prevIsMobile = useRef(isMobile)
   // stable wrapper — never remounts, so the ref is always valid
   const fadeRef = useRef<HTMLDivElement>(null)
@@ -89,6 +109,23 @@ export default function App() {
   }, [])
 
   useEffect(() => {
+    const down = () => setIsClicking(true)
+    const up   = () => setIsClicking(false)
+    const move = (e: MouseEvent) => {
+      const el = e.target as Element
+      setIsPointer(!!el.closest('a[href], button, [role="button"], .archive-panel'))
+    }
+    window.addEventListener('mousedown', down)
+    window.addEventListener('mouseup',   up)
+    window.addEventListener('mouseover', move)
+    return () => {
+      window.removeEventListener('mousedown', down)
+      window.removeEventListener('mouseup',   up)
+      window.removeEventListener('mouseover', move)
+    }
+  }, [])
+
+  useEffect(() => {
     if (!lenis) return
     const l = lenis
     l.on('scroll', ScrollTrigger.update)
@@ -114,6 +151,26 @@ export default function App() {
       {!introDone && <IntroLoader onDone={() => setIntroDone(true)} />}
       <ScrollProgress />
 
+      {!isMobileOrTablet && (
+        <Cursor
+          hidden={cursorHidden}
+          springConfig={{ damping: 25, stiffness: 350 }}
+          variants={{
+            initial: { scale: 0.3, opacity: 0 },
+            animate: { scale: 1,   opacity: 1 },
+            exit:    { scale: 0.3, opacity: 0 },
+          }}
+          transition={{ ease: 'easeInOut', duration: 0.15 }}
+        >
+          <div style={{
+            transform: isClicking ? 'scale(0.8)' : 'scale(1)',
+            transition: 'transform 0.1s ease',
+          }}>
+            <MouseIcon fill={isPointer ? '#fff' : '#000'} stroke={isPointer ? '#000' : '#fff'} />
+          </div>
+        </Cursor>
+      )}
+
       <button
         type="button"
         aria-label="Open menu"
@@ -137,8 +194,10 @@ export default function App() {
           <div id="section-about" />
           <AboutSection />
           {/* <About /> */}
-          <div id="section-work" />
-          <HorizontalSection />
+          <div onMouseEnter={() => setCursorHidden(true)} onMouseLeave={() => setCursorHidden(false)} style={{ cursor: 'auto' }}>
+            <div id="section-work" />
+            <HorizontalSection />
+          </div>
           <DarkTransition />
           <div id="section-contact" />
           <FooterSection />
