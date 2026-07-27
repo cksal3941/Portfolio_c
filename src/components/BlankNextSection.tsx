@@ -20,7 +20,7 @@ export default function BlankNextSection({ className = '', onModalClose, isSprea
   const [activePanel, setActivePanel] = useState<Panel | null>(null)
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null)
   const { lang } = useLang()
-  const { isMobile } = useBreakpoint()
+  const { isMobile, isTablet } = useBreakpoint()
 
   const handleClose = () => {
     setActivePanel(null)
@@ -79,7 +79,7 @@ export default function BlankNextSection({ className = '', onModalClose, isSprea
             {/* inner wrapper — slides right on hover, text moves with it */}
             <div style={{
               position: 'relative',
-              transform: hoveredIndex === i ? 'translateX(150px)' : 'translateX(0px)',
+              transform: hoveredIndex === i ? `translateX(${isTablet ? 80 : 150}px)` : 'translateX(0px)',
               transition: 'transform 0.45s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
             }}>
 

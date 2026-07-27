@@ -5,6 +5,7 @@ import weefImg from '@/images/weef.webp'
 import lumaImg from '@/images/luma.png'
 import gumiseaImg from '@/images/goldfish.png'
 import gyeongjuImg from '@/images/첨성대 임시 이미지.png'
+import chorogiImg from '@/images/chorogi.png'
 import type { Lang } from '@/context/LangContext'
 
 export type BiLang<T> = { ko: T; en: T }
@@ -112,7 +113,7 @@ export const WORK_PANELS: Panel[] = [
   {
     title: 'HANCOM ACADEMY RENEWAL',
     image: hancomImg,
-    imgClass: 'absolute inset-0 w-full h-full object-contain scale-[0.88] group-hover:scale-[0.93]',
+    imgClass: 'absolute inset-0 w-full h-full object-contain scale-[1.05] group-hover:scale-[1.1]',
     meta: {
       num: '02',
       displayTitle: { ko: '한글과컴퓨터학원 반응형 웹 리뉴얼', en: 'HANCOM ACADEMY RENEWAL' },
@@ -315,11 +316,11 @@ export const WORK_PANELS: Panel[] = [
   {
     title: 'GYEONGJU CULTURAL TOURISM RENEWAL',
     image: gyeongjuImg,
-    imgClass: 'absolute inset-0 w-full h-full object-contain scale-[0.88] group-hover:scale-[0.93]',
+    imgClass: 'absolute inset-0 w-full h-full object-contain scale-[0.72] group-hover:scale-[0.77]',
     meta: {
       num: '07',
       displayTitle: { ko: '경주 문화관광 웹 리뉴얼', en: 'GYEONGJU TOURISM RENEWAL' },
-      type: { ko: '웹 리뉴얼 / 풀스택', en: 'WEB RENEWAL / FULL-STACK' },
+      type: { ko: '팀 프로젝트 / 웹 리뉴얼', en: 'TEAM PROJECT / WEB RENEWAL' },
       tags: { ko: '팀 프로젝트 / 웹 퍼블리싱 / Node.js', en: 'TEAM PROJECT / WEB PUBLISHING / NODE.JS' },
     },
     detail: {
@@ -369,45 +370,51 @@ export const WORK_PANELS: Panel[] = [
   },
   {
     title: '관악구 초록이',
+    image: chorogiImg,
+    imgClass: 'absolute inset-0 w-full h-full object-contain scale-[0.88] group-hover:scale-[0.93]',
     meta: {
       num: '08',
       displayTitle: { ko: '관악구 초록이', en: 'GWANAK CHOROKI' },
-      type: { ko: '모바일 웹 / 공공 API', en: 'MOBILE WEB / PUBLIC API' },
+      type: { ko: '팀 프로젝트 / 모바일 웹', en: 'TEAM PROJECT / MOBILE WEB' },
       tags: { ko: '팀 프로젝트 / 지도 서비스', en: 'TEAM PROJECT / MAP SERVICE' },
     },
     detail: {
       subtitle: {
-        ko: '관악구 폐기물 수거함 위치를 지도로 찾아주는 모바일 웹 서비스입니다. 공공 API를 활용했으며 3D 캐릭터 초록이를 직접 제작했습니다.',
-        en: 'A mobile web service that locates waste collection points in Gwanak-gu on a map. Built with public API data and a custom 3D character — no AI used.',
+        ko: '버리기 애매한 형광등, 의류, 폐건전지 등을 근처 어디에 버릴 수 있는지 지도로 알려주는 서비스입니다. 길에서 마주치는 초록색 새싹 캐릭터 초록이와 함께, 분리배출을 조금 더 쉽고 친숙하게 만들고 싶어서 만들었습니다.',
+        en: 'A map-based service showing where to dispose of hard-to-sort items — fluorescent bulbs, clothing, dead batteries — near you. Built alongside Choroki, a green sprout character, to make waste sorting a little easier and more approachable.',
       },
-      type: 'TEAM PROJECT',
-      period: '2026',
+      type: 'TEAM PROJECT (3인)',
+      period: '2023.08 / 1 WEEK',
       role: {
-        ko: '모바일 웹 구현 · 3D 캐릭터 제작',
-        en: 'Mobile Web Implementation · 3D Character Design',
+        ko: '기획 · 디자인 · 개발 전 과정 (3인 공동)',
+        en: 'Planning · Design · Development (all phases, 3 members)',
       },
-      stack: ['HTML', 'CSS', 'JavaScript', '공공 API', '지도 API', '3D 모델링'],
+      stack: ['React 18', 'Create React App', 'react-router-dom', 'react-kakao-maps-sdk', 'react-slick', '@iconify/react', 'react-device-detect', '카카오맵 API', '공공데이터포털', 'Vercel'],
       tasks: {
         ko: [
-          '공공 API 연동으로 폐기물 수거함 위치 데이터 수집',
-          '지도 API를 활용한 수거함 위치 시각화',
-          '모바일 최적화 반응형 UI 구현',
-          '브랜드 캐릭터 초록이 3D 직접 제작',
-          '팀원 간 역할 분담 및 협업',
+          '서울시·관악구 공공데이터의 수거함 주소를 카카오맵 좌표로 변환해 데이터 구성',
+          '카카오맵 API로 의류·폐건전지·형광등·네프론·기부처 위치를 지도에 표시',
+          '카테고리별 위치 안내 화면 및 분리배출 상세 안내 페이지 구현',
+          'Nomad Sculpt로 직접 조각한 3D 캐릭터 초록이 제작 및 서비스 전반 적용',
+          '기획·디자인·개발·배포 전 과정 3인 공동 진행',
         ],
         en: [
-          'Fetched waste collection point data via public API',
-          'Visualised locations on a map using a map API',
-          'Mobile-optimised responsive UI implementation',
-          'Custom 3D character Choroki designed without AI',
-          'Role distribution and collaboration within the team',
+          'Converted public waste collection address data (Seoul / Gwanak-gu) to Kakao Maps coordinates',
+          'Displayed clothing, battery, fluorescent bulb, Nephron, and donation drop-off points on Kakao Maps',
+          'Built per-category map screens and disposal detail/guide pages',
+          'Sculpted and textured the 3D character Choroki in Nomad Sculpt on iPad; integrated across loading screens and headers',
+          'Full project cycle — planning, design, development, and deployment — handled jointly by all three members',
         ],
       },
       learned: {
-        ko: '공공 데이터를 실생활 문제 해결에 연결하는 경험과 함께, 3D 캐릭터로 서비스 아이덴티티를 직접 만드는 과정을 경험했습니다.',
-        en: 'Gained experience connecting public data to real-life problem solving, while creating a service identity through a hand-crafted 3D character.',
+        ko: '공공 데이터를 좌표로 변환해 지도 위에 직접 시각화하는 과정을 경험하고, 3D 캐릭터를 직접 제작해 서비스 아이덴티티를 만드는 것이 사용자 경험에 어떤 차이를 주는지 체감했습니다.',
+        en: 'Learned to convert public address data into map coordinates for direct visualisation, and saw first-hand how a hand-crafted 3D character shapes service identity and user experience.',
       },
-      links: [],
+      links: [
+        { label: 'Live Demo', url: 'https://chorogi.vercel.app' },
+        { label: 'GitHub',    url: 'https://github.com/cksal3941/gwanakgu-chorogi' },
+        { label: 'Figma',     url: 'https://www.figma.com/design/0XHDPuvAA3hM3KVDByNpBJ/%EA%B4%80%EC%95%85%EA%B5%AC-%EC%B4%88%EB%A1%9D%EC%9D%B4-%EC%93%B0%EB%A0%88%EA%B8%B0-%EC%88%98%EA%B1%B0%ED%95%A8-%EC%9C%84%EC%B9%98-%EC%95%8C%EB%A6%BC-%EC%84%9C%EB%B9%84%EC%8A%A4-?node-id=0-1&t=ewxhHmZU3oQksNq2-1' },
+      ],
     },
   },
 ]

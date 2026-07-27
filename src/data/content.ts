@@ -102,14 +102,14 @@ export const C = {
       title: { ko: ['구조를 이해하고', '직접 만듭니다'], en: ['I BUILD AFTER', 'UNDERSTANDING STRUCTURE'] },
       principles: {
         ko: [
-          { num: '01', key: '구조',   desc: '화면을 만들기 전, 정보 순서와 사용자 흐름을 먼저 잡습니다' },
-          { num: '02', key: '연결',   desc: '모든 요소가 전체 안에서 의미 있게 연결되도록 합니다' },
-          { num: '03', key: '디테일', desc: '결과물이 스스로 말할 때까지 다듬습니다' },
+          { num: '01', key: '구조',   desc: '화면을 만들기 전, 정보 순서와 사용자 흐름을 먼저 파악합니다' },
+          { num: '02', key: '연결',   desc: '단순한 나열이 아닌, 흐름으로 이어지도록 만듭니다' },
+          { num: '03', key: '디테일', desc: '보이지 않는 곳까지 신경 씁니다' },
         ],
         en: [
           { num: '01', key: 'STRUCTURE',  desc: 'Information order and user flow before any screen' },
-          { num: '02', key: 'CONNECTION', desc: 'Every element linked and purposeful in the whole'  },
-          { num: '03', key: 'DETAIL',     desc: 'Refine until the result speaks for itself'          },
+          { num: '02', key: 'CONNECTION', desc: 'Not just listed — built to flow as a whole'         },
+          { num: '03', key: 'DETAIL',     desc: 'Attention to what goes unseen'                       },
         ],
       },
     },

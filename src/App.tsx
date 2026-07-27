@@ -47,7 +47,6 @@ export default function App() {
   const { isMobile, isMobileOrTablet } = useBreakpoint()
   const [cursorHidden, setCursorHidden] = useState(false)
   const [isClicking, setIsClicking] = useState(false)
-  const [isPointer, setIsPointer] = useState(false)
   const prevIsMobile = useRef(isMobile)
   // stable wrapper — never remounts, so the ref is always valid
   const fadeRef = useRef<HTMLDivElement>(null)
@@ -111,17 +110,11 @@ export default function App() {
   useEffect(() => {
     const down = () => setIsClicking(true)
     const up   = () => setIsClicking(false)
-    const move = (e: MouseEvent) => {
-      const el = e.target as Element
-      setIsPointer(!!el.closest('a[href], button, [role="button"], .archive-panel'))
-    }
     window.addEventListener('mousedown', down)
     window.addEventListener('mouseup',   up)
-    window.addEventListener('mouseover', move)
     return () => {
       window.removeEventListener('mousedown', down)
       window.removeEventListener('mouseup',   up)
-      window.removeEventListener('mouseover', move)
     }
   }, [])
 
@@ -151,7 +144,7 @@ export default function App() {
       {!introDone && <IntroLoader onDone={() => setIntroDone(true)} />}
       <ScrollProgress />
 
-      {!isMobileOrTablet && (
+      {!isMobile && (
         <Cursor
           hidden={cursorHidden}
           springConfig={{ damping: 25, stiffness: 350 }}
@@ -166,7 +159,7 @@ export default function App() {
             transform: isClicking ? 'scale(0.8)' : 'scale(1)',
             transition: 'transform 0.1s ease',
           }}>
-            <MouseIcon fill={isPointer ? '#fff' : '#000'} stroke={isPointer ? '#000' : '#fff'} />
+            <MouseIcon fill="#000" stroke="#fff" />
           </div>
         </Cursor>
       )}

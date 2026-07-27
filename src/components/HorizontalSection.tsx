@@ -265,12 +265,12 @@ function PrinciplesGrid({ items }: { items: Principle[] }) {
           borderBottom: i === items.length - 1 ? '1px solid #000' : 'none',
         }}>
           <div style={{ display: 'flex', alignItems: 'baseline', gap: '14px', marginBottom: '10px' }}>
-            <span style={{ fontSize: '16px', letterSpacing: '0.16em', color: '#000' }}>{num}</span>
+            <span style={{ fontSize: '22px', letterSpacing: '0.16em', color: '#000' }}>{num}</span>
             <span style={{ ...ANTON, fontSize: 'clamp(22px, 2.4vw, 36px)', textTransform: 'uppercase', letterSpacing: '-0.01em' }}>
               {key}
             </span>
           </div>
-          <p style={{ fontSize: '16px', lineHeight: 1.75, margin: 0, paddingLeft: '34px', color: '#000' }}>
+          <p style={{ fontSize: '16px', lineHeight: 1.75, margin: 0, paddingLeft: '50px', color: '#000' }}>
             {desc}
           </p>
         </div>
