@@ -252,7 +252,7 @@ export const WORK_PANELS: Panel[] = [
         ko: '기획 · AI 이미지 제작 · 인터랙션 구현',
         en: 'Planning · AI Image Production · Interaction Implementation',
       },
-      stack: ['React', 'Vite', 'CSS', 'GSAP', 'AI Image Generation'],
+      stack: ['HTML', 'CSS', 'JavaScript', 'AI Image Generation'],
       tasks: {
         ko: [
           '가상 브랜드 GUMISEA 기획 및 콘셉트 설계',
