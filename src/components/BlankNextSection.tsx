@@ -67,7 +67,7 @@ export default function BlankNextSection({ className = '', onModalClose, isSprea
             right: 'clamp(100px, 14vw, 280px)',
           }}
         >
-        {WORK_PANELS.map((panel, i) => (
+        {WORK_PANELS.filter(p => !p.hidden).map((panel, i) => (
           <div
             key={panel.title}
             className="archive-panel group absolute left-0 top-1/2 w-[clamp(140px,17vw,280px)] hover:z-[100]"
@@ -101,7 +101,7 @@ export default function BlankNextSection({ className = '', onModalClose, isSprea
                 border: '1px solid rgba(255,255,255,0.15)',
               }}>
                 <p style={{ ...ANTON, fontSize: 'clamp(36px, 4vw, 60px)', color: '#fff', letterSpacing: '0.05em', lineHeight: 1, margin: '0 0 10px' }}>
-                  {panel.meta.num}
+                  {String(i + 1).padStart(2, '0')}
                 </p>
                 <p style={{ ...ARCHIVO, fontSize: '20px', color: '#fff', lineHeight: 1.2, margin: '0 0 6px', fontWeight: 600, letterSpacing: '0.03em' }}>
                   {panel.meta.displayTitle[lang]}

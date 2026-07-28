@@ -90,7 +90,7 @@ export default function ProjectsSection({ forceCols, compact }: { forceCols?: nu
         gridTemplateColumns: `repeat(${cols}, 1fr)`,
         gap: compact ? '8px' : (isMobile ? '48px' : '40px 32px'),
       }}>
-        {WORK_PANELS.map((panel, i) => (
+        {WORK_PANELS.filter(p => !p.hidden).map((panel, i) => (
           <div
             key={panel.title}
             ref={el => { cardsRef.current[i] = el }}
@@ -159,7 +159,7 @@ export default function ProjectsSection({ forceCols, compact }: { forceCols?: nu
                     color: '#000',
                     flexShrink: 0,
                   }}>
-                    {panel.meta.num}
+                    {String(i + 1).padStart(2, '0')}
                   </span>
                   <div style={{ flex: 1, height: '1px', background: '#000' }} />
                 </div>

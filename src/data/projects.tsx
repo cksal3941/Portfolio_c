@@ -23,6 +23,7 @@ export type Detail = {
 
 export type Panel = {
   title: string
+  hidden?: boolean
   image?: string
   imgClass?: string
   cardBg?: string
@@ -243,39 +244,50 @@ export const WORK_PANELS: Panel[] = [
     },
     detail: {
       subtitle: {
-        ko: '인터랙션을 통해 역동적이고 컬러풀한 경험을 제공하는 가상 브랜드 랜딩페이지입니다. 기획부터 AI 이미지 제작까지 직접 진행했습니다.',
-        en: 'A vibrant, colourful landing page for a fictional brand built around dynamic interactions — from planning to AI image production, all solo.',
+        ko: '바다 물고기를 모티브로 한 가상의 유기농 구미 젤리 브랜드 랜딩 페이지입니다. 5종의 물고기 모양 젤리가 각각 고유한 유기농 과일 맛을 대표하며, 기획부터 AI 이미지·에셋 제작까지 직접 진행했습니다.',
+        en: 'A landing page for a fictional organic gummy brand inspired by sea creatures. Five fish-shaped gummies each represent a unique organic fruit flavour — planned and produced solo, from concept to AI-generated assets.',
       },
       type: 'PERSONAL PROJECT',
       period: '2026',
       role: {
-        ko: '기획 · AI 이미지 제작 · 인터랙션 구현',
-        en: 'Planning · AI Image Production · Interaction Implementation',
+        ko: '기획 · 브랜드 콘셉트 설계 · AI 이미지 제작 · 웹사이트 구현',
+        en: 'Planning · Brand Concept · AI Image Production · Website Implementation',
       },
-      stack: ['HTML', 'CSS', 'JavaScript', 'AI Image Generation'],
+      stack: ['HTML5', 'CSS3', 'JavaScript', 'anime.js', 'Google Fonts', 'Vercel', 'Figma'],
       tasks: {
         ko: [
-          '가상 브랜드 GUMISEA 기획 및 콘셉트 설계',
-          'AI 이미지를 활용한 비주얼 에셋 제작',
-          '스크롤 및 마우스 인터랙션 기반 역동적인 화면 구현',
-          '컬러풀하고 생동감 있는 UI 디자인 및 애니메이션 적용',
+          '가상 유기농 구미 젤리 브랜드 Gumi Sea 기획 및 5종 물고기 모양 젤리(금붕어·블루탱·문어·해마·열대어) 콘셉트 설계',
+          'AI 이미지 생성(DALL·E)으로 젤리 에셋 및 히어로 배경 영상(Google AI) 제작',
+          'Hero 영상 배경 — MP4 자동재생(음소거·반복)',
+          '3-레이어 젤리 캐러셀 — 좌우 peek 노출 + 키보드/클릭 탐색 + 자동 슬라이드 구현',
+          '상품 상세 페이지 — 원형 배경 expand 애니메이션, 5개 상품 개별 페이지 구현',
+          '모바일 풀스크린 원형 호 메뉴 — 젤리 이미지가 원호 위를 따라 배치, 무한 슬라이드 및 터치/드래그 스냅·탄성 구현',
+          'clamp() 기반 반응형 레이아웃 및 접근성(aria-label, focus-visible, prefers-reduced-motion) 적용',
         ],
         en: [
-          'Brand planning and concept design for fictional brand GUMISEA',
-          'Visual asset production using AI image generation',
-          'Dynamic scroll and mouse interaction implementation',
-          'Colourful, vibrant UI design and animation',
+          'Brand planning for fictional organic gummy brand Gumi Sea and concept design for 5 fish-shaped gummies (goldfish, blue tang, octopus, seahorse, tropical fish)',
+          'Gummy assets produced with AI image generation (DALL·E); hero background video produced with Google AI',
+          'Hero video background — auto-play MP4 (muted, looping)',
+          '3-layer gummy carousel — left/right peek + keyboard/click navigation + auto-slide',
+          'Product detail pages — circular background expand animation, 5 individual product pages',
+          'Mobile full-screen arc menu — gummy images arranged along a circular arc; infinite slide with touch/mouse drag snap and spring physics',
+          'Responsive layout with clamp()-based fluid type/spacing; accessibility (aria-label, focus-visible, prefers-reduced-motion)',
         ],
       },
       learned: {
-        ko: '색감과 인터랙션이 브랜드의 에너지를 어떻게 전달하는지, 그 관계를 직접 설계하며 배웠습니다.',
-        en: 'Learned first-hand how colour and interaction convey a brand\'s energy by designing that relationship from scratch.',
+        ko: '5종 젤리의 세계관과 상품을 연결하는 콘셉트를 설계하면서, 브랜드 아이덴티티가 UI 인터랙션 전반에 어떻게 녹아드는지 직접 체험했습니다.',
+        en: 'Designing the brand universe for 5 gummy characters and tying each to a product showed me how identity shapes every interaction and layout decision.',
       },
-      links: [],
+      links: [
+        { label: 'Live Demo', url: 'https://gumisea.vercel.app/' },
+        { label: 'GitHub',    url: 'https://github.com/cksal3941/gumisea' },
+        { label: 'Figma',     url: 'https://www.figma.com/design/A30eIW3rdki0A2bae7D4Nl/%EA%B5%AC%EB%AF%B8%EC%94%A8-%EB%A0%8C%EB%94%A9%ED%8E%98%EC%9D%B4%EC%A7%80?node-id=0-1&t=hGNAqqpy65ut0i4d-1' },
+      ],
     },
   },
   {
     title: '클래스 브릿지',
+    hidden: true,
     meta: {
       num: '06',
       displayTitle: { ko: '클래스 브릿지', en: 'CLASS BRIDGE' },
