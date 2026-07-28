@@ -44,7 +44,7 @@ export default function App() {
     window.innerWidth < 768 ? 'mobile' : 'desktop'
   )
   const menuMagRef = useMagnetic<HTMLSpanElement>(0.25)
-  const { isMobile, isMobileOrTablet } = useBreakpoint()
+  const { isMobile } = useBreakpoint()
   const [cursorHidden, setCursorHidden] = useState(false)
   const [isClicking, setIsClicking] = useState(false)
   const prevIsMobile = useRef(isMobile)

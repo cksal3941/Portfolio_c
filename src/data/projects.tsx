@@ -389,13 +389,13 @@ export const WORK_PANELS: Panel[] = [
         ko: '기획 · 디자인 · 개발 전 과정 (3인 공동)',
         en: 'Planning · Design · Development (all phases, 3 members)',
       },
-      stack: ['React 18', 'Create React App', 'react-router-dom', 'react-kakao-maps-sdk', 'react-slick', '@iconify/react', 'react-device-detect', '카카오맵 API', '공공데이터포털', 'Vercel'],
+      stack: ['React 18', 'Create React App', 'react-router-dom', 'react-kakao-maps-sdk', 'react-slick', '@iconify/react', 'react-device-detect', '카카오맵 API', '공공데이터포털', 'Nomad Sculpt', 'Vercel'],
       tasks: {
         ko: [
           '서울시·관악구 공공데이터의 수거함 주소를 카카오맵 좌표로 변환해 데이터 구성',
           '카카오맵 API로 의류·폐건전지·형광등·네프론·기부처 위치를 지도에 표시',
           '카테고리별 위치 안내 화면 및 분리배출 상세 안내 페이지 구현',
-          'Nomad Sculpt로 직접 조각한 3D 캐릭터 초록이 제작 및 서비스 전반 적용',
+          '3D 모델링 앱 Nomad Sculpt로 직접 제작한 캐릭터 초록이를 서비스 전반에 적용',
           '기획·디자인·개발·배포 전 과정 3인 공동 진행',
         ],
         en: [
